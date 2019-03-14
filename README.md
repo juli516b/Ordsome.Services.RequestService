@@ -7,4 +7,5 @@ Tried out Mediator pattern with MediatR + CQRS. Implemented Clean Architecture (
 2. Implement ViewModels for AnswersController.
 3. Implement RabbitMQ.
 4. Implement logging with MediatR.
-5. More to come..
+5. Answer configuring.
+6. More to come..
