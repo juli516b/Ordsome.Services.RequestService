@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RequestService.WebApi.Application.Commands.Requests.AnswerCreation;
 using RequestService.WebApi.Application.Commands.Requests.RequestCreation;
 using RequestService.WebApi.Application.Queries.Requests.GetRequests;
 using RequestService.WebApi.Application.Queries.Requests.GetRequestsWithoutAnswers;

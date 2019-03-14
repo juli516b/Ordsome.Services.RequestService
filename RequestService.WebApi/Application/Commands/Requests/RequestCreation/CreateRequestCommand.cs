@@ -1,11 +1,8 @@
 ﻿using MediatR;
 using RequestService.WebApi.Application.Interfaces;
 using RequestService.WebApi.Domain.Requests;
-using RequestService.WebApi.Domain.SharedKernel;
 using RequestService.WebApi.Infrastructure.Persistence;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

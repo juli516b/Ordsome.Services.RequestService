@@ -1,9 +1,5 @@
-﻿using RequestService.WebApi.Domain.Events.Requests;
-using RequestService.WebApi.Domain.SharedKernel;
-using System;
+﻿using RequestService.WebApi.Domain.SharedKernel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RequestService.WebApi.Domain.Requests
 {

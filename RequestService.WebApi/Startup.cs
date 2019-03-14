@@ -36,12 +36,8 @@ namespace RequestService.WebApi
 
             // Add framework services.
             services.AddTransient<INotificationService, NotificationService>();
-            //services.AddTransient<IDateTime, MachineDateTime>();
 
-            // Add MediatR
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+            // Add MediatR - muligt at tilføje logging af alle requests via mediatr her.
             services.AddMediatR(typeof(GetRequestsQueryHandler).GetTypeInfo().Assembly);
 
             // Add DbContext using SQL Server Provider
@@ -57,7 +53,6 @@ namespace RequestService.WebApi
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
             // In production, the Angular files will be served from this directory
-            //services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Info { Title = "RequestServiceApi", Version = "v1" }));
         }
 
@@ -77,7 +72,6 @@ namespace RequestService.WebApi
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseSpaStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "My API V1"));
 
@@ -87,19 +81,6 @@ namespace RequestService.WebApi
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-
-            //app.UseSpa(spa =>
-            //{
-            //    // To learn more about options for serving an Angular SPA from ASP.NET Core,
-            //    // see https://go.microsoft.com/fwlink/?linkid=864501
-
-            //    spa.Options.SourcePath = "ClientApp";
-
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-            //    }
-            //});
         }
     }
 }
