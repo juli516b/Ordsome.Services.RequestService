@@ -1,6 +1,6 @@
 # Ordsome.Services.RequestService
 
-Tried out Mediator pattern with MediatR. Implemented Clean Architecture (small flaws).
+Tried out Mediator pattern with MediatR + CQRS. Implemented Clean Architecture (small flaws).
 
 #### To do: 
 1. Split up in 4 projects: Domain, Application, Infrastructure and Webapi.
