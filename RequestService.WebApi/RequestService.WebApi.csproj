@@ -27,6 +27,12 @@
     <Folder Include="wwwroot\api\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RequestService.Application\RequestService.Application.csproj" />
+    <ProjectReference Include="..\RequestService.Infrastructure.Persistence\RequestService.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\RequestService.Infrastructure\RequestService.Infrastructure.csproj" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties __JSONSchema="http://json.schemastore.org/nswag" /></VisualStudio></ProjectExtensions>
 
 </Project>
