@@ -1,4 +1,7 @@
-﻿namespace RequestService.Infrastructure.Persistence
+﻿using Microsoft.EntityFrameworkCore;
+using RequestService.Domain.Requests;
+
+namespace RequestService.Infrastructure.Persistence
 {
     public class RequestServiceDbContext : DbContext
     {

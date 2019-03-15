@@ -36,9 +36,9 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
 
             _context.Answers.Add(entity);
 
-            await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await _context.SaveChangesAsync(cancellationToken);
 
-            await _mediator.Publish(new AnswerCreated { AnswerId = entity.Id }).ConfigureAwait(false);
+            await _mediator.Publish(new AnswerCreated { AnswerId = entity.Id });
 
             return Unit.Value;
         }

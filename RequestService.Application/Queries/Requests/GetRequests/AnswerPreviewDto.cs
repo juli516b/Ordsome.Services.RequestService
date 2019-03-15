@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RequestService.Domain.Requests;
+using System;
 using System.Linq.Expressions;
 
 namespace RequestService.Application.Queries.Requests.GetRequests

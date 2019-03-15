@@ -1,4 +1,9 @@
-﻿using System.Threading;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using RequestService.Infrastructure.Persistence;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RequestService.Application.Queries.Requests.GetRequestsWithoutAnswers

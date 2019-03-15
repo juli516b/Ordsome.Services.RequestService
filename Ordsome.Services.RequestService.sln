@@ -4,14 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestService.WebApi", "RequestService.WebApi\RequestService.WebApi.csproj", "{107063FB-30BF-4CF6-A0A6-C87109A64463}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B65C2516-46FB-4227-ADBB-6DD1D7C32AF9} = {B65C2516-46FB-4227-ADBB-6DD1D7C32AF9}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestService.Application", "RequestService.Application\RequestService.Application.csproj", "{5AA23869-6459-44B9-BAC5-3B7E28829FF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestService.Application", "RequestService.Application\RequestService.Application.csproj", "{5AA23869-6459-44B9-BAC5-3B7E28829FF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestService.Infrastructure", "RequestService.Infrastructure\RequestService.Infrastructure.csproj", "{E8F3004B-E06E-42E7-A334-855DB4DB5B98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestService.Infrastructure", "RequestService.Infrastructure\RequestService.Infrastructure.csproj", "{E8F3004B-E06E-42E7-A334-855DB4DB5B98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestService.Domain", "RequestService.Domain\RequestService.Domain.csproj", "{B65C2516-46FB-4227-ADBB-6DD1D7C32AF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestService.Domain", "RequestService.Domain\RequestService.Domain.csproj", "{B65C2516-46FB-4227-ADBB-6DD1D7C32AF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestService.Infrastructure.Persistence", "RequestService.Infrastructure.Persistence\RequestService.Infrastructure.Persistence.csproj", "{6AE31E7C-828E-4054-9D80-B2CEB3C0F4BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestService.Infrastructure.Persistence", "RequestService.Infrastructure.Persistence\RequestService.Infrastructure.Persistence.csproj", "{6AE31E7C-828E-4054-9D80-B2CEB3C0F4BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

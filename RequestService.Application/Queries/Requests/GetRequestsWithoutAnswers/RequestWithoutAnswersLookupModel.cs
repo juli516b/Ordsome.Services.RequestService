@@ -1,4 +1,6 @@
-﻿using RequestService.Application.Interfaces.Mapping;
+﻿using AutoMapper;
+using RequestService.Application.Interfaces.Mapping;
+using RequestService.Domain.Requests;
 
 namespace RequestService.Application.Queries.Requests.GetRequestsWithoutAnswers
 {
