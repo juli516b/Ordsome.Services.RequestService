@@ -11,7 +11,7 @@ namespace RequestService.WebApi.Application.Commands.Requests.RequestCreation
     public class CreateRequestCommand : IRequest
     {
         public string LanguageOrigin { get; set; }
-        public string LagnuageTarget { get; set; }
+        public string LanguageTarget { get; set; }
         public string TextToTranslate { get; set; }
         public ICollection<Answer> Answers { get; set; }
     }
@@ -33,7 +33,7 @@ namespace RequestService.WebApi.Application.Commands.Requests.RequestCreation
         {
             var entity = new Request
             {
-                LanguageTarget = request.LagnuageTarget,
+                LanguageTarget = request.LanguageTarget,
                 LanguageOrigin = request.LanguageOrigin,
                 TextToTranslate = request.TextToTranslate
             };
