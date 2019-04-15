@@ -6,7 +6,7 @@ namespace RequestService.WebApi.Application.Commands.Requests.RequestCreation
     {
         public CreateRequestCommandValidator()
         {
-            RuleFor(x => x.LagnuageTarget).NotEmpty().NotNull();
+            RuleFor(x => x.LanguageTarget).NotEmpty().NotNull();
             RuleFor(x => x.TextToTranslate).NotEmpty().NotNull();
         }
     }
