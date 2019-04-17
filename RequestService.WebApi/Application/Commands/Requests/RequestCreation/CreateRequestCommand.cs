@@ -33,7 +33,7 @@ namespace RequestService.WebApi.Application.Commands.Requests.RequestCreation
         {
             var entity = new Request
             {
-                LanguageTarget = request.LagnuageTarget,
+                LanguageTarget = request.LanguageTarget,
                 LanguageOrigin = request.LanguageOrigin,
                 TextToTranslate = request.TextToTranslate
             };
