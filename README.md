@@ -1,7 +1,7 @@
 # Ordsome.Services.RequestService
+Forked from which is the correct repo https://github.com/juli516b/Ordsome.Services.RequestService
 
-Tried out Mediator pattern with MediatR + CQRS. Implemented Clean Architecture (small flaws).
+This fork is to maintain an enviroment suitable for testing locally
 
-#### To do: 
-Follow the Trello board for this service
-https://trello.com/b/dGL6qEss/requestservice
+
+Use `noSLL` branch for test.
