@@ -10,15 +10,13 @@ namespace RequestService.Application.Queries.Requests.GetRequests
     {
         public RequestPreviewDto()
         {
-            Answers = new List<AnswerPreviewDto>();
         }
 
         public int RequestId { get; set; }
         public string LanguageOrigin { get; set; }
         public string LanguageTarget { get; set; }
         public string TextToTranslate { get; set; }
-        public List<AnswerPreviewDto> Answers { get; set; }
-
+        public int noOfAnswers { get; set; }
         public static Expression<Func<Request, RequestPreviewDto>> Projection
         {
             get
@@ -29,9 +27,7 @@ namespace RequestService.Application.Queries.Requests.GetRequests
                     LanguageOrigin = r.LanguageOrigin,
                     LanguageTarget = r.LanguageTarget,
                     TextToTranslate = r.TextToTranslate,
-                    Answers = r.Answers.AsQueryable()
-                        .Select(AnswerPreviewDto.Projection)
-                        .ToList()
+                    noOfAnswers = r.Answers.Count
                 };
             }
         }
