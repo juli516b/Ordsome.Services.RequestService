@@ -38,7 +38,7 @@ namespace RequestService.WebApi
             services.AddTransient<INotificationService, NotificationService>();
 
             // Add MediatR - muligt at tilføje logging af alle requests via mediatr her.
-            services.AddMediatR(typeof(GetRequestsQueryHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(GetAnswersByRequestIdQueryHandler).GetTypeInfo().Assembly);
 
             // Add DbContext using SQL Server Provider
             services.AddDbContext<RequestServiceDbContext>(options =>
@@ -73,14 +73,13 @@ namespace RequestService.WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "My API V1"));
-
-            app.UseMvc(routes =>
+            app.UseSwaggerUI(c =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                c.SwaggerEndpoint("swagger/v1/swagger.json", "Sample API");
+                c.RoutePrefix = string.Empty;
             });
+
+            app.UseMvc();        
         }
     }
 }

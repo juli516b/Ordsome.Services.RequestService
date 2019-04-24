@@ -16,4 +16,10 @@
     <ProjectReference Include="..\RequestService.Infrastructure.Persistence\RequestService.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Queries\Requests\GetAnswersByRequestId\GetAnswersByRequestIdQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

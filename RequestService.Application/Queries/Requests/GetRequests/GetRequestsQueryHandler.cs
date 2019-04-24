@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RequestService.Application.Queries.Requests.GetRequests
 {
-    public class GetRequestsQueryHandler : IRequestHandler<GetRequestsQuery, List<Request>>
+    public class GetRequestsQueryHandler : IRequestHandler<GetRequestsQuery, List<RequestPreviewDto>>
     {
         private readonly RequestServiceDbContext _context;
 
@@ -17,12 +17,25 @@ namespace RequestService.Application.Queries.Requests.GetRequests
             _context = context;
         }
 
-        public async Task<List<Request>> Handle(GetRequestsQuery request, CancellationToken cancellationToken)
+        public async Task<List<RequestPreviewDto>> Handle(GetRequestsQuery request, CancellationToken cancellationToken)
         {
-            //Skal helst bruge automapper
-            return await _context.Requests
-                .Include(a => a.Answers)
-                .ToListAsync().ConfigureAwait(false);
+            var entities = await _context.Requests.Include(a => a.Answers).ToListAsync();
+
+            List<RequestPreviewDto> entitiesToReturn = new List<RequestPreviewDto>();
+
+            foreach (var entity in entities)
+            {
+                entitiesToReturn.Add(
+                    new RequestPreviewDto
+                    {
+                        RequestId = entity.Id,
+                        noOfAnswers = entity.Answers.Count,
+                        LanguageOrigin = entity.LanguageOrigin,
+                        LanguageTarget = entity.LanguageTarget,
+                        TextToTranslate = entity.TextToTranslate
+                    });
+            }
+            return entitiesToReturn;
         }
     }
 }
