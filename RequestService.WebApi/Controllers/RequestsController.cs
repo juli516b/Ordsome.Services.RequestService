@@ -1,14 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using RequestService.Application.Commands.Answers.AnswerCreation;
+using RequestService.Application.Commands.Requests.RequestCreation;
+using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
+using RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId;
+using RequestService.Application.Queries.Requests.GetRequest;
+using RequestService.Application.Queries.Requests.GetRequests;
+using RequestService.Application.Queries.Requests.GetRequestsWithoutAnswers;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using RequestService.WebApi.Application.Commands.Requests.RequestCreation;
-using RequestService.WebApi.Application.Queries.Requests.GetRequests;
-using RequestService.WebApi.Application.Queries.Requests.GetRequestsWithoutAnswers;
 
 namespace RequestService.WebApi.Controllers
 {
+    [Route("api/request")]
     public class RequestsController : BaseController
     {
         [HttpGet]
@@ -18,11 +23,32 @@ namespace RequestService.WebApi.Controllers
             return Ok(await Mediator.Send(new GetRequestsQuery()).ConfigureAwait(false));
         }
 
-        [HttpGet]
-        public async Task<ActionResult<RequestsWithoutAnswersViewModel>> GetAllWithoutAnswers()
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetById(int id)
         {
-            return Ok(await Mediator.Send(new GetRequestsWithoutAnswersListQuery()).ConfigureAwait(false));
+            return Ok(await Mediator.Send(new GetRequestQuery { Id = id }));
         }
+
+        [HttpGet("{id}/answers")]
+        [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetAnswersByRequestId(int id)
+        {
+            return Ok(await Mediator.Send(new GetAnswersByRequestIdQuery { Id = id }));
+        }
+
+        [HttpGet("{id}/answers/count")]
+        [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetCountOfAnswersByRequestId(int id)
+        {
+            return Ok(await Mediator.Send(new GetCountOfAnswersByRequestIdQuery { Id = id }));
+        }
+
+        //[HttpGet()]
+        //public async Task<ActionResult<RequestsWithoutAnswersViewModel>> GetAllWithoutAnswers()
+        //{
+        //    return Ok(await Mediator.Send(new GetRequestsWithoutAnswersListQuery()).ConfigureAwait(false));
+        //}
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -33,5 +59,16 @@ namespace RequestService.WebApi.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("{id}/answer")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> CreateAnAnswer([FromBody]CreateAnswerCommand command)
+        {
+            await Mediator.Send(command).ConfigureAwait(false);
+
+            return NoContent();
+        }
+
     }
 }

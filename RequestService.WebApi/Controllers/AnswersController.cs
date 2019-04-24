@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RequestService.WebApi.Application.Commands.Requests.AnswerCreation;
+using RequestService.Application.Commands.Answers.AnswerCreation;
 using System.Threading.Tasks;
 
 namespace RequestService.WebApi.Controllers
 {
+    [Route("api/answer")]
     public class AnswersController : BaseController
     {
         [HttpPost]

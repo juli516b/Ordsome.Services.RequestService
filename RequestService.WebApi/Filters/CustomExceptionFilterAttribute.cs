@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using RequestService.WebApi.Application.Exceptions;
+using RequestService.Application.Exceptions;
 using System;
 using System.Net;
 

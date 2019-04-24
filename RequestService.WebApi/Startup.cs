@@ -1,21 +1,21 @@
-﻿using System.Reflection;
+﻿using AutoMapper;
+using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using AutoMapper;
-using RequestService.WebApi.Application.Interfaces;
-using RequestService.WebApi.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using MediatR;
-using RequestService.WebApi.Application.Queries.Requests.GetRequests;
-using RequestService.WebApi.Infrastructure.Infrastructure;
+using RequestService.Application.Commands.Requests.RequestCreation;
+using RequestService.Application.Interfaces;
+using RequestService.Application.Queries.Requests.GetRequests;
+using RequestService.Infrastructure;
+using RequestService.Infrastructure.AutoMapper;
+using RequestService.Infrastructure.Persistence;
 using RequestService.WebApi.Filters;
-using RequestService.WebApi.Infrastructure.Infrastructure.AutoMapper;
-using FluentValidation.AspNetCore;
-using RequestService.WebApi.Application.Commands.Requests.RequestCreation;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Reflection;
 
 namespace RequestService.WebApi
 {
@@ -38,7 +38,7 @@ namespace RequestService.WebApi
             services.AddTransient<INotificationService, NotificationService>();
 
             // Add MediatR - muligt at tilføje logging af alle requests via mediatr her.
-            services.AddMediatR(typeof(GetRequestsQueryHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(GetAnswersByRequestIdQueryHandler).GetTypeInfo().Assembly);
 
             // Add DbContext using SQL Server Provider
             services.AddDbContext<RequestServiceDbContext>(options =>
@@ -73,14 +73,13 @@ namespace RequestService.WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "My API V1"));
-
-            app.UseMvc(routes =>
+            app.UseSwaggerUI(c =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                c.SwaggerEndpoint("swagger/v1/swagger.json", "Sample API");
+                c.RoutePrefix = string.Empty;
             });
+
+            app.UseMvc();        
         }
     }
 }
