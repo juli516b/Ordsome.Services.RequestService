@@ -12,7 +12,7 @@ namespace RequestService.WebApi.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Create([FromBody]CreateAnswerCommand command)
         {
-            await Mediator.Send(command).ConfigureAwait(false);
+            await Mediator.Send(command);
 
             return NoContent();
         }

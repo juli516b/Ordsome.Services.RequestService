@@ -22,7 +22,7 @@ namespace RequestService.WebApi.Application.Queries.Requests.GetRequests
             //Skal helst bruge automapper
             return await _context.Requests
                 .Include(a => a.Answers)
-                .ToListAsync().ConfigureAwait(false);
+                .ToListAsync();
         }
     }
 }
