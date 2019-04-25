@@ -13,6 +13,7 @@ namespace RequestService.Domain.Requests
         public string LanguageOrigin { get; set; }
         public string LanguageTarget { get; set; }
         public string TextToTranslate { get; set; }
+        public bool IsClosed { get; set; }
         public ICollection<Answer> Answers { get; set; }
     }
 }

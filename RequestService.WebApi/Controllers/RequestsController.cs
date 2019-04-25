@@ -6,7 +6,6 @@ using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetRequest;
 using RequestService.Application.Queries.Requests.GetRequests;
-using RequestService.Application.Queries.Requests.GetRequestsWithoutAnswers;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -63,7 +62,7 @@ namespace RequestService.WebApi.Controllers
         [HttpPost("{id}/answer")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> CreateAnAnswer([FromBody]CreateAnswerCommand command)
+        public async Task<IActionResult> CreateAnswer([FromBody]CreateAnswerCommand command)
         {
             await Mediator.Send(command).ConfigureAwait(false);
 
