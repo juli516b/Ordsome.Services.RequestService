@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestService.Application.Commands.Answers.AnswerCreation;
+using RequestService.Application.Commands.Requests.CloseRequest;
 using RequestService.Application.Commands.Requests.RequestCreation;
 using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId;
@@ -65,6 +66,16 @@ namespace RequestService.WebApi.Controllers
         public async Task<IActionResult> CreateAnswer([FromBody]CreateAnswerCommand command)
         {
             await Mediator.Send(command).ConfigureAwait(false);
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}/close")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> CloseRequest(int id)
+        {
+            await Mediator.Send(new CloseRequestCommand { RequestId = id }).ConfigureAwait(false);
 
             return NoContent();
         }

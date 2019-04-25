@@ -7,6 +7,6 @@ namespace RequestService.Application.Commands.Requests.CloseRequest
 {
     public class CloseRequestCommand : IRequest
     {
-        public bool IsClosed { get; set; }
+        public int RequestId { get; set; }
     }
 }

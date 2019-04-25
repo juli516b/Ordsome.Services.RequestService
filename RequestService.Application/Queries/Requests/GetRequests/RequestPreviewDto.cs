@@ -16,7 +16,8 @@ namespace RequestService.Application.Queries.Requests.GetRequests
         public string LanguageOrigin { get; set; }
         public string LanguageTarget { get; set; }
         public string TextToTranslate { get; set; }
-        public int noOfAnswers { get; set; }
+        public int NoOfAnswers { get; set; }
+        public bool IsClosed { get; set; }
         public static Expression<Func<Request, RequestPreviewDto>> Projection
         {
             get
@@ -27,7 +28,7 @@ namespace RequestService.Application.Queries.Requests.GetRequests
                     LanguageOrigin = r.LanguageOrigin,
                     LanguageTarget = r.LanguageTarget,
                     TextToTranslate = r.TextToTranslate,
-                    noOfAnswers = r.Answers.Count
+                    NoOfAnswers = r.Answers.Count
                 };
             }
         }
