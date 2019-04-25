@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestService.Application.Commands.Answers.AnswerCreation;
+using RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer;
 using RequestService.Application.Commands.Requests.CloseRequest;
 using RequestService.Application.Commands.Requests.RequestCreation;
 using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
@@ -47,9 +48,11 @@ namespace RequestService.WebApi.Controllers
         [HttpPatch("{id}/answers/{answerId}/correct")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> SetAnswerAsCorrectAnswer(int id, int answerId)
+        public async Task<IActionResult> SetAnswerAsCorrectAnswer(int id, int answerId)
         {
-            return Ok(await Mediator.Send(new GetCountOfAnswersByRequestIdQuery { Id = id }));
+            await Mediator.Publish(new SetAnswerAsCorrectAnswerCommand { RequestId = id, AnswerId = answerId });
+
+            return NoContent();
         }
 
         //[HttpGet()]
