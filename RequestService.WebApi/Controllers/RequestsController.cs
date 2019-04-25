@@ -44,6 +44,14 @@ namespace RequestService.WebApi.Controllers
             return Ok(await Mediator.Send(new GetCountOfAnswersByRequestIdQuery { Id = id }));
         }
 
+        [HttpPatch("{id}/answers/{answerId}/correct")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> SetAnswerAsCorrectAnswer(int id, int answerId)
+        {
+            return Ok(await Mediator.Send(new GetCountOfAnswersByRequestIdQuery { Id = id }));
+        }
+
         //[HttpGet()]
         //public async Task<ActionResult<RequestsWithoutAnswersViewModel>> GetAllWithoutAnswers()
         //{

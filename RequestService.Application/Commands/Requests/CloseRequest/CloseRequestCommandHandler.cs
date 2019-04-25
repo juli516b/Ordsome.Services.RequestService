@@ -1,13 +1,8 @@
 ﻿using MediatR;
 using RequestService.Application.Interfaces;
 using RequestService.Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using RequestService.Domain.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace RequestService.Application.Commands.Requests.CloseRequest
