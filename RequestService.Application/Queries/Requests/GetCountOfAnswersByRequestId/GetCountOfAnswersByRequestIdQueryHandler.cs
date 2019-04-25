@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId
 {
-    public class GetCountOfAnswersByRequestIdQueryHandler : IRequestHandler<GetCountOfAnswersByRequestIdQuery, int>
+    public class GetCountOfAnswersByRequestIdQueryHandler : IRequestHandler<GetCountOfAnswersByRequestIdQuery, CountOfAnswersDto>
     {
         private RequestServiceDbContext _context;
 
@@ -19,12 +19,17 @@ namespace RequestService.Application.Queries.Requests.GetCountOfAnswersByRequest
             _context = context;
         }
 
-        public async Task<int> Handle(GetCountOfAnswersByRequestIdQuery request, CancellationToken cancellationToken)
+        public async Task<CountOfAnswersDto> Handle(GetCountOfAnswersByRequestIdQuery request, CancellationToken cancellationToken)
         {
             var entity = await _context.Requests.Include(a => a.Answers).
                 FirstOrDefaultAsync(r => r.Id == request.Id);
 
-            return entity.Answers.Count;
+            CountOfAnswersDto countOfAnswersDto = new CountOfAnswersDto
+            {
+                noOfAnswers = entity.Answers.Count
+            };
+
+            return countOfAnswersDto;
         }
     }
 }

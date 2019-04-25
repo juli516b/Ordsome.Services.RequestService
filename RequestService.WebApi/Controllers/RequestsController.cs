@@ -24,21 +24,21 @@ namespace RequestService.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(RequestPreviewDto), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetById(int id)
         {
             return Ok(await Mediator.Send(new GetRequestQuery { Id = id }));
         }
 
         [HttpGet("{id}/answers")]
-        [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<AnswerDto>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetAnswersByRequestId(int id)
         {
             return Ok(await Mediator.Send(new GetAnswersByRequestIdQuery { Id = id }));
         }
 
         [HttpGet("{id}/answers/count")]
-        [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(CountOfAnswersDto), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetCountOfAnswersByRequestId(int id)
         {
             return Ok(await Mediator.Send(new GetCountOfAnswersByRequestIdQuery { Id = id }));

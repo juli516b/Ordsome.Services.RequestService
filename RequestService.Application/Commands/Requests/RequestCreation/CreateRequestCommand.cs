@@ -13,7 +13,6 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
         public string LanguageOrigin { get; set; }
         public string LanguageTarget { get; set; }
         public string TextToTranslate { get; set; }
-        public ICollection<Answer> Answers { get; set; }
     }
 
     public class Handler : IRequestHandler<CreateRequestCommand, Unit>

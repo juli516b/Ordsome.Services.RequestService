@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RequestService.Application.Queries.Requests.GetRequest;
-using RequestService.Domain.Requests;
 using RequestService.Infrastructure.Persistence;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
 {
-    public class GetAnswersByRequestIdQueryHandler : IRequestHandler<GetAnswersByRequestIdQuery, ICollection<Answer>>
+    public class GetAnswersByRequestIdQueryHandler : IRequestHandler<GetAnswersByRequestIdQuery, IEnumerable<AnswerDto>>
     {
         private readonly RequestServiceDbContext _context;
 
@@ -18,14 +16,27 @@ namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
             _context = context;
         }
 
-        public async Task<ICollection<Answer>> Handle(GetAnswersByRequestIdQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<AnswerDto>> Handle(GetAnswersByRequestIdQuery request, CancellationToken cancellationToken)
         {
             var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.Id);
 
             if (entity == null)
                 return null;
 
-            return entity.Answers;
+            List<AnswerDto> listOfAnswers = new List<AnswerDto>();
+
+            foreach (var answer in entity.Answers)
+            {
+                listOfAnswers.Add(new AnswerDto
+                {
+                    AnswerId = answer.Id,
+                    TextTranslated = answer.TextTranslated
+                });
+            }
+
+            IEnumerable<AnswerDto> answersToReturn = listOfAnswers;
+
+            return answersToReturn;
         }
     }
 }
