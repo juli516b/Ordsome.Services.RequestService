@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using RequestService.Application.Queries.Requests.GetRequests;
 using RequestService.Domain.Requests;
 
 namespace RequestService.Application.Queries.Requests.GetRequest
 {
-    public class GetRequestQuery : IRequest<Request>
+    public class GetRequestQuery : IRequest<RequestPreviewDto>
     {
         public int Id { get; set; }
     }

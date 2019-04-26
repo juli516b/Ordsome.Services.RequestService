@@ -29,10 +29,11 @@ namespace RequestService.Application.Queries.Requests.GetRequests
                     new RequestPreviewDto
                     {
                         RequestId = entity.Id,
-                        noOfAnswers = entity.Answers.Count,
+                        NoOfAnswers = entity.Answers.Count,
                         LanguageOrigin = entity.LanguageOrigin,
                         LanguageTarget = entity.LanguageTarget,
-                        TextToTranslate = entity.TextToTranslate
+                        TextToTranslate = entity.TextToTranslate,
+                        IsClosed = entity.IsClosed
                     });
             }
             return entitiesToReturn;

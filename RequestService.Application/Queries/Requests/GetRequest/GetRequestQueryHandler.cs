@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RequestService.Application.Queries.Requests.GetRequests
 {
-    public class GetAnswersByRequestIdQueryHandler : IRequestHandler<GetRequestQuery, Request>
+    public class GetAnswersByRequestIdQueryHandler : IRequestHandler<GetRequestQuery, RequestPreviewDto>
     {
         private readonly RequestServiceDbContext _context;
 
@@ -17,7 +17,7 @@ namespace RequestService.Application.Queries.Requests.GetRequests
             _context = context;
         }
 
-        public async Task<Request> Handle(GetRequestQuery request, CancellationToken cancellationToken)
+        public async Task<RequestPreviewDto> Handle(GetRequestQuery request, CancellationToken cancellationToken)
         {
             var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.Id);
             
@@ -25,7 +25,17 @@ namespace RequestService.Application.Queries.Requests.GetRequests
             {
                 return null;
             }
-            return entity;
+            RequestPreviewDto requestToReturn = new RequestPreviewDto
+            {
+                IsClosed = entity.IsClosed,
+                RequestId = entity.Id,
+                LanguageOrigin = entity.LanguageOrigin,
+                LanguageTarget = entity.LanguageTarget,
+                TextToTranslate = entity.TextToTranslate,
+                NoOfAnswers = entity.Answers.Count
+            };
+
+            return requestToReturn;
         }
     }
 }
