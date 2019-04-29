@@ -19,7 +19,7 @@ namespace RequestService.Application.Queries.Requests.GetRequests
 
         public async Task<RequestPreviewDto> Handle(GetRequestQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.Id);
+            var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.RequestId);
             
             if (entity == null)
             {
