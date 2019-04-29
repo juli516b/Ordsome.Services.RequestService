@@ -12,7 +12,7 @@ namespace RequestService.Application.Queries.Requests.GetRequests
         {
         }
 
-        public int RequestId { get; set; }
+        public int Id { get; set; }
         public string LanguageOrigin { get; set; }
         public string LanguageTarget { get; set; }
         public string TextToTranslate { get; set; }
@@ -24,7 +24,7 @@ namespace RequestService.Application.Queries.Requests.GetRequests
             {
                 return r => new RequestPreviewDto
                 {
-                    RequestId = r.Id,
+                    Id = r.Id,
                     LanguageOrigin = r.LanguageOrigin,
                     LanguageTarget = r.LanguageTarget,
                     TextToTranslate = r.TextToTranslate,

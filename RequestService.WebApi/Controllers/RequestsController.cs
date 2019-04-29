@@ -28,7 +28,7 @@ namespace RequestService.WebApi.Controllers
         [ProducesResponseType(typeof(RequestPreviewDto), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetById(int id)
         {
-            return Ok(await Mediator.Send(new GetRequestQuery { RequestId = id }));
+            return Ok(await Mediator.Send(new GetRequestQuery { Id = id }));
         }
 
         [HttpGet("{id}/answers")]

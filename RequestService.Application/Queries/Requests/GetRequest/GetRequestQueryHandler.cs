@@ -19,7 +19,7 @@ namespace RequestService.Application.Queries.Requests.GetRequests
 
         public async Task<RequestPreviewDto> Handle(GetRequestQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.RequestId);
+            var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.Id);
             
             if (entity == null)
             {
@@ -28,7 +28,7 @@ namespace RequestService.Application.Queries.Requests.GetRequests
             RequestPreviewDto requestToReturn = new RequestPreviewDto
             {
                 IsClosed = entity.IsClosed,
-                RequestId = entity.Id,
+                Id = entity.Id,
                 LanguageOrigin = entity.LanguageOrigin,
                 LanguageTarget = entity.LanguageTarget,
                 TextToTranslate = entity.TextToTranslate,
