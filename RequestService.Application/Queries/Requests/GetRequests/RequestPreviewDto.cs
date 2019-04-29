@@ -12,22 +12,23 @@ namespace RequestService.Application.Queries.Requests.GetRequests
         {
         }
 
-        public int RequestId { get; set; }
+        public int Id { get; set; }
         public string LanguageOrigin { get; set; }
         public string LanguageTarget { get; set; }
         public string TextToTranslate { get; set; }
-        public int noOfAnswers { get; set; }
+        public int NoOfAnswers { get; set; }
+        public bool IsClosed { get; set; }
         public static Expression<Func<Request, RequestPreviewDto>> Projection
         {
             get
             {
                 return r => new RequestPreviewDto
                 {
-                    RequestId = r.Id,
+                    Id = r.Id,
                     LanguageOrigin = r.LanguageOrigin,
                     LanguageTarget = r.LanguageTarget,
                     TextToTranslate = r.TextToTranslate,
-                    noOfAnswers = r.Answers.Count
+                    NoOfAnswers = r.Answers.Count
                 };
             }
         }

@@ -6,5 +6,6 @@ namespace RequestService.Domain.Requests
     {
         public string TextTranslated { get; set; }
         public int RequestId { get; set; }
+        public bool IsCorrectAnswer { get; set; }
     }
 }

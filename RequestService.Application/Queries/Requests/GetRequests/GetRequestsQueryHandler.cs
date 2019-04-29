@@ -28,11 +28,12 @@ namespace RequestService.Application.Queries.Requests.GetRequests
                 entitiesToReturn.Add(
                     new RequestPreviewDto
                     {
-                        RequestId = entity.Id,
-                        noOfAnswers = entity.Answers.Count,
+                        Id = entity.Id,
+                        NoOfAnswers = entity.Answers.Count,
                         LanguageOrigin = entity.LanguageOrigin,
                         LanguageTarget = entity.LanguageTarget,
-                        TextToTranslate = entity.TextToTranslate
+                        TextToTranslate = entity.TextToTranslate,
+                        IsClosed = entity.IsClosed
                     });
             }
             return entitiesToReturn;

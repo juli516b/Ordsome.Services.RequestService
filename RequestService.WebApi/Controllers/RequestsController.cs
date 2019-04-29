@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestService.Application.Commands.Answers.AnswerCreation;
+using RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer;
+using RequestService.Application.Commands.Requests.CloseRequest;
 using RequestService.Application.Commands.Requests.RequestCreation;
 using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetRequest;
 using RequestService.Application.Queries.Requests.GetRequests;
-using RequestService.Application.Queries.Requests.GetRequestsWithoutAnswers;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -44,6 +45,16 @@ namespace RequestService.WebApi.Controllers
             return Ok(await Mediator.Send(new GetCountOfAnswersByRequestIdQuery { Id = id }));
         }
 
+        [HttpPatch("{id}/answers/{answerId}/correct")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> SetAnswerAsCorrectAnswer(int id, int answerId)
+        {
+            await Mediator.Publish(new SetAnswerAsCorrectAnswerCommand { RequestId = id, AnswerId = answerId });
+
+            return NoContent();
+        }
+
         //[HttpGet()]
         //public async Task<ActionResult<RequestsWithoutAnswersViewModel>> GetAllWithoutAnswers()
         //{
@@ -63,9 +74,19 @@ namespace RequestService.WebApi.Controllers
         [HttpPost("{id}/answer")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> CreateAnAnswer([FromBody]CreateAnswerCommand command)
+        public async Task<IActionResult> CreateAnswer([FromBody]CreateAnswerCommand command)
         {
             await Mediator.Send(command).ConfigureAwait(false);
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}/close")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> CloseRequest(int id)
+        {
+            await Mediator.Send(new CloseRequestCommand { RequestId = id }).ConfigureAwait(false);
 
             return NoContent();
         }
