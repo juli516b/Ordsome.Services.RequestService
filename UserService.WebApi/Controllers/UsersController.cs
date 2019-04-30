@@ -28,8 +28,8 @@ namespace UserService.WebApi.Controllers
             return StatusCode(201);
         }
 
-        [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> Login([FromBody] LoginCommand command)
         {
             return Ok(await Mediator.Send(command));

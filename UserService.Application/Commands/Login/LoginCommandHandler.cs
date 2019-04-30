@@ -12,7 +12,7 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Application.Commands.Login
 {
-    public class LoginCommandHandler : IRequestHandler<LoginCommand, SecurityToken>
+    public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
     {
         private UserServiceDbContext _context;
         private IMediator _mediator;
@@ -24,7 +24,7 @@ namespace UserService.Application.Commands.Login
             _mediator = mediator;
             _config = config; 
         }
-        public async Task<SecurityToken> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
 
@@ -41,7 +41,7 @@ namespace UserService.Application.Commands.Login
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes(_config.GetSection("AppSettings:Token").Value));
+            .GetBytes(_config.GetSection("AppSettings:Secret").Value));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
@@ -56,7 +56,9 @@ namespace UserService.Application.Commands.Login
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return token;
+            var tokenToReturn = tokenHandler.WriteToken(token);
+
+            return tokenToReturn;
 
         }
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
