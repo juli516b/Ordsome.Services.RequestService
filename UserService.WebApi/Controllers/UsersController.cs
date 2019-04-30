@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
+using UserService.Application.Commands.Login;
 using UserService.Application.Commands.Register;
 
 namespace UserService.WebApi.Controllers
@@ -29,11 +30,9 @@ namespace UserService.WebApi.Controllers
 
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult> Login([FromBody] RegisterCommand command)
+        public async Task<ActionResult> Login([FromBody] LoginCommand command)
         {
-            await Mediator.Send(command);
-
-            return StatusCode(201);
+            return Ok(await Mediator.Send(command));
         }
     }
 }
