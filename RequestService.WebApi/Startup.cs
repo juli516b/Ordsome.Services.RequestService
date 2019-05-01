@@ -70,7 +70,6 @@ namespace RequestService.WebApi
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
