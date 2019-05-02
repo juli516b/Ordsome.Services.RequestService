@@ -78,6 +78,8 @@ namespace RequestService.WebApi
                 c.RoutePrefix = string.Empty;
             });
 
+            app.UseHttpsRedirection();
+
             app.UseMvc();        
         }
     }

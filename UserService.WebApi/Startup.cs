@@ -93,6 +93,8 @@ namespace UserService.WebApi
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
 
+            app.UseHttpsRedirection();
+
             app.UseMvc();
         }
     }
