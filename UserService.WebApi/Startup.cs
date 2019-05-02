@@ -79,21 +79,20 @@ namespace UserService.WebApi
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
             }
 
             app.UseStaticFiles();
-            app.UseSwagger();
+            app.UseSwagger(c=> {
+                c.RouteTemplate = "userapi/docs/{documentName}/swagger.json";
+            });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("swagger/v1/swagger.json", "Sample API");
-                c.RoutePrefix = string.Empty;
+                c.SwaggerEndpoint("/userapi/docs/v1/swagger.json", "UserAPI");
+                c.RoutePrefix = "userapi/docs";
             });
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
-
-            app.UseHttpsRedirection();
 
             app.UseMvc();
         }

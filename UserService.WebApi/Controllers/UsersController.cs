@@ -29,7 +29,7 @@ namespace UserService.WebApi.Controllers
         }
 
         [HttpPost("login")]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> Login([FromBody] LoginCommand command)
         {
             return Ok(await Mediator.Send(command));
