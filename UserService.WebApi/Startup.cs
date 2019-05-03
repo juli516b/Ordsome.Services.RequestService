@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Steeltoe.Discovery.Client;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Reflection;
 using System.Text;
@@ -30,8 +31,11 @@ namespace UserService.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add discovery client
+            services.AddDiscoveryClient(Configuration);
+            
             // Add AutoMapper
-          //  services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
+            //  services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
             // Add framework services.
             //services.AddTransient<INotificationService, NotificationService>();
@@ -56,7 +60,8 @@ namespace UserService.WebApi
 
             services.AddCors();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
+                .AddJwtBearer(options =>
+                {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
@@ -82,7 +87,8 @@ namespace UserService.WebApi
             }
 
             app.UseStaticFiles();
-            app.UseSwagger(c=> {
+            app.UseSwagger(c =>
+            {
                 c.RouteTemplate = "userapi/docs/{documentName}/swagger.json";
             });
             app.UseSwaggerUI(c =>
@@ -94,6 +100,7 @@ namespace UserService.WebApi
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
 
+            app.UseDiscoveryClient();
             app.UseMvc();
         }
     }

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace RequestService.WebApi.Controllers
 {
-    [Route("api/request")]
+    [Route("api/requests")]
     public class RequestsController : BaseController
     {
         [HttpGet]
@@ -45,15 +45,15 @@ namespace RequestService.WebApi.Controllers
             return Ok(await Mediator.Send(new GetCountOfAnswersByRequestIdQuery { Id = id }));
         }
 
-        [HttpPatch("{id}/answers/{answerId}/correct")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> SetAnswerAsCorrectAnswer(int id, int answerId)
-        {
-            await Mediator.Publish(new SetAnswerAsCorrectAnswerCommand { RequestId = id, AnswerId = answerId });
+        // [HttpPatch("{id}/answers/{answerId}/{isPreferred}")]
+        // [ProducesResponseType(StatusCodes.Status204NoContent)]
+        // [ProducesDefaultResponseType]
+        // public async Task<IActionResult> SetAnswerAsCorrectAnswer([FromBody] int id, int answerId, bool isPreferred)
+        // {
+        //     await Mediator.Publish(new SetAnswerAsCorrectAnswerCommand { RequestId = id, AnswerId = answerId, IsPreferred = isPreferred });
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
         //[HttpGet()]
         //public async Task<ActionResult<RequestsWithoutAnswersViewModel>> GetAllWithoutAnswers()
@@ -81,15 +81,14 @@ namespace RequestService.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{id}/close")]
+        [HttpPatch("isClosed")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> CloseRequest(int id)
+        public async Task<IActionResult> CloseRequest([FromBody] CloseRequestCommand command)
         {
-            await Mediator.Send(new CloseRequestCommand { RequestId = id }).ConfigureAwait(false);
+            await Mediator.Send(command).ConfigureAwait(false);
 
             return NoContent();
         }
-
     }
 }

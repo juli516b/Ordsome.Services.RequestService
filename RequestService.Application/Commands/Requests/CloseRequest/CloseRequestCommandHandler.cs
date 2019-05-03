@@ -26,7 +26,7 @@ namespace RequestService.Application.Commands.Requests.CloseRequest
             {
                 var entity = await _context.Requests.FirstOrDefaultAsync(x => x.Id == request.RequestId);
 
-                entity.IsClosed = true;
+                entity.IsClosed = request.isClosed;
 
                 await _context.SaveChangesAsync();
 
