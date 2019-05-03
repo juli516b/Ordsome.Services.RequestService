@@ -3,36 +3,30 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Microsoft.AspNetCore;
 
-public class Program
+namespace Ordsome.ApiGway
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        new WebHostBuilder()
-           .UseKestrel()
-           .UseContentRoot(Directory.GetCurrentDirectory())
-           .ConfigureAppConfiguration((hostingContext, config) =>
-           {
-               config
-                   .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                   .AddJsonFile("appsettings.json", true, true)
-                   .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
-                   .AddJsonFile("configuration.json")
-                   .AddEnvironmentVariables();
-           })
-           .ConfigureServices(s => {
-               s.AddOcelot();
-           })
-           .ConfigureLogging((hostingContext, logging) =>
-           {
-                   //add your logging
-               })
-           .UseIIS()
-           .Configure(app =>
-           {
-               app.UseOcelot().Wait();
-           })
-           .Build()
-           .Run();
+        public static void Main(string[] args)
+        {
+            CreateWebHostBuilder(args).Build().Run();
+        }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config
+                        .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                        .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json",
+                            optional: true, reloadOnChange: true)
+                        .AddJsonFile($"appsettings.local.json", optional: true, reloadOnChange: true)
+                        .AddJsonFile("ocelot.json")
+                        .AddEnvironmentVariables();
+                })
+                .UseStartup<Startup>();
     }
 }

@@ -5,7 +5,7 @@
    "version": "0.2.0",
    "configurations": [
         {
-            "name": ".NET Core Launch (web)",
+            "name": ".NET Core Launch RequestService",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -25,10 +25,25 @@
             }
         },
         {
-            "name": ".NET Core Attach",
+            "name": ".NET Core Launch UserService",
             "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/UserService.WebApi/bin/Debug/netcoreapp2.2/UserService.WebApi.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/UserService.WebApi",
+            "stopAtEntry": false,
+            "launchBrowser": {
+                "enabled": true
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
         }
+    
     ]
 }

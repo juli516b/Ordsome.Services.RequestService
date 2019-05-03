@@ -20,29 +20,26 @@ namespace UserService.Application.Commands.Register
         }
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            Guid guidOutput;
+            Guid outputGuid;
+            bool parsedGuid = Guid.TryParse(request.Id, out outputGuid);
 
-            if (Guid.TryParse(request.Id, out guidOutput) == true)
+            if (outputGuid == Guid.Empty)
             {
-                if (_context.Users.FirstOrDefaultAsync(r => r.Id == guidOutput) == null)
-                {
-                    Guid newGuid = new Guid();
-                    var userWithoutId = await MakeUser(newGuid, request.Username, request.Password);
+                Guid newGuid = new Guid();
+                var userWithoutId = await MakeUser(newGuid, request.Username, request.Password);
 
-                    await _context.Users.AddAsync(userWithoutId);
-                }
-                else
-                {
-                    var user = await MakeUser(guidOutput, request.Username, request.Password);
-
-                    await _context.Users.AddAsync(user);
-                }
+                await _context.Users.AddAsync(userWithoutId);
             }
-
+            else
+            {
+                var user = await MakeUser(outputGuid, request.Username, request.Password);
+                await _context.Users.AddAsync(user);
+            }
             await _context.SaveChangesAsync();
 
             return Unit.Value;
         }
+
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

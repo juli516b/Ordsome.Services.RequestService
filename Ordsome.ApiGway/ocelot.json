@@ -1,0 +1,173 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/users/new",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/new",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "users"
+    },
+    {
+      "DownstreamPathTemplate": "/api/users/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/register",
+      "UpstreamHttpMethod": ["Post"],
+      "SwaggerKey": "users"
+
+    },
+    {
+      "DownstreamPathTemplate": "/api/users/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/login",
+      "UpstreamHttpMethod": ["Post"],
+      "SwaggerKey": "users"
+    },
+    {
+      "DownstreamPathTemplate": "/api/request",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/request",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "requests"
+    },
+    {
+      "DownstreamPathTemplate": "/api/request",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/request",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "requests"
+    },
+    {
+      "DownstreamPathTemplate": "/api/request/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/request/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "requests"
+    },
+    {
+      "DownstreamPathTemplate": "/api/request/{id}/answers",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/request/{id}/answers",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "requests"
+    },
+    {
+      "DownstreamPathTemplate": "/api/request/{id}/answers/count",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/request/{id}/answers/count",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "requests"
+    },
+    {
+      "DownstreamPathTemplate": "/api/request/{id}/answers/{answerId}/correct",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/request/{id}/answers/{answerId}/correct",
+      "UpstreamHttpMethod": [ "Patch" ],
+      "SwaggerKey": "requests"
+    },
+    {
+      "DownstreamPathTemplate": "/api/request/{id}/answer",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/request/{id}/answer",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "requests"
+    },
+    {
+      "DownstreamPathTemplate": "/api/request/{id}/close",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/request/{id}/close",
+      "UpstreamHttpMethod": [ "Patch" ],
+      "SwaggerKey": "requests"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "users",
+      "Config": [
+        {
+          "Name": "UserServiceAPI",
+          "Version": "v1",
+          "Url": "http://localhost:7002/userapi/docs/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "requests",
+      "Config": [
+        {
+          "Name": "RequestServiceAPI",
+          "Version": "v1",
+          "Url": "http://localhost:7001/requestapi/docs/v1/swagger.json"
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7000"
+  }
+}

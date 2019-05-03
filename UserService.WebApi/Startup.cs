@@ -41,7 +41,7 @@ namespace UserService.WebApi
 
             // Add DbContext using SQL Server Provider
             services.AddDbContext<UserServiceDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("RequestDbService")));
+                options.UseSqlServer(Configuration.GetConnectionString("UserServiceDb")));
 
             services
                 .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
@@ -52,7 +52,7 @@ namespace UserService.WebApi
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
             // In production, the Angular files will be served from this directory
-            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Info { Title = "RequestServiceApi", Version = "v1" }));
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Info { Title = "UserServiceAPI", Version = "v1" }));
 
             services.AddCors();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
