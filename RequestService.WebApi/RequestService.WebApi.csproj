@@ -36,6 +36,4 @@
     <ProjectReference Include="..\RequestService.Infrastructure\RequestService.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties __JSONSchema="http://json.schemastore.org/nswag" /></VisualStudio></ProjectExtensions>
-
 </Project>
