@@ -14,6 +14,7 @@ using RequestService.Infrastructure;
 using RequestService.Infrastructure.AutoMapper;
 using RequestService.Infrastructure.Persistence;
 using RequestService.WebApi.Filters;
+using Steeltoe.Discovery.Client;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Reflection;
 
@@ -67,16 +68,17 @@ namespace RequestService.WebApi
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSwagger();
+            app.UseSwagger(c => 
+            {
+                c.RouteTemplate = "requestapi/docs/{documentName}/swagger.json";
+            });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("swagger/v1/swagger.json", "Sample API");
-                c.RoutePrefix = string.Empty;
+                c.SwaggerEndpoint("/requestapi/docs/v1/swagger.json", "RequestAPI");
+                c.RoutePrefix = "requestapi/docs";
             });
 
             app.UseMvc();        

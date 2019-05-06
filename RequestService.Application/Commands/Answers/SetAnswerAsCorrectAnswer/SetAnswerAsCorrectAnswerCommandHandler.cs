@@ -29,7 +29,7 @@ namespace RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer
 
             var answerToEdit = entity.Answers.FirstOrDefault(a => a.Id == notification.AnswerId);
 
-            answerToEdit.IsCorrectAnswer = true;
+            answerToEdit.IsPreferred = notification.IsPreferred;
 
             await _context.SaveChangesAsync();
         }

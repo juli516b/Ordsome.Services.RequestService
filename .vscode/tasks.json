@@ -9,6 +9,28 @@
                 "build",
                 "${workspaceFolder}/RequestService.WebApi/RequestService.WebApi.csproj"
             ],
+            "problemMatcher": "$tsc"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/RequestService.WebApi/RequestService.WebApi.csproj"
+            ],
+            "problemMatcher": "$tsc"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/RequestService.WebApi/RequestService.WebApi.csproj"
+            ],
+            "problemMatcher": "$tsc"
             "problemMatcher": "$msCompile"
         }
     ]

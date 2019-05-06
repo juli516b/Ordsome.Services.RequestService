@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace RequestService.WebApi.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public abstract class BaseController : Controller
     {

@@ -1,0 +1,13 @@
+{
+  "Version": 3,
+  "ListAllProjects": true,
+  "MultiProjectConfigurations": {
+    "User + Request + ApiGateway": {
+      "Projects": {
+        "UserService.WebApi": {},
+        "RequestService.WebApi": {},
+        "Ordsome.ApiGway": {}
+      }
+    }
+  }
+}

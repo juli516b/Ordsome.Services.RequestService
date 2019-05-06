@@ -24,7 +24,7 @@ namespace RequestService.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsCorrectAnswer");
+                    b.Property<bool>("IsPreferred");
 
                     b.Property<int>("RequestId");
 
