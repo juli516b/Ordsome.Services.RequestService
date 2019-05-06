@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestService.Application.Commands.Answers.AnswerCreation;
 using RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer;
@@ -17,6 +18,7 @@ namespace RequestService.WebApi.Controllers
     [Route("api/requests")]
     public class RequestsController : BaseController
     {
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetAll()

@@ -4,17 +4,17 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 
-namespace RequestService.Infrastructure.Persistence.SharedKernel
+namespace UserService.Infrastructure.Persistence.SharedKernel
 {
     public abstract class DesignTimeDbContextFactoryBase<TContext> :
             IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
-        private const string ConnectionStringName = "RequestDbService";
+        private const string ConnectionStringName = "UserServiceDb";
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
 
         public TContext CreateDbContext(string[] args)
         {
-            var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}RequestService.WebApi", Path.DirectorySeparatorChar);
+            var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}UserService.WebApi", Path.DirectorySeparatorChar);
             return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
         }
 
