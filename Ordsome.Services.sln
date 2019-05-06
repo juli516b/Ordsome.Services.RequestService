@@ -16,6 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestService.Domain", "Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestService.Infrastructure.Persistence", "RequestService.Infrastructure.Persistence\RequestService.Infrastructure.Persistence.csproj", "{6AE31E7C-828E-4054-9D80-B2CEB3C0F4BE}"
 EndProject
+
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RequestService", "RequestService", "{A40FF577-81A3-4CD8-986F-C399616F312F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserService", "UserService", "{A381A787-8F03-46FB-980E-63C4E18F220B}"

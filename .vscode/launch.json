@@ -16,6 +16,20 @@
             "stopAtEntry": false,
             "launchBrowser": {
                 "enabled": true
+            "internalConsoleOptions": "openOnSessionStart",
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                },
+                "osx": {
+                    "command": "open"
+                },
+                "linux": {
+                    "command": "xdg-open"
+                }
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
@@ -46,4 +60,10 @@
         }
     
     ]
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        }
+    ,]
 }
