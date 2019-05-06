@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Eureka;
+using Ocelot.Cache.CacheManager;
 
 namespace Ordsome.ApiGway
 {
@@ -32,7 +34,7 @@ namespace Ordsome.ApiGway
                 .ConfigureServices(s =>
                 {
                     s
-                        .AddOcelot();
+                        .AddOcelot().AddEureka().AddCacheManager(x => x.WithDictionaryHandle());
                 })
                 .Configure(a =>
                 {

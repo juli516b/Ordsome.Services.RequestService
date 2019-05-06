@@ -16,6 +16,7 @@
     <PackageReference Include="Ocelot.Administration" Version="13.5.0" />
     <PackageReference Include="Ocelot.Cache.CacheManager" Version="13.5.0" />
     <PackageReference Include="Ocelot.Provider.Consul" Version="13.5.0" />
+    <PackageReference Include="Ocelot.Provider.Eureka" Version="13.5.0" />
   </ItemGroup>
 
 </Project>
