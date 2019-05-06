@@ -15,10 +15,10 @@ namespace Ordsome.ApiGway
             BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) => 
-        
-            WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:7000")
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args)
+                .UseUrls("https://localhost:7000")
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config
@@ -38,7 +38,7 @@ namespace Ordsome.ApiGway
                 {
                     a.UseOcelot().Wait();
                 })
-                .UseIIS()
                 .Build();
         }
     }
+}

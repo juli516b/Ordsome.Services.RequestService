@@ -2,7 +2,7 @@
     "ReRoutes": [
         {
             "DownstreamPathTemplate": "/api/answers",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -16,7 +16,7 @@
         },
         {
             "DownstreamPathTemplate": "/api/answers/isPreferred",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -30,7 +30,7 @@
         },
         {
             "DownstreamPathTemplate": "/api/requests",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -45,7 +45,7 @@
         },
         {
             "DownstreamPathTemplate": "/api/requests/{id}",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -59,7 +59,7 @@
         },
         {
             "DownstreamPathTemplate": "/api/requests/{id}/answers",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -73,7 +73,7 @@
         },
         {
             "DownstreamPathTemplate": "/api/requests/{id}/answers/count",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -87,7 +87,7 @@
         },
         {
             "DownstreamPathTemplate": "/api/requests/{id}/answer",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -101,7 +101,7 @@
         },
         {
             "DownstreamPathTemplate": "/api/requests/isClosed",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -115,7 +115,7 @@
         },
         {
             "DownstreamPathTemplate": "/api/users/new",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -129,7 +129,7 @@
         },
         {
             "DownstreamPathTemplate": "/api/users/register",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -143,7 +143,7 @@
         },
         {
             "DownstreamPathTemplate": "/api/users/login",
-            "DowmstreamScheme": "http",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
@@ -157,6 +157,6 @@
         }
     ],
     "GlobalConfiguration": {
-        "BaseUrl": "http://localhost:7000"
+        "BaseUrl": "https://localhost:7000"
     }
 }
