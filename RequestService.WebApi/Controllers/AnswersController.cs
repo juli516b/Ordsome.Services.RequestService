@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RequestService.WebApi.Controllers
 {
-    [Route("api/answer")]
+    [Route("api/answers")]
     public class AnswersController : BaseController
     {
         [HttpPost]

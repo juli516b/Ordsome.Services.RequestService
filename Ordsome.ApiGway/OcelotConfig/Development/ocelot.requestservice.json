@@ -1,0 +1,76 @@
+{
+    "ReRoutes": [
+        {
+            "DownstreamPathTemplate": "/api/answers",
+            "DowmstreamScheme": "http",
+            "UpstreamPathTemplate": "/api/answers",
+            "ServiceName": "RequestService",
+            "UpstreamMethod": [
+                "Post"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/answers/isPreferred",
+            "DowmstreamScheme": "http",
+            "UpstreamPathTemplate": "/api/answers/isPreferred",
+            "ServiceName": "RequestService",
+            "UpstreamMethod": [
+                "Patch"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/requests",
+            "DowmstreamScheme": "http",
+            "UpstreamPathTemplate": "/api/requests",
+            "ServiceName": "RequestService",
+            "UpstreamMethod": [
+                "Get", "Post"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/requests/{id}",
+            "DowmstreamScheme": "http",
+            "UpstreamPathTemplate": "/api/requests/{id}",
+            "ServiceName": "RequestService",
+            "UpstreamMethod": [
+                "Get"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/requests/{id}/answers",
+            "DowmstreamScheme": "http",
+            "UpstreamPathTemplate": "/api/requests/{id}/answers",
+            "ServiceName": "RequestService",
+            "UpstreamMethod": [
+                "Get"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/requests/{id}/answers/count",
+            "DowmstreamScheme": "http",
+            "UpstreamPathTemplate": "/api/requests/{id}/answers/count",
+            "ServiceName": "RequestService",
+            "UpstreamMethod": [
+                "Get"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/requests/{id}/answer",
+            "DowmstreamScheme": "http",
+            "UpstreamPathTemplate": "/api/requests/{id}/answer",
+            "ServiceName": "RequestService",
+            "UpstreamMethod": [
+                "Post"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/requests/isClosed",
+            "DowmstreamScheme": "http",
+            "UpstreamPathTemplate": "/api/requests/isClosed",
+            "ServiceName": "RequestService",
+            "UpstreamMethod": [
+                "Patch"
+            ]
+        }
+    ]
+}
