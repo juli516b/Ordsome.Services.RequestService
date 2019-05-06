@@ -3,143 +3,160 @@
         {
             "DownstreamPathTemplate": "/api/answers",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
             "UpstreamPathTemplate": "/api/answers",
-            "ServiceName": "RequestService",
             "UpstreamMethod": [
                 "Post"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]
         },
         {
             "DownstreamPathTemplate": "/api/answers/isPreferred",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
             "UpstreamPathTemplate": "/api/answers/isPreferred",
-            "ServiceName": "RequestService",
             "UpstreamMethod": [
                 "Patch"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]
         },
         {
             "DownstreamPathTemplate": "/api/requests",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
             "UpstreamPathTemplate": "/requests",
-            "ServiceName": "RequestService",
             "UpstreamMethod": [
                 "Get",
                 "Post"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]
         },
         {
             "DownstreamPathTemplate": "/api/requests/{id}",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
             "UpstreamPathTemplate": "/api/requests/{id}",
-            "ServiceName": "RequestService",
             "UpstreamMethod": [
                 "Get"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]
         },
         {
             "DownstreamPathTemplate": "/api/requests/{id}/answers",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
             "UpstreamPathTemplate": "/api/requests/{id}/answers",
-            "ServiceName": "RequestService",
             "UpstreamMethod": [
                 "Get"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]
         },
         {
             "DownstreamPathTemplate": "/api/requests/{id}/answers/count",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
             "UpstreamPathTemplate": "/api/requests/{id}/answers/count",
-            "ServiceName": "RequestService",
             "UpstreamMethod": [
                 "Get"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]
         },
         {
             "DownstreamPathTemplate": "/api/requests/{id}/answer",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
             "UpstreamPathTemplate": "/api/requests/{id}/answer",
-            "ServiceName": "RequestService",
             "UpstreamMethod": [
                 "Post"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]            
         },
         {
             "DownstreamPathTemplate": "/api/requests/isClosed",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7001
+                }
+            ],
             "UpstreamPathTemplate": "/api/requests/isClosed",
-            "ServiceName": "RequestService",
             "UpstreamMethod": [
                 "Patch"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]
         },
         {
             "DownstreamPathTemplate": "/api/users/new",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7002
+                }
+            ],
             "UpstreamPathTemplate": "/api/users/new",
-            "ServiceName": "UserService",
             "UpstreamMethod": [
                 "Get"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]
         },
         {
             "DownstreamPathTemplate": "/api/users/register",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7002
+                }
+            ],
             "UpstreamPathTemplate": "/api/users/register",
-            "ServiceName": "UserService",
             "UpstreamMethod": [
                 "Post"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]
         },
         {
             "DownstreamPathTemplate": "/api/users/login",
             "DowmstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7002
+                }
+            ],
             "UpstreamPathTemplate": "/api/users/login",
-            "ServiceName": "UserService",
             "UpstreamMethod": [
                 "Post"
-            ],
-            "LoadBalancerOptions": {
-                "Type": "NoLoadBalancer"
-            }
+            ]
         }
     ],
     "GlobalConfiguration": {
-        "RequestIdKey": "OcRequestId",
-        "AdministrationPath": "/administration",
-        "UseServiceDiscovery": true,
-        "ServiceDiscoveryProvider": {
-            "Type": "Eureka"
-        }
+        "BaseUrl": "http://localhost:7000"
     }
 }

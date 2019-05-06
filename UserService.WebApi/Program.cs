@@ -13,7 +13,7 @@ namespace UserService.WebApi
 
         public static IWebHost CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls($"http://{Environment.MachineName}:7002")
+                .UseUrls($"http://localhost:7002")
                 .UseStartup<Startup>()
                 .Build();
     }

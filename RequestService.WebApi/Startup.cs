@@ -32,9 +32,6 @@ namespace RequestService.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add SteelToe discovery client so Eureka can register.
-            services.AddDiscoveryClient(Configuration);
-
             // Add AutoMapper
             services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
@@ -83,8 +80,6 @@ namespace RequestService.WebApi
                 c.SwaggerEndpoint("/requestapi/docs/v1/swagger.json", "RequestAPI");
                 c.RoutePrefix = "requestapi/docs";
             });
-
-            app.UseDiscoveryClient();
 
             app.UseMvc();        
         }

@@ -30,10 +30,7 @@ namespace UserService.WebApi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            // Add discovery client
-            services.AddDiscoveryClient(Configuration);
-            
+        {            
             // Add AutoMapper
             //  services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
@@ -100,7 +97,6 @@ namespace UserService.WebApi
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
 
-            app.UseDiscoveryClient();
             app.UseMvc();
         }
     }
