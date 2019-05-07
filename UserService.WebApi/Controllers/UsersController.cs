@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
+using UserService.Application.Commands.AddNewLanguage;
 using UserService.Application.Commands.Login;
 using UserService.Application.Commands.Register;
 

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RequestService.WebApi.Migrations
+namespace RequestService.Infrastructure.Persistence.Migrations
 {
     public partial class SecondMigration : Migration
     {

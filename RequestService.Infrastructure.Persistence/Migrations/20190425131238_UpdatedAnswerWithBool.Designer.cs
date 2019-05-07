@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RequestService.Infrastructure.Persistence;
 
-namespace RequestService.WebApi.Migrations
+namespace RequestService.Infrastructure.Persistence.Migrations
 {
     [DbContext (typeof (RequestServiceDbContext))]
     [Migration ("20190425131238_UpdatedAnswerWithBool")]

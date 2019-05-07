@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UserService.Domain.Users;
 
-namespace RequestService.Infrastructure.Persistence.Configurations
+namespace UserService.Infrastructure.Persistence.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

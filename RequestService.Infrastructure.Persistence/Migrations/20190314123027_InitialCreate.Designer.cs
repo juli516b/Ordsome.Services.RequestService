@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using RequestService.Infrastructure.Persistence;
 
-namespace RequestService.WebApi.Migrations
+namespace RequestService.Infrastructure.Persistence.Migrations
 {
     [DbContext (typeof (RequestServiceDbContext))]
     [Migration ("20190314123027_InitialCreate")]
