@@ -39,13 +39,16 @@ namespace Ordsome.ApiGway
                     ValidateAudience = false
                     };
                 });
-
+            services.AddSwaggerForOcelot(Configuration);
             services.AddOcelot (Configuration);
         }
 
         public async void Configure (IApplicationBuilder app, IHostingEnvironment env)
-        {
+        {            
             app.UseAuthentication ();
+            app.UseSwaggerForOcelotUI(Configuration, opt => {
+                opt.EndPointBasePath = "/swagger/docs";
+            });
             await app.UseOcelot ();
         }
     }

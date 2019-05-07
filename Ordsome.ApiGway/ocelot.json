@@ -1,7 +1,7 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/answers",
+      "DownstreamPathTemplate": "/api/answers/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,11 +9,12 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/answers",
-      "UpstreamMethod": ["Post"]
+      "UpstreamPathTemplate": "/api/answers/",
+      "UpstreamMethod": ["Post"],
+      "SwaggerKey": "requestapi"
     },
     {
-      "DownstreamPathTemplate": "/api/answers/isPreferred",
+      "DownstreamPathTemplate": "/api/answers/isPreferred/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -21,11 +22,13 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/answers/isPreferred",
-      "UpstreamMethod": ["Patch"]
+      "UpstreamPathTemplate": "/api/answers/isPreferred/",
+      "UpstreamMethod": ["Patch"],
+      "SwaggerKey": "requestapi"
+
     },
     {
-      "DownstreamPathTemplate": "/api/requests",
+      "DownstreamPathTemplate": "/api/requests/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -33,8 +36,9 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/requests",
-      "UpstreamMethod": ["Get"]
+      "UpstreamPathTemplate": "/api/requests/",
+      "UpstreamMethod": ["Get"],
+      "SwaggerKey": "requestapi"
     },
     {
       "DownstreamPathTemplate": "/api/requests/{id}",
@@ -46,10 +50,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/{id}",
-      "UpstreamMethod": ["Get"]
+      "UpstreamMethod": ["Get"],
+      "SwaggerKey": "requestapi"
     },
     {
-      "DownstreamPathTemplate": "/api/requests/{id}/answers",
+      "DownstreamPathTemplate": "/api/requests/{id}/answers/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -57,11 +62,12 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/requests/{id}/answers",
-      "UpstreamMethod": ["Get"]
+      "UpstreamPathTemplate": "/api/requests/{id}/answers/",
+      "UpstreamMethod": ["Get"],
+      "SwaggerKey": "requestapi"
     },
     {
-      "DownstreamPathTemplate": "/api/requests/{id}/answers/count",
+      "DownstreamPathTemplate": "/api/requests/{id}/answers/count/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -69,11 +75,12 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/requests/{id}/answers/count",
-      "UpstreamMethod": ["Get"]
+      "UpstreamPathTemplate": "/api/requests/{id}/answers/count/",
+      "UpstreamMethod": ["Get"],
+      "SwaggerKey": "requestapi"
     },
     {
-      "DownstreamPathTemplate": "/api/requests/{id}/answer",
+      "DownstreamPathTemplate": "/api/requests/{id}/answer/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -81,11 +88,12 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/requests/{id}/answer",
-      "UpstreamMethod": ["Post"]
+      "UpstreamPathTemplate": "/api/requests/{id}/answer/",
+      "UpstreamMethod": ["Post"],
+      "SwaggerKey": "requestapi"
     },
     {
-      "DownstreamPathTemplate": "/api/requests/isClosed",
+      "DownstreamPathTemplate": "/api/requests/isClosed/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -93,11 +101,12 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/requests/isClosed",
-      "UpstreamMethod": ["Patch"]
+      "UpstreamPathTemplate": "/api/requests/isClosed/",
+      "UpstreamMethod": ["Patch"],
+      "SwaggerKey": "requestapi"
     },
     {
-      "DownstreamPathTemplate": "/api/users/new",
+      "DownstreamPathTemplate": "/api/users/new/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -105,11 +114,12 @@
           "Port": 7002
         }
       ],
-      "UpstreamPathTemplate": "/api/users/new",
-      "UpstreamMethod": ["Get"]
+      "UpstreamPathTemplate": "/api/users/new/",
+      "UpstreamMethod": ["Get"],
+      "SwaggerKey": "userapi"
     },
     {
-      "DownstreamPathTemplate": "/api/users/register",
+      "DownstreamPathTemplate": "/api/users/register/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -117,11 +127,12 @@
           "Port": 7002
         }
       ],
-      "UpstreamPathTemplate": "/api/users/register",
-      "UpstreamMethod": ["Post"]
+      "UpstreamPathTemplate": "/api/users/register/",
+      "UpstreamMethod": ["Post"],
+      "SwaggerKey": "userapi"
     },
     {
-      "DownstreamPathTemplate": "/api/users/login",
+      "DownstreamPathTemplate": "/api/users/login/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -129,11 +140,34 @@
           "Port": 7002
         }
       ],
-      "UpstreamPathTemplate": "/api/users/login",
-      "UpstreamMethod": ["Post"]
+      "UpstreamPathTemplate": "/api/users/login/",
+      "UpstreamMethod": ["Post"],
+      "SwaggerKey": "userapi"
     }
   ],
+  "SwaggerEndPoints": [
+     {
+       "Key": "requestapi",
+       "Config": [
+         {
+           "Name": "Request API",
+           "Version": "v1",
+           "Url": "http://localhost:7001/requestapi/docs/v1/swagger.json"
+         }
+       ]
+     },
+     {
+       "Key": "userapi",
+       "Config": [
+         {
+           "Name": "User API",
+           "Version": "v1",
+           "Url": "http://localhost:7002/userapi/docs/v1/swagger.json"
+         }
+       ]
+     }
+  ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:7000"
+    "BaseUrl": "https://localhost"
   }
 }
