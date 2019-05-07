@@ -10,7 +10,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/answers",
-      "UpstreamMethod": ["Post"]
+      "UpstreamMethod": [ "Post" ]
     },
     {
       "DownstreamPathTemplate": "/api/answers/isPreferred",
@@ -22,10 +22,10 @@
         }
       ],
       "UpstreamPathTemplate": "/api/answers/isPreferred",
-      "UpstreamMethod": ["Patch"]
+      "UpstreamMethod": [ "Patch" ]
     },
     {
-      "DownstreamPathTemplate": "/api/requests",
+      "DownstreamPathTemplate": "/api/requests/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -33,12 +33,8 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/requests",
-      "UpstreamMethod": ["Get", "Post"],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
+      "UpstreamPathTemplate": "/api/requests/",
+      "UpstreamMethod": [ "Get" ]
     },
     {
       "DownstreamPathTemplate": "/api/requests/{id}",
@@ -50,7 +46,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/{id}",
-      "UpstreamMethod": ["Get"]
+      "UpstreamMethod": [ "Get" ]
     },
     {
       "DownstreamPathTemplate": "/api/requests/{id}/answers",
@@ -62,7 +58,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/{id}/answers",
-      "UpstreamMethod": ["Get"]
+      "UpstreamMethod": [ "Get" ]
     },
     {
       "DownstreamPathTemplate": "/api/requests/{id}/answers/count",
@@ -74,7 +70,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/{id}/answers/count",
-      "UpstreamMethod": ["Get"]
+      "UpstreamMethod": [ "Get" ]
     },
     {
       "DownstreamPathTemplate": "/api/requests/{id}/answer",
@@ -86,7 +82,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/{id}/answer",
-      "UpstreamMethod": ["Post"]
+      "UpstreamMethod": [ "Post" ]
     },
     {
       "DownstreamPathTemplate": "/api/requests/isClosed",
@@ -98,7 +94,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/isClosed",
-      "UpstreamMethod": ["Patch"]
+      "UpstreamMethod": [ "Patch" ]
     },
     {
       "DownstreamPathTemplate": "/api/users/new",
@@ -110,7 +106,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/users/new",
-      "UpstreamMethod": ["Get"]
+      "UpstreamMethod": [ "Get" ]
     },
     {
       "DownstreamPathTemplate": "/api/users/register",
@@ -122,7 +118,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/users/register",
-      "UpstreamMethod": ["Post"]
+      "UpstreamMethod": [ "Post" ]
     },
     {
       "DownstreamPathTemplate": "/api/users/login",
@@ -134,7 +130,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/users/login",
-      "UpstreamMethod": ["Post"]
+      "UpstreamMethod": [ "Post" ]
     }
   ],
   "GlobalConfiguration": {
