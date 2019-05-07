@@ -26,9 +26,10 @@ Register will make you an account in the database. Afterwards you will have to m
 
 To make a call to an authorized endpoint the HTTP request could be like the following
 
-```GET *INSERTTHECALLHERE* HTTP/1.1
+```GET api/requests HTTP/1.1
 Host: localhost:7000
-Authorization: Bearer *INSERTOKENHERE*```
+Authorization: Bearer TOKENGOESHERE
+```
 
 
 #### To do: 
