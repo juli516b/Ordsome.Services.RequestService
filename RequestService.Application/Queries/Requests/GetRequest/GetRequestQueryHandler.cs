@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RequestService.Application.Queries.Requests.GetRequest;
 using RequestService.Infrastructure.Persistence;
 
-namespace RequestService.Application.Queries.Requests.GetRequests
+namespace RequestService.Application.Queries.Requests.GetRequest
 {
     public class GetAnswersByRequestIdQueryHandler : IRequestHandler<GetRequestQuery, RequestPreviewDto>
     {
