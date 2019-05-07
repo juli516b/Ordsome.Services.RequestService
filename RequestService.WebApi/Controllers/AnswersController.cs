@@ -1,32 +1,32 @@
-﻿using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestService.Application.Commands.Answers.AnswerCreation;
 using RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer;
-using System.Threading.Tasks;
 
 namespace RequestService.WebApi.Controllers
 {
-    [Route("api/answers")]
+    [Route ("api/answers")]
     public class AnswersController : BaseController
     {
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody]CreateAnswerCommand command)
+        public async Task<IActionResult> Create ([FromBody] CreateAnswerCommand command)
         {
-            await Mediator.Send(command);
+            await Mediator.Send (command);
 
-            return NoContent();
+            return NoContent ();
         }
 
-        [HttpPatch("isPreferred")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPatch ("isPreferred")]
+        [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> IsPreferred([FromBody]SetAnswerAsCorrectAnswerCommand command)
+        public async Task<IActionResult> IsPreferred ([FromBody] SetAnswerAsCorrectAnswerCommand command)
         {
-            await Mediator.Publish(command);
+            await Mediator.Publish (command);
 
-            return NoContent();
+            return NoContent ();
         }
     }
 

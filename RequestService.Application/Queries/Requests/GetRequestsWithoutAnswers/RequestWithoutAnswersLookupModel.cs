@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using RequestService.Application.Interfaces.Mapping;
 using RequestService.Domain.Requests;
 
@@ -11,13 +11,13 @@ namespace RequestService.Application.Queries.Requests.GetRequestsWithoutAnswers
         public string LanguageOrigin { get; set; }
         public string LanguageTarget { get; set; }
 
-        public void CreateMappings(Profile configuration)
+        public void CreateMappings (Profile configuration)
         {
-            configuration.CreateMap<Request, RequestWithoutAnswersLookupModel>()
-                .ForMember(rDTO => rDTO.Id, opt => opt.MapFrom(r => r.Id))
-                .ForMember(rDTO => rDTO.LanguageOrigin, opt => opt.MapFrom(r => r.LanguageOrigin))
-                .ForMember(rDTO => rDTO.LanguageTarget, opt => opt.MapFrom(r => r.LanguageTarget))
-                .ForMember(rDTO => rDTO.TextToTranslate, opt => opt.MapFrom(r => r.TextToTranslate));
+            configuration.CreateMap<Request, RequestWithoutAnswersLookupModel> ()
+                .ForMember (rDTO => rDTO.Id, opt => opt.MapFrom (r => r.Id))
+                .ForMember (rDTO => rDTO.LanguageOrigin, opt => opt.MapFrom (r => r.LanguageOrigin))
+                .ForMember (rDTO => rDTO.LanguageTarget, opt => opt.MapFrom (r => r.LanguageTarget))
+                .ForMember (rDTO => rDTO.TextToTranslate, opt => opt.MapFrom (r => r.TextToTranslate));
         }
     }
 }

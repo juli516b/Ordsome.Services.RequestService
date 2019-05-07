@@ -1,73 +1,73 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RequestService.WebApi.Migrations
+namespace RequestService.Infrastructure.Persistence.Migrations
 {
     public partial class SecondMigration : Migration
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
+        protected override void Up (MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
+            migrationBuilder.DropForeignKey (
                 name: "FK_Answer_Requests_RequestId",
                 table: "Answer");
 
-            migrationBuilder.DropPrimaryKey(
+            migrationBuilder.DropPrimaryKey (
                 name: "PK_Answer",
                 table: "Answer");
 
-            migrationBuilder.RenameTable(
+            migrationBuilder.RenameTable (
                 name: "Answer",
                 newName: "Answers");
 
-            migrationBuilder.RenameIndex(
+            migrationBuilder.RenameIndex (
                 name: "IX_Answer_RequestId",
                 table: "Answers",
                 newName: "IX_Answers_RequestId");
 
-            migrationBuilder.AddPrimaryKey(
+            migrationBuilder.AddPrimaryKey (
                 name: "PK_Answers",
                 table: "Answers",
                 column: "Id");
 
-            migrationBuilder.AddForeignKey(
+            migrationBuilder.AddForeignKey (
                 name: "FK_Answers_Requests_RequestId",
                 table: "Answers",
                 column: "RequestId",
                 principalTable: "Requests",
                 principalColumn: "RequestID",
-                onDelete: ReferentialAction.Cascade);
+                onDelete : ReferentialAction.Cascade);
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
+        protected override void Down (MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
+            migrationBuilder.DropForeignKey (
                 name: "FK_Answers_Requests_RequestId",
                 table: "Answers");
 
-            migrationBuilder.DropPrimaryKey(
+            migrationBuilder.DropPrimaryKey (
                 name: "PK_Answers",
                 table: "Answers");
 
-            migrationBuilder.RenameTable(
+            migrationBuilder.RenameTable (
                 name: "Answers",
                 newName: "Answer");
 
-            migrationBuilder.RenameIndex(
+            migrationBuilder.RenameIndex (
                 name: "IX_Answers_RequestId",
                 table: "Answer",
                 newName: "IX_Answer_RequestId");
 
-            migrationBuilder.AddPrimaryKey(
+            migrationBuilder.AddPrimaryKey (
                 name: "PK_Answer",
                 table: "Answer",
                 column: "Id");
 
-            migrationBuilder.AddForeignKey(
+            migrationBuilder.AddForeignKey (
                 name: "FK_Answer_Requests_RequestId",
                 table: "Answer",
                 column: "RequestId",
                 principalTable: "Requests",
                 principalColumn: "RequestID",
-                onDelete: ReferentialAction.Cascade);
+                onDelete : ReferentialAction.Cascade);
         }
     }
 }

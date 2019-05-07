@@ -1,8 +1,8 @@
-﻿using MediatR;
-using RequestService.Application.Interfaces;
-using RequestService.Application.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using RequestService.Application.Interfaces;
+using RequestService.Application.Models;
 
 namespace RequestService.Application.Commands.Answers.AnswerCreation
 {
@@ -14,14 +14,14 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
         {
             private readonly INotificationService _notification;
 
-            public RequestCreatedHandler(INotificationService notification)
+            public RequestCreatedHandler (INotificationService notification)
             {
                 _notification = notification;
             }
 
-            public async Task Handle(AnswerCreated notification, CancellationToken cancellationToken)
+            public async Task Handle (AnswerCreated notification, CancellationToken cancellationToken)
             {
-                await _notification.SendAsync(new Message()).ConfigureAwait(false);
+                await _notification.SendAsync (new Message ()).ConfigureAwait (false);
             }
         }
     }

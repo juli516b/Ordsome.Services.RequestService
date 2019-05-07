@@ -1,21 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RequestService.WebApi.Migrations
+namespace RequestService.Infrastructure.Persistence.Migrations
 {
     public partial class UpdatedRequest : Migration
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
+        protected override void Up (MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
+            migrationBuilder.AddColumn<bool> (
                 name: "IsClosed",
                 table: "Requests",
-                nullable: false,
-                defaultValue: false);
+                nullable : false,
+                defaultValue : false);
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
+        protected override void Down (MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            migrationBuilder.DropColumn (
                 name: "IsClosed",
                 table: "Requests");
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.Text;
 using AutoMapper;
@@ -23,16 +23,20 @@ using RequestService.WebApi.Filters;
 using Steeltoe.Discovery.Client;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace RequestService.WebApi {
-    public class Startup {
-        public Startup (IConfiguration configuration) {
+namespace RequestService.WebApi
+{
+    public class Startup
+    {
+        public Startup (IConfiguration configuration)
+        {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices (IServiceCollection services) {
+        public void ConfigureServices (IServiceCollection services)
+        {
             // Add AutoMapper
             services.AddAutoMapper (new Assembly[] { typeof (AutoMapperProfile).GetTypeInfo ().Assembly });
 
@@ -59,39 +63,45 @@ namespace RequestService.WebApi {
 
             // Security
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            services.AddAuthentication (JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer (options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                            .GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey (Encoding.ASCII
+                    .GetBytes (Configuration.GetSection ("AppSettings:Secret").Value)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
                     };
                 });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
-            if (env.IsDevelopment ()) {
-                IdentityModelEventSource.ShowPII = true; 
+        public void Configure (IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment ())
+            {
+                IdentityModelEventSource.ShowPII = true;
                 app.UseDeveloperExceptionPage ();
                 app.UseDatabaseErrorPage ();
-            } else {
+            }
+            else
+            {
                 app.UseExceptionHandler ("/Error");
             }
 
             app.UseStaticFiles ();
-            app.UseSwagger (c => {
+            app.UseSwagger (c =>
+            {
                 c.RouteTemplate = "requestapi/docs/{documentName}/swagger.json";
             });
-            app.UseSwaggerUI (c => {
+            app.UseSwaggerUI (c =>
+            {
                 c.SwaggerEndpoint ("/requestapi/docs/v1/swagger.json", "RequestAPI");
                 c.RoutePrefix = "requestapi/docs";
             });
-            app.UseAuthentication();  
+            app.UseAuthentication ();
 
             app.UseMvc ();
         }

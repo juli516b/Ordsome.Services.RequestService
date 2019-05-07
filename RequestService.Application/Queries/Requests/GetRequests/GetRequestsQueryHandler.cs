@@ -1,10 +1,10 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using RequestService.Domain.Requests;
-using RequestService.Infrastructure.Persistence;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using RequestService.Domain.Requests;
+using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Application.Queries.Requests.GetRequests
 {
@@ -12,28 +12,28 @@ namespace RequestService.Application.Queries.Requests.GetRequests
     {
         private readonly RequestServiceDbContext _context;
 
-        public GetRequestsQueryHandler(RequestServiceDbContext context)
+        public GetRequestsQueryHandler (RequestServiceDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<RequestPreviewDto>> Handle(GetRequestsQuery request, CancellationToken cancellationToken)
+        public async Task<List<RequestPreviewDto>> Handle (GetRequestsQuery request, CancellationToken cancellationToken)
         {
-            var entities = await _context.Requests.Include(a => a.Answers).ToListAsync();
+            var entities = await _context.Requests.Include (a => a.Answers).ToListAsync ();
 
-            List<RequestPreviewDto> entitiesToReturn = new List<RequestPreviewDto>();
+            List<RequestPreviewDto> entitiesToReturn = new List<RequestPreviewDto> ();
 
             foreach (var entity in entities)
             {
-                entitiesToReturn.Add(
+                entitiesToReturn.Add (
                     new RequestPreviewDto
                     {
                         Id = entity.Id,
-                        NoOfAnswers = entity.Answers.Count,
-                        LanguageOrigin = entity.LanguageOrigin,
-                        LanguageTarget = entity.LanguageTarget,
-                        TextToTranslate = entity.TextToTranslate,
-                        IsClosed = entity.IsClosed
+                            NoOfAnswers = entity.Answers.Count,
+                            LanguageOrigin = entity.LanguageOrigin,
+                            LanguageTarget = entity.LanguageTarget,
+                            TextToTranslate = entity.TextToTranslate,
+                            IsClosed = entity.IsClosed
                     });
             }
             return entitiesToReturn;

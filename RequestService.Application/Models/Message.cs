@@ -1,4 +1,4 @@
-﻿namespace RequestService.Application.Models
+namespace RequestService.Application.Models
 {
     public class Message
     {

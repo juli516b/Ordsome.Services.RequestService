@@ -1,6 +1,5 @@
-﻿namespace RequestService.Domain.Interfaces
+namespace RequestService.Domain.Interfaces
 {
     public class IRepository
-    {
-    }
+    { }
 }

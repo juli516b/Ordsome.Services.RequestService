@@ -1,16 +1,14 @@
-﻿using RequestService.Domain.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using RequestService.Domain.Requests;
 
 namespace RequestService.Application.Queries.Requests.GetRequests
 {
     public class RequestPreviewDto
     {
-        public RequestPreviewDto()
-        {
-        }
+        public RequestPreviewDto () { }
 
         public int Id { get; set; }
         public string LanguageOrigin { get; set; }
