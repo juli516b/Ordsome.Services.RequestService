@@ -1,6 +1,18 @@
 {
   "ReRoutes": [
     {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": [7001, 7002]
+        }
+      ],
+      "UpstreamPathTemplate": "/{everything}",
+      "UpstreamMethod": ["Post", "Get", "Patch"]
+    },
+    {
       "DownstreamPathTemplate": "/api/answers",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
