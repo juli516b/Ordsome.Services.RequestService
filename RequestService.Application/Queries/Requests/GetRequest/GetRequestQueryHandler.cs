@@ -28,7 +28,7 @@ namespace RequestService.Application.Queries.Requests.GetRequest
             return new RequestPreviewDto
             {
                 IsClosed = entity.IsClosed,
-                    Id = entity.Id,
+                    RequestId = entity.Id,
                     LanguageOrigin = entity.LanguageOrigin,
                     LanguageTarget = entity.LanguageTarget,
                     TextToTranslate = entity.TextToTranslate,

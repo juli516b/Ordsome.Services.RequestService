@@ -28,7 +28,7 @@ namespace RequestService.Application.Queries.Requests.GetRequests
                 entitiesToReturn.Add (
                     new RequestPreviewDto
                     {
-                        Id = entity.Id,
+                        RequestId = entity.Id,
                             NoOfAnswers = entity.Answers.Count,
                             LanguageOrigin = entity.LanguageOrigin,
                             LanguageTarget = entity.LanguageTarget,
