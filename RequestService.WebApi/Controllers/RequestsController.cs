@@ -27,7 +27,6 @@ namespace RequestService.WebApi.Controllers
             return Ok (listOfLanguages._list);
         }
 
-        [Authorize]
         [HttpGet]
         [ProducesResponseType (typeof (IEnumerable<RequestPreviewDto>), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> GetAll ()
