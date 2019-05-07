@@ -1,4 +1,3 @@
-using System;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,10 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace Ordsome.ApiGway {
+namespace Ordsome.ApiGway
+{
     public class Startup {
         public Startup (IHostingEnvironment env) {
             var builder = new ConfigurationBuilder ();
