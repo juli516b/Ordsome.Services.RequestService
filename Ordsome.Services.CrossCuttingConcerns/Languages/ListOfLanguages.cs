@@ -11,16 +11,16 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
 
         public List<LanguageDto> _list = JsonConvert.DeserializeObject<List<LanguageDto>> (File.ReadAllText ("..\\Ordsome.Services.CrossCuttingConcerns\\Languages\\languages.json"));
 
-        public bool CheckIfLanguageExists (LanguageDto languageToCheck)
+        public LanguageDto GetLanguage(int id) 
         {
-            var language = _list.FirstOrDefault(x => x.Id == languageToCheck.Id);
-
+            var language = _list.FirstOrDefault(x => x.Id == id);
+            
             if (language == null)
-            {
-                return false;
-            }
-
-            return true;
+                {
+                    return null;
+                }
+            
+            return language;
         }
 
     }

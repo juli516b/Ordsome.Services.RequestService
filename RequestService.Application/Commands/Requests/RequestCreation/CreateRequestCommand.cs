@@ -12,15 +12,7 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
     public class CreateRequestCommand : IRequest
     {
         public int LanguageOrignId { get; set; }
-        public string LanguageOriginCode { get; set; }
-        public string LanguageOriginName { get; set; }
-        public string LanguageOriginNativeName { get; set; }
-
-        public string LanguageTargetCode { get; set; }
         public int LanguageTargetlId { get; set; }
-        public string LanguageTargetName { get; set; }
-        public string LanguageTargetNativeName { get; set; }
-
         public string TextToTranslate { get; set; }
     }
 
@@ -41,31 +33,14 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
         {
             ListOfLanguages listOfLanguages = new ListOfLanguages ();
 
-            var checkIfLanguageOriginExists = listOfLanguages.CheckIfLanguageExists (new LanguageDto
-            {
-                Id = request.LanguageOrignId,
-                    LanguageCode = request.LanguageOriginCode,
-                    LanguageName = request.LanguageOriginName,
-                    LanguageNativeName = request.LanguageOriginNativeName
-            });
+            var getAndCheckIfLanguageOriginExists = listOfLanguages.GetLanguage (request.LanguageOrignId);
 
-            var checkIfLanguageTargetExists = listOfLanguages.CheckIfLanguageExists (new LanguageDto
-            {
-                Id = request.LanguageTargetlId,
-                    LanguageCode = request.LanguageTargetCode,
-                    LanguageName = request.LanguageTargetName,
-                    LanguageNativeName = request.LanguageTargetNativeName
-            });
-
-            if (checkIfLanguageOriginExists == false || checkIfLanguageTargetExists == false)
-            {
-                return Unit.Value;
-            }
+            var getAndCheckIfLanguageTargetExists = listOfLanguages.GetLanguage (request.LanguageTargetlId);
 
             var entity = new Request
             {
-                LanguageTarget = request.LanguageTargetName,
-                LanguageOrigin = request.LanguageOriginName,
+                LanguageTarget = getAndCheckIfLanguageTargetExists.LanguageName,
+                LanguageOrigin = getAndCheckIfLanguageOriginExists.LanguageName,
                 TextToTranslate = request.TextToTranslate
             };
 

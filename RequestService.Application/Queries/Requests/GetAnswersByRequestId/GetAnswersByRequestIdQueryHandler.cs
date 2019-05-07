@@ -30,7 +30,9 @@ namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
                 listOfAnswers.Add (new AnswerDto
                 {
                     AnswerId = answer.Id,
-                        TextTranslated = answer.TextTranslated
+                    TextTranslated = answer.TextTranslated,
+                    IsPreferred = answer.IsPreferred,
+                    RequestId = answer.RequestId
                 });
             }
 
