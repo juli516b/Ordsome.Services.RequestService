@@ -9,6 +9,9 @@ namespace RequestService.WebApi.Controllers
     [Route ("api/answers")]
     public class AnswersController : BaseController
     {
+        /// <summary>
+        /// Creates an answer for a request.
+        /// </summary>
         [HttpPost]
         [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
@@ -19,6 +22,9 @@ namespace RequestService.WebApi.Controllers
             return NoContent ();
         }
 
+        /// <summary>
+        /// Sets a answer's bool 'isPreferred'.
+        /// </summary>
         [HttpPatch ("isPreferred")]
         [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]

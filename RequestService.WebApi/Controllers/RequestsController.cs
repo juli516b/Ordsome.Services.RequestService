@@ -19,14 +19,22 @@ namespace RequestService.WebApi.Controllers
     [Route ("api/requests")]
     public class RequestsController : BaseController
     {
+        /// <summary>
+        /// Gets all requests submitted by users
+        /// </summary>
         [HttpGet("")]
+        [Produces("application/json")]
         [ProducesResponseType (typeof (IEnumerable<RequestPreviewDto>), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> GetAll ()
         {
             return Ok (await Mediator.Send (new GetRequestsQuery ()).ConfigureAwait (false));
         }
-        
+
+        /// <summary>
+        /// Get all languages listed in our API.
+        /// </summary>
         [HttpGet ("languages")]
+        [Produces("application/json")]
         [ProducesResponseType (typeof (ListOfLanguages), (int) HttpStatusCode.OK)]
         public IActionResult GetAllLanguages ()
         {
@@ -34,21 +42,34 @@ namespace RequestService.WebApi.Controllers
             return Ok (listOfLanguages._list);
         }
 
+        /// <summary>
+        /// Gets a request based on its id.
+        /// </summary>
         [HttpGet ("{id}")]
+        [Produces("application/json")]
         [ProducesResponseType (typeof (RequestPreviewDto), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> GetById (int id)
         {
             return Ok (await Mediator.Send (new GetRequestQuery { Id = id }));
         }
 
+        /// <summary>
+        /// Gets all answers for a request based on Id
+        /// </summary>
         [HttpGet ("{id}/answers")]
+        [Produces("application/json")]
         [ProducesResponseType (typeof (IEnumerable<AnswerDto>), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> GetAnswersByRequestId (int id)
         {
             return Ok (await Mediator.Send (new GetAnswersByRequestIdQuery { Id = id }));
         }
 
+        /// <summary>
+        /// Gets the count of answers.
+        /// </summary>
+
         [HttpGet ("{id}/answers/count")]
+        [Produces("application/json")]
         [ProducesResponseType (typeof (CountOfAnswersDto), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> GetCountOfAnswersByRequestId (int id)
         {
@@ -71,6 +92,9 @@ namespace RequestService.WebApi.Controllers
         //    return Ok(await Mediator.Send(new GetRequestsWithoutAnswersListQuery()).ConfigureAwait(false));
         //}
 
+        /// <summary>
+        /// Create a request.
+        /// </summary>
         [HttpPost]
         [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
@@ -81,6 +105,9 @@ namespace RequestService.WebApi.Controllers
             return NoContent ();
         }
 
+        /// <summary>
+        /// Create an answer for a request.
+        /// </summary>
         [HttpPost ("{id}/answer")]
         [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
@@ -91,6 +118,9 @@ namespace RequestService.WebApi.Controllers
             return NoContent ();
         }
 
+        /// <summary>
+        /// Sets the bool 'isClosed' for a request.
+        /// </summary>
         [HttpPatch ("isClosed")]
         [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]

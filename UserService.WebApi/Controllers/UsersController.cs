@@ -14,13 +14,20 @@ namespace UserService.WebApi.Controllers
     [ApiController]
     public class UsersController : BaseController
     {
+        /// <summary>
+        /// Generates a Guid which is used for making requests.
+        /// </summary>
         [HttpGet("new")]
+        [Produces("application/json")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         public IActionResult GetNewGuid()
         {
             return Ok(Guid.NewGuid());
         }
 
+        /// <summary>
+        /// Registers a user to the database.
+        /// </summary>
         [HttpPost("register")]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<ActionResult> RegisterNewUser([FromBody] RegisterCommand command)
@@ -30,12 +37,19 @@ namespace UserService.WebApi.Controllers
             return StatusCode(201);
         }
 
+        /// <summary>
+        /// Returns a JWToken which is used for authorization.
+        /// </summary>
         [HttpPost("login")]
         [ProducesResponseType(typeof(LoginToken), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> Login([FromBody] LoginCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
+        
+        /// <summary>
+        /// Adds a new language to a user.
+        /// </summary>
         
         [Authorize]
         [HttpPatch("newLanguage")]
