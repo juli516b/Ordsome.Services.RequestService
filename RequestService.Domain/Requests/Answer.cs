@@ -1,4 +1,4 @@
-﻿using RequestService.Domain.SharedKernel;
+using RequestService.Domain.SharedKernel;
 
 namespace RequestService.Domain.Requests
 {

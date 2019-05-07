@@ -1,13 +1,13 @@
-﻿using FluentValidation;
+using FluentValidation;
 
 namespace UserService.Application.Commands.Register
 {
     public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     {
-        public RegisterCommandValidator()
+        public RegisterCommandValidator ()
         {
-            RuleFor(x => x.Password).NotEmpty().NotNull();
-            RuleFor(x => x.Username).NotEmpty().NotNull();
+            RuleFor (x => x.Password).NotEmpty ().NotNull ();
+            RuleFor (x => x.Username).NotEmpty ().NotNull ();
         }
     }
 }

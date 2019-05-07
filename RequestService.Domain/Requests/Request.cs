@@ -1,13 +1,13 @@
-﻿using RequestService.Domain.SharedKernel;
 using System.Collections.Generic;
+using RequestService.Domain.SharedKernel;
 
 namespace RequestService.Domain.Requests
 {
     public class Request : BaseEntity
     {
-        public Request()
+        public Request ()
         {
-            Answers = new HashSet<Answer>();
+            Answers = new HashSet<Answer> ();
         }
 
         public string LanguageOrigin { get; set; }

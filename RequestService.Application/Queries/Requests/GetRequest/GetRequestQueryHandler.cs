@@ -1,9 +1,9 @@
-﻿using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RequestService.Application.Queries.Requests.GetRequest;
 using RequestService.Infrastructure.Persistence;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace RequestService.Application.Queries.Requests.GetRequests
 {
@@ -11,15 +11,15 @@ namespace RequestService.Application.Queries.Requests.GetRequests
     {
         private readonly RequestServiceDbContext _context;
 
-        public GetAnswersByRequestIdQueryHandler(RequestServiceDbContext context)
+        public GetAnswersByRequestIdQueryHandler (RequestServiceDbContext context)
         {
             _context = context;
         }
 
-        public async Task<RequestPreviewDto> Handle(GetRequestQuery request, CancellationToken cancellationToken)
+        public async Task<RequestPreviewDto> Handle (GetRequestQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.Id);
-            
+            var entity = await _context.Requests.Include (a => a.Answers).FirstOrDefaultAsync (r => r.Id == request.Id);
+
             if (entity == null)
             {
                 return null;
@@ -28,11 +28,11 @@ namespace RequestService.Application.Queries.Requests.GetRequests
             return new RequestPreviewDto
             {
                 IsClosed = entity.IsClosed,
-                Id = entity.Id,
-                LanguageOrigin = entity.LanguageOrigin,
-                LanguageTarget = entity.LanguageTarget,
-                TextToTranslate = entity.TextToTranslate,
-                NoOfAnswers = entity.Answers.Count
+                    Id = entity.Id,
+                    LanguageOrigin = entity.LanguageOrigin,
+                    LanguageTarget = entity.LanguageTarget,
+                    TextToTranslate = entity.TextToTranslate,
+                    NoOfAnswers = entity.Answers.Count
             };
         }
     }

@@ -1,6 +1,6 @@
-﻿using RequestService.Domain.Requests;
 using System;
 using System.Linq.Expressions;
+using RequestService.Domain.Requests;
 
 namespace RequestService.Application.Queries.Requests.GetRequests
 {

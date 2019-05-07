@@ -1,11 +1,11 @@
-﻿using MediatR;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
 using RequestService.Application.Interfaces;
 using RequestService.Domain.Requests;
 using RequestService.Infrastructure.Persistence;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace RequestService.Application.Commands.Requests.RequestCreation
 {
@@ -30,29 +30,31 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
         private readonly INotificationService _notificationService;
         private readonly IMediator _mediator;
 
-        public Handler(RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+        public Handler (RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
         {
             _context = context;
             _notificationService = notificationService;
             _mediator = mediator;
         }
 
-        public async Task<Unit> Handle(CreateRequestCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle (CreateRequestCommand request, CancellationToken cancellationToken)
         {
-            ListOfLanguages listOfLanguages = new ListOfLanguages();
+            ListOfLanguages listOfLanguages = new ListOfLanguages ();
 
-            var checkIfLanguageOriginExists = listOfLanguages.CheckIfLanguageExists(new LanguageDto {
+            var checkIfLanguageOriginExists = listOfLanguages.CheckIfLanguageExists (new LanguageDto
+            {
                 Id = request.LanguageOrignId,
-                LanguageCode = request.LanguageOriginCode,
-                LanguageName = request.LanguageOriginName,
-                LanguageNativeName = request.LanguageOriginNativeName
+                    LanguageCode = request.LanguageOriginCode,
+                    LanguageName = request.LanguageOriginName,
+                    LanguageNativeName = request.LanguageOriginNativeName
             });
 
-            var checkIfLanguageTargetExists = listOfLanguages.CheckIfLanguageExists(new LanguageDto {
+            var checkIfLanguageTargetExists = listOfLanguages.CheckIfLanguageExists (new LanguageDto
+            {
                 Id = request.LanguageTargetlId,
-                LanguageCode = request.LanguageTargetCode,
-                LanguageName = request.LanguageTargetName,
-                LanguageNativeName = request.LanguageTargetNativeName
+                    LanguageCode = request.LanguageTargetCode,
+                    LanguageName = request.LanguageTargetName,
+                    LanguageNativeName = request.LanguageTargetNativeName
             });
 
             if (checkIfLanguageOriginExists == false || checkIfLanguageTargetExists == false)
@@ -67,11 +69,11 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
                 TextToTranslate = request.TextToTranslate
             };
 
-            _context.Requests.Add(entity);
+            _context.Requests.Add (entity);
 
-            await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await _context.SaveChangesAsync (cancellationToken).ConfigureAwait (false);
 
-            await _mediator.Publish(new RequestCreated { RequestId = entity.Id }).ConfigureAwait(false);
+            await _mediator.Publish (new RequestCreated { RequestId = entity.Id }).ConfigureAwait (false);
 
             return Unit.Value;
         }

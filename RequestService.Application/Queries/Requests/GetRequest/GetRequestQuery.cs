@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using RequestService.Application.Queries.Requests.GetRequests;
 using RequestService.Domain.Requests;
 

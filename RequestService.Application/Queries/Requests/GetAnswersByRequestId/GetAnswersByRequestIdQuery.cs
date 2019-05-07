@@ -1,6 +1,6 @@
-﻿using MediatR;
-using RequestService.Domain.Requests;
 using System.Collections.Generic;
+using MediatR;
+using RequestService.Domain.Requests;
 
 namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
 {
@@ -9,4 +9,3 @@ namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
         public int Id { get; set; }
     }
 }
-

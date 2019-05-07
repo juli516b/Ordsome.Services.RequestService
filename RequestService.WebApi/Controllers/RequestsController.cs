@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
@@ -10,50 +13,47 @@ using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetRequest;
 using RequestService.Application.Queries.Requests.GetRequests;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace RequestService.WebApi.Controllers
 {
-    [Route("api/requests")]
+    [Route ("api/requests")]
     public class RequestsController : BaseController
     {
-        [HttpGet("languages")]
-        [ProducesResponseType(typeof(ListOfLanguages), (int)HttpStatusCode.OK)]
-        public IActionResult GetAllLanguages()
+        [HttpGet ("languages")]
+        [ProducesResponseType (typeof (ListOfLanguages), (int) HttpStatusCode.OK)]
+        public IActionResult GetAllLanguages ()
         {
-            ListOfLanguages listOfLanguages = new ListOfLanguages();
-            return Ok(listOfLanguages._list);
+            ListOfLanguages listOfLanguages = new ListOfLanguages ();
+            return Ok (listOfLanguages._list);
         }
 
         [Authorize]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetAll()
+        [ProducesResponseType (typeof (IEnumerable<RequestPreviewDto>), (int) HttpStatusCode.OK)]
+        public async Task<ActionResult> GetAll ()
         {
-            return Ok(await Mediator.Send(new GetRequestsQuery()).ConfigureAwait(false));
+            return Ok (await Mediator.Send (new GetRequestsQuery ()).ConfigureAwait (false));
         }
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(RequestPreviewDto), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetById(int id)
+        [HttpGet ("{id}")]
+        [ProducesResponseType (typeof (RequestPreviewDto), (int) HttpStatusCode.OK)]
+        public async Task<ActionResult> GetById (int id)
         {
-            return Ok(await Mediator.Send(new GetRequestQuery { Id = id }));
+            return Ok (await Mediator.Send (new GetRequestQuery { Id = id }));
         }
 
-        [HttpGet("{id}/answers")]
-        [ProducesResponseType(typeof(IEnumerable<AnswerDto>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetAnswersByRequestId(int id)
+        [HttpGet ("{id}/answers")]
+        [ProducesResponseType (typeof (IEnumerable<AnswerDto>), (int) HttpStatusCode.OK)]
+        public async Task<ActionResult> GetAnswersByRequestId (int id)
         {
-            return Ok(await Mediator.Send(new GetAnswersByRequestIdQuery { Id = id }));
+            return Ok (await Mediator.Send (new GetAnswersByRequestIdQuery { Id = id }));
         }
 
-        [HttpGet("{id}/answers/count")]
-        [ProducesResponseType(typeof(CountOfAnswersDto), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetCountOfAnswersByRequestId(int id)
+        [HttpGet ("{id}/answers/count")]
+        [ProducesResponseType (typeof (CountOfAnswersDto), (int) HttpStatusCode.OK)]
+        public async Task<ActionResult> GetCountOfAnswersByRequestId (int id)
         {
-            return Ok(await Mediator.Send(new GetCountOfAnswersByRequestIdQuery { Id = id }));
+            return Ok (await Mediator.Send (new GetCountOfAnswersByRequestIdQuery { Id = id }));
         }
 
         // [HttpPatch("{id}/answers/{answerId}/{isPreferred}")]
@@ -73,33 +73,33 @@ namespace RequestService.WebApi.Controllers
         //}
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody]CreateRequestCommand command)
+        public async Task<IActionResult> Create ([FromBody] CreateRequestCommand command)
         {
-            await Mediator.Send(command).ConfigureAwait(false);
+            await Mediator.Send (command).ConfigureAwait (false);
 
-            return NoContent();
+            return NoContent ();
         }
 
-        [HttpPost("{id}/answer")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPost ("{id}/answer")]
+        [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> CreateAnswer([FromBody]CreateAnswerCommand command)
+        public async Task<IActionResult> CreateAnswer ([FromBody] CreateAnswerCommand command)
         {
-            await Mediator.Send(command).ConfigureAwait(false);
+            await Mediator.Send (command).ConfigureAwait (false);
 
-            return NoContent();
+            return NoContent ();
         }
 
-        [HttpPatch("isClosed")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPatch ("isClosed")]
+        [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> CloseRequest([FromBody] CloseRequestCommand command)
+        public async Task<IActionResult> CloseRequest ([FromBody] CloseRequestCommand command)
         {
-            await Mediator.Send(command).ConfigureAwait(false);
+            await Mediator.Send (command).ConfigureAwait (false);
 
-            return NoContent();
+            return NoContent ();
         }
     }
 }

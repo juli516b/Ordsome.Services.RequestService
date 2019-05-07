@@ -1,9 +1,9 @@
-﻿using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using RequestService.Application.Interfaces;
 using RequestService.Domain.Requests;
 using RequestService.Infrastructure.Persistence;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace RequestService.Application.Commands.Answers.AnswerCreation
 {
@@ -19,14 +19,14 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
         private readonly INotificationService _notificationService;
         private readonly IMediator _mediator;
 
-        public Handler(RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+        public Handler (RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
         {
             _context = context;
             _notificationService = notificationService;
             _mediator = mediator;
         }
 
-        public async Task<Unit> Handle(CreateAnswerCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle (CreateAnswerCommand request, CancellationToken cancellationToken)
         {
             var entity = new Answer
             {
@@ -34,11 +34,11 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
                 TextTranslated = request.TextTranslated
             };
 
-            _context.Answers.Add(entity);
+            _context.Answers.Add (entity);
 
-            await _context.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync (cancellationToken);
 
-            await _mediator.Publish(new AnswerCreated { AnswerId = entity.Id });
+            await _mediator.Publish (new AnswerCreated { AnswerId = entity.Id });
 
             return Unit.Value;
         }
