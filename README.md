@@ -26,11 +26,7 @@ Register will make you an account in the database. Afterwards you will have to m
 
 To make a call to an authorized endpoint the HTTP request could be like the following
 
-```GET api/requests HTTP/1.1
-Host: localhost:7000
-Authorization: Bearer TOKENGOESHERE
-```
-
+![PictureOfCall](https://i.imgur.com/QbrPiSI.png)
 
 #### To do: 
 Follow the Trello board for this service
