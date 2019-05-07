@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using UserService.Domain.Users;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Application.Commands.AddNewLanguage
@@ -15,9 +16,9 @@ namespace UserService.Application.Commands.AddNewLanguage
             _context = context;
             _mediator = mediator;
         }
-        public async Task<Unit> Handle(AddNewLanguageCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddNewLanguageCommand request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FindAsync(command.UserId);
+            var user = await _context.Users.FindAsync(request.UserId);
 
             if (user == null)
             {
@@ -25,7 +26,12 @@ namespace UserService.Application.Commands.AddNewLanguage
             }
 
             
-            user.Languages.Add($"{command.LanguageNativeName}, {command.LanguageName}");
+            user.Languages.Add(new Language {
+                Id = request.Id,
+                LanguageCode = request.LanguageCode,
+                LanguageName = request.LanguageName,
+                LanguageNativeName = request.LanguageNativeName
+            });
 
             return Unit.Value;
         }

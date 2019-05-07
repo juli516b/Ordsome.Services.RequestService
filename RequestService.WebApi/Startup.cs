@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using RequestService.Application.Commands.Requests.RequestCreation;
 using RequestService.Application.Interfaces;
+using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetRequests;
 using RequestService.Infrastructure;
 using RequestService.Infrastructure.AutoMapper;

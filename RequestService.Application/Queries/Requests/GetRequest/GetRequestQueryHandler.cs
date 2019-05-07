@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RequestService.Application.Queries.Requests.GetRequest;
+using RequestService.Application.Queries.Requests.GetRequests;
 using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Application.Queries.Requests.GetRequest
