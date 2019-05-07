@@ -7,7 +7,7 @@ namespace RequestService.Application.Queries.Requests.GetCountOfAnswersByRequest
 {
     public class GetCountOfAnswersByRequestIdQuery : IRequest<CountOfAnswersDto>
     {
-        public int Id { get; set; }
+        public int RequestId { get; set; }
 
     }
 }

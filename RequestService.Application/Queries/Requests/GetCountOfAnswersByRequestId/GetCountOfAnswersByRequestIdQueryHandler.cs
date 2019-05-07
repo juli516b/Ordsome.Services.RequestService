@@ -22,7 +22,7 @@ namespace RequestService.Application.Queries.Requests.GetCountOfAnswersByRequest
         public async Task<CountOfAnswersDto> Handle (GetCountOfAnswersByRequestIdQuery request, CancellationToken cancellationToken)
         {
             var entity = await _context.Requests.Include (a => a.Answers).
-            FirstOrDefaultAsync (r => r.Id == request.Id);
+            FirstOrDefaultAsync (r => r.Id == request.RequestId);
 
             CountOfAnswersDto countOfAnswersDto = new CountOfAnswersDto
             {

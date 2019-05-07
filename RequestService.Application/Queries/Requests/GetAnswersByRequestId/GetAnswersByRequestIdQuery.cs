@@ -6,6 +6,6 @@ namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
 {
     public partial class GetAnswersByRequestIdQuery : IRequest<IEnumerable<AnswerDto>>
     {
-        public int Id { get; set; }
+        public int RequestId { get; set; }
     }
 }

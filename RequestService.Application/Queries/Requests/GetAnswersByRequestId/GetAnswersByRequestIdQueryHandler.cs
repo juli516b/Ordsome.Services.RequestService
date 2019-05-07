@@ -18,7 +18,7 @@ namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
 
         public async Task<IEnumerable<AnswerDto>> Handle (GetAnswersByRequestIdQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Requests.Include (a => a.Answers).FirstOrDefaultAsync (r => r.Id == request.Id);
+            var entity = await _context.Requests.Include (a => a.Answers).FirstOrDefaultAsync (r => r.Id == request.RequestId);
 
             if (entity == null)
                 return null;
@@ -30,9 +30,9 @@ namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
                 listOfAnswers.Add (new AnswerDto
                 {
                     AnswerId = answer.Id,
+                    RequestId = answer.RequestId,
                     TextTranslated = answer.TextTranslated,
                     IsPreferred = answer.IsPreferred,
-                    RequestId = answer.RequestId
                 });
             }
 

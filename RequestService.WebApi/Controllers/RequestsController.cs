@@ -50,7 +50,7 @@ namespace RequestService.WebApi.Controllers
         [ProducesResponseType (typeof (RequestPreviewDto), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> GetById (int id)
         {
-            return Ok (await Mediator.Send (new GetRequestQuery { Id = id }));
+            return Ok (await Mediator.Send (new GetRequestQuery { RequestId = id }));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace RequestService.WebApi.Controllers
         [ProducesResponseType (typeof (IEnumerable<AnswerDto>), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> GetAnswersByRequestId (int id)
         {
-            return Ok (await Mediator.Send (new GetAnswersByRequestIdQuery { Id = id }));
+            return Ok (await Mediator.Send (new GetAnswersByRequestIdQuery { RequestId = id }));
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace RequestService.WebApi.Controllers
         [ProducesResponseType (typeof (CountOfAnswersDto), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> GetCountOfAnswersByRequestId (int id)
         {
-            return Ok (await Mediator.Send (new GetCountOfAnswersByRequestIdQuery { Id = id }));
+            return Ok (await Mediator.Send (new GetCountOfAnswersByRequestIdQuery { RequestId = id }));
         }
 
         // [HttpPatch("{id}/answers/{answerId}/{isPreferred}")]
