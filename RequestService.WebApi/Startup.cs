@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using System.Text;
 using AutoMapper;
@@ -16,12 +15,10 @@ using Microsoft.IdentityModel.Tokens;
 using RequestService.Application.Commands.Requests.RequestCreation;
 using RequestService.Application.Interfaces;
 using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
-using RequestService.Application.Queries.Requests.GetRequests;
 using RequestService.Infrastructure;
 using RequestService.Infrastructure.AutoMapper;
 using RequestService.Infrastructure.Persistence;
 using RequestService.WebApi.Filters;
-using Steeltoe.Discovery.Client;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace RequestService.WebApi

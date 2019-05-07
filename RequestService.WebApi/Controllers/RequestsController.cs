@@ -19,19 +19,19 @@ namespace RequestService.WebApi.Controllers
     [Route ("api/requests")]
     public class RequestsController : BaseController
     {
+        [HttpGet("")]
+        [ProducesResponseType (typeof (IEnumerable<RequestPreviewDto>), (int) HttpStatusCode.OK)]
+        public async Task<ActionResult> GetAll ()
+        {
+            return Ok (await Mediator.Send (new GetRequestsQuery ()).ConfigureAwait (false));
+        }
+        
         [HttpGet ("languages")]
         [ProducesResponseType (typeof (ListOfLanguages), (int) HttpStatusCode.OK)]
         public IActionResult GetAllLanguages ()
         {
             ListOfLanguages listOfLanguages = new ListOfLanguages ();
             return Ok (listOfLanguages._list);
-        }
-
-        [HttpGet]
-        [ProducesResponseType (typeof (IEnumerable<RequestPreviewDto>), (int) HttpStatusCode.OK)]
-        public async Task<ActionResult> GetAll ()
-        {
-            return Ok (await Mediator.Send (new GetRequestsQuery ()).ConfigureAwait (false));
         }
 
         [HttpGet ("{id}")]
