@@ -15,6 +15,20 @@ Since Ocelot doesn't work with Swagger ATM you need to access the different Swag
 
 The endpoint listed in swagger can be run through the API gateway on port 7000. 
 
+# Authentication.
+
+To make use of authentication you have to do the following. 
+The UserService.WebApi has three endpoints.
+![alt text](https://imgur.com/pDbBWai)
+
+Register will make you an account in the database. Afterwards you will have to make a login to get a token in return.
+
+To make a call to an authorized endpoint the HTTP request could be like the following
+```GET *INSERTTHECALLHERE* HTTP/1.1
+Host: localhost:7000
+Authorization: Bearer *INSERTOKENHERE*```
+
+
 #### To do: 
 Follow the Trello board for this service
 https://trello.com/b/dGL6qEss/requestservice
