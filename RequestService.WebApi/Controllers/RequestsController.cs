@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Ordsome.Services.CrossCuttingConcerns.Languages;
 using RequestService.Application.Commands.Answers.AnswerCreation;
 using RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer;
 using RequestService.Application.Commands.Requests.CloseRequest;
@@ -17,6 +19,15 @@ namespace RequestService.WebApi.Controllers
     [Route("api/requests")]
     public class RequestsController : BaseController
     {
+        [HttpGet("languages")]
+        [ProducesResponseType(typeof(ListOfLanguages), (int)HttpStatusCode.OK)]
+        public IActionResult GetAllLanguages()
+        {
+            ListOfLanguages listOfLanguages = new ListOfLanguages();
+            return Ok(listOfLanguages._list);
+        }
+
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetAll()

@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ordsome.Services.CrossCuttingConcerns\Ordsome.Services.CrossCuttingConcerns.csproj" />
     <ProjectReference Include="..\RequestService.Application\RequestService.Application.csproj" />
     <ProjectReference Include="..\RequestService.Infrastructure.Persistence\RequestService.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\RequestService.Infrastructure\RequestService.Infrastructure.csproj" />
