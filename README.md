@@ -20,7 +20,7 @@ The endpoint listed in swagger can be run through the API gateway on port 7000.
 To make use of authentication you have to do the following. 
 The UserService.WebApi has three endpoints.
 
-![PictureofUserAPI](https://imgur.com/pDbBWai)
+![PictureofUserAPI](https://i.imgur.com/pDbBWai.png)
 
 Register will make you an account in the database. Afterwards you will have to make a login to get a token in return.
 
