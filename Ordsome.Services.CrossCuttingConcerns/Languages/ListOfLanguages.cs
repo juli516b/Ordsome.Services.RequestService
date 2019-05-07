@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace Ordsome.Services.CrossCuttingConcerns.Languages
@@ -12,9 +13,14 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
 
         public bool CheckIfLanguageExists (LanguageDto languageToCheck)
         {
-            if (_list.Contains (languageToCheck))
-                return true;
-            return false;
+            var language = _list.FirstOrDefault(x => x.Id == languageToCheck.Id);
+
+            if (language == null)
+            {
+                return false;
+            }
+
+            return true;
         }
 
     }

@@ -14,6 +14,10 @@ namespace UserService.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Language>()
+            //    .Property(b => b.Id)
+            //    .ValueGeneratedNever();
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserServiceDbContext).Assembly);
         }
     }

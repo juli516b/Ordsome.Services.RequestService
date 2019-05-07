@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using UserService.Application.Commands.AddNewLanguage;
 using UserService.Application.Commands.Login;
 using UserService.Application.Commands.Register;
+using UserService.Application.Queries.GetUser;
 
 namespace UserService.WebApi.Controllers
 {
@@ -50,7 +51,6 @@ namespace UserService.WebApi.Controllers
         /// <summary>
         /// Adds a new language to a user.
         /// </summary>
-        
         [Authorize]
         [HttpPatch("newLanguage")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
@@ -59,6 +59,16 @@ namespace UserService.WebApi.Controllers
             await Mediator.Send(command);
 
             return NoContent();
+        }
+
+        [Authorize]
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetUserInformation(Guid id) 
+        {
+            var result = await Mediator.Send(new GetUserQuery{ UserId = id });
+
+            return Ok (result);
         }
     }
 }
