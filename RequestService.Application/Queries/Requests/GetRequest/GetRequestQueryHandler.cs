@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RequestService.Application.Queries.Requests.GetRequest;
-using RequestService.Domain.Requests;
 using RequestService.Infrastructure.Persistence;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +24,8 @@ namespace RequestService.Application.Queries.Requests.GetRequests
             {
                 return null;
             }
-            RequestPreviewDto requestToReturn = new RequestPreviewDto
+
+            return new RequestPreviewDto
             {
                 IsClosed = entity.IsClosed,
                 Id = entity.Id,
@@ -34,8 +34,6 @@ namespace RequestService.Application.Queries.Requests.GetRequests
                 TextToTranslate = entity.TextToTranslate,
                 NoOfAnswers = entity.Answers.Count
             };
-
-            return requestToReturn;
         }
     }
 }

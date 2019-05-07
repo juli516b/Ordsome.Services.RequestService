@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Ordsome.Services.CrossCuttingConcerns.Languages;
 using RequestService.Application.Interfaces;
 using RequestService.Domain.Requests;
 using RequestService.Infrastructure.Persistence;
@@ -10,8 +11,16 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
 {
     public class CreateRequestCommand : IRequest
     {
-        public string LanguageOrigin { get; set; }
-        public string LanguageTarget { get; set; }
+        public int LanguageOrignId { get; set; }
+        public string LanguageOriginCode { get; set; }
+        public string LanguageOriginName { get; set; }
+        public string LanguageOriginNativeName { get; set; }
+
+        public string LanguageTargetCode { get; set; }
+        public int LanguageTargetlId { get; set; }
+        public string LanguageTargetName { get; set; }
+        public string LanguageTargetNativeName { get; set; }
+
         public string TextToTranslate { get; set; }
     }
 
@@ -30,10 +39,31 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
 
         public async Task<Unit> Handle(CreateRequestCommand request, CancellationToken cancellationToken)
         {
+            ListOfLanguages listOfLanguages = new ListOfLanguages();
+
+            var checkIfLanguageOriginExists = listOfLanguages.CheckIfLanguageExists(new LanguageDto {
+                Id = request.LanguageOrignId,
+                LanguageCode = request.LanguageOriginCode,
+                LanguageName = request.LanguageOriginName,
+                LanguageNativeName = request.LanguageOriginNativeName
+            });
+
+            var checkIfLanguageTargetExists = listOfLanguages.CheckIfLanguageExists(new LanguageDto {
+                Id = request.LanguageTargetlId,
+                LanguageCode = request.LanguageTargetCode,
+                LanguageName = request.LanguageTargetName,
+                LanguageNativeName = request.LanguageTargetNativeName
+            });
+
+            if (checkIfLanguageOriginExists == false || checkIfLanguageTargetExists == false)
+            {
+                return Unit.Value;
+            }
+
             var entity = new Request
             {
-                LanguageTarget = request.LanguageTarget,
-                LanguageOrigin = request.LanguageOrigin,
+                LanguageTarget = request.LanguageTargetName,
+                LanguageOrigin = request.LanguageOriginName,
                 TextToTranslate = request.TextToTranslate
             };
 

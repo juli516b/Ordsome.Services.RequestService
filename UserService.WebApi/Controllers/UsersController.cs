@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using UserService.Application.Commands.Login;
@@ -33,6 +34,16 @@ namespace UserService.WebApi.Controllers
         public async Task<ActionResult> Login([FromBody] LoginCommand command)
         {
             return Ok(await Mediator.Send(command));
+        }
+        
+        [Authorize]
+        [HttpPatch("newLanguage")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        public async Task<ActionResult> NewLanguage([FromBody] AddNewLanguageCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
         }
     }
 }

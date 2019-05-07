@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RequestService.Domain\RequestService.Domain.csproj" />
     <ProjectReference Include="..\RequestService.Infrastructure.Persistence\RequestService.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\Ordsome.Services.CrossCuttingConcerns\Ordsome.Services.CrossCuttingConcerns.csproj" />
   </ItemGroup>
 
   <ItemGroup>
