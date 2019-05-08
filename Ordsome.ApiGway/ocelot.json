@@ -1,6 +1,19 @@
 {
   "ReRoutes": [
     {
+      "DownstreamPathTemplate": "/api/requests/languages/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/requests/languages/",
+      "UpstreamMethod": ["Get"],
+      "SwaggerKey": "requestapi"
+    },
+    {
       "DownstreamPathTemplate": "/api/answers/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -63,7 +76,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/{id}/answers/",
-      "UpstreamMethod": ["Get"],
+      "UpstreamMethod": ["Get, Post"],
       "SwaggerKey": "requestapi"
     },
     {
@@ -80,19 +93,6 @@
       "SwaggerKey": "requestapi"
     },
     {
-      "DownstreamPathTemplate": "/api/requests/{id}/answer/",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7001
-        }
-      ],
-      "UpstreamPathTemplate": "/api/requests/{id}/answer/",
-      "UpstreamMethod": ["Post"],
-      "SwaggerKey": "requestapi"
-    },
-    {
       "DownstreamPathTemplate": "/api/requests/isClosed/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -103,6 +103,19 @@
       ],
       "UpstreamPathTemplate": "/api/requests/isClosed/",
       "UpstreamMethod": ["Patch"],
+      "SwaggerKey": "requestapi"
+    },
+    {
+      "DownstreamPathTemplate": "/api/requests/{id}/answers/{answerId}/vote",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/requests/{id}/answers/{answerId}/vote",
+      "UpstreamMethod": ["Post"],
       "SwaggerKey": "requestapi"
     },
     {
@@ -142,6 +155,32 @@
       ],
       "UpstreamPathTemplate": "/api/users/login/",
       "UpstreamMethod": ["Post"],
+      "SwaggerKey": "userapi"
+    },
+    {
+      "DownstreamPathTemplate": "/api/users/newLanguage/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/newLanguage/",
+      "UpstreamMethod": ["Patch"],
+      "SwaggerKey": "userapi"
+    },
+    {
+      "DownstreamPathTemplate": "/api/users/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/{id}",
+      "UpstreamMethod": ["Get"],
       "SwaggerKey": "userapi"
     }
   ],

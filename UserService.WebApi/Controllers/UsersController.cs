@@ -71,7 +71,8 @@ namespace UserService.WebApi.Controllers
 
             return Ok (result);
         }
-
+        
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("check/{id}")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> CheckUserId(Guid id)
