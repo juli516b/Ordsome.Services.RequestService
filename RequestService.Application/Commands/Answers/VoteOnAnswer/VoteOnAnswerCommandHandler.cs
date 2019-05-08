@@ -19,6 +19,7 @@ namespace RequestService.Application.Commands.Answers.VoteOnAnswer
 
         public async Task<Unit> Handle(VoteOnAnswerCommand command, CancellationToken cancellationToken)
         {
+
             var request = await _context.Requests.Include(r => r.Answers).FirstOrDefaultAsync(s => s.Id == command.RequestId);
 
             if (request == null)

@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using UserService.Application.Commands.AddNewLanguage;
 using UserService.Application.Commands.Login;
 using UserService.Application.Commands.Register;
+using UserService.Application.Queries.CheckUserId;
 using UserService.Application.Queries.GetUser;
 
 namespace UserService.WebApi.Controllers
@@ -69,6 +70,15 @@ namespace UserService.WebApi.Controllers
             var result = await Mediator.Send(new GetUserQuery{ UserId = id });
 
             return Ok (result);
+        }
+
+        [HttpGet("check/{id}")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> CheckUserId(Guid id)
+        {
+            var result = await Mediator.Send(new CheckUserIdQuery{ UserId = id});
+
+            return Ok(result);
         }
     }
 }

@@ -18,6 +18,7 @@ using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 using RequestService.Infrastructure;
 using RequestService.Infrastructure.AutoMapper;
 using RequestService.Infrastructure.Persistence;
+using RequestService.RequestService.WebApi.RestClients;
 using RequestService.WebApi.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -73,6 +74,8 @@ namespace RequestService.WebApi
                     ValidateAudience = false
                     };
                 });
+
+           // services.AddUserServiceRestClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

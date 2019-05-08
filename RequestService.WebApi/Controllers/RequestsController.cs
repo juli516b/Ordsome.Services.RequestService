@@ -14,6 +14,8 @@ using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetRequest;
 using RequestService.Application.Queries.Requests.GetRequests;
+using RequestService.RequestService.WebApi.RestClients;
+using RestEase;
 
 namespace RequestService.WebApi.Controllers
 {
@@ -109,7 +111,7 @@ namespace RequestService.WebApi.Controllers
         /// <summary>
         /// Create an answer for a request.
         /// </summary>
-        [HttpPost ("{id}/answer")]
+        [HttpPost ("{id}/answers")]
         [ProducesResponseType (StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> CreateAnswer ([FromBody] CreateAnswerCommand command)
@@ -140,7 +142,15 @@ namespace RequestService.WebApi.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> VoteOnAnswer ([FromBody] VoteOnAnswerCommand command)
         {
-            await Mediator.Send (command);
+            var api = RestClient.For<IUserServiceClient>("http://localhost:7002/api/users/check");
+            api.UserId = command.UserId;
+            var checkUserId = await api.CheckUserId();
+
+            if (checkUserId == false)
+            {
+                return NotFound(command.UserId);
+            }
+            await Mediator.Send(command);
 
             return NoContent ();
         }
