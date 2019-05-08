@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
 using RequestService.Application.Commands.Answers.AnswerCreation;
 using RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer;
+using RequestService.Application.Commands.Answers.VoteOnAnswer;
 using RequestService.Application.Commands.Requests.CloseRequest;
 using RequestService.Application.Commands.Requests.RequestCreation;
 using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
@@ -127,6 +128,19 @@ namespace RequestService.WebApi.Controllers
         public async Task<IActionResult> CloseRequest ([FromBody] CloseRequestCommand command)
         {
             await Mediator.Send (command).ConfigureAwait (false);
+
+            return NoContent ();
+        }
+        
+        /// <summary>
+        /// A user can vote on one of the answers already supplied. (Logic: but not one of his own)
+        /// </summary>
+        [HttpPost("{id}/answers/{answerId}/vote")]
+        [ProducesResponseType (StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> VoteOnAnswer ([FromBody] VoteOnAnswerCommand command)
+        {
+            await Mediator.Send (command);
 
             return NoContent ();
         }
