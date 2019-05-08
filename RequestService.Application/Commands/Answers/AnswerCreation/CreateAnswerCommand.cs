@@ -7,13 +7,13 @@ using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Application.Commands.Answers.AnswerCreation
 {
-    public class CreateAnswerCommand : IRequest
+    public class CreateAnswerCommand : IRequest<AnswerIdDto>
     {
         public string TextTranslated { get; set; }
         public int RequestId { get; set; }
     }
 
-    public class Handler : IRequestHandler<CreateAnswerCommand, Unit>
+    public class Handler : IRequestHandler<CreateAnswerCommand, AnswerIdDto>
     {
         private readonly RequestServiceDbContext _context;
         private readonly INotificationService _notificationService;
@@ -26,7 +26,7 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
             _mediator = mediator;
         }
 
-        public async Task<Unit> Handle (CreateAnswerCommand request, CancellationToken cancellationToken)
+        public async Task<AnswerIdDto> Handle (CreateAnswerCommand request, CancellationToken cancellationToken)
         {
             var entity = new Answer
             {
@@ -40,7 +40,9 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
 
             await _mediator.Publish (new AnswerCreated { AnswerId = entity.Id });
 
-            return Unit.Value;
+            return new AnswerIdDto {
+                Id = request.RequestId
+            };
         }
     }
 }

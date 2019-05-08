@@ -102,7 +102,7 @@ namespace RequestService.WebApi.Controllers
         {
             await Mediator.Send (command).ConfigureAwait (false);
 
-            return NoContent ();
+            return NoContent();
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ namespace RequestService.Infrastructure.Persistence
 
         public DbSet<Request> Requests { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<AnswerVote> AnswerVotes { get; set; }
 
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
