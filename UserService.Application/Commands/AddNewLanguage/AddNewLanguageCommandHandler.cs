@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Ordsome.Services.CrossCuttingConcerns.Languages;
 using UserService.Domain.Users;
 using UserService.Infrastructure.Persistence;
 
@@ -26,12 +27,16 @@ namespace UserService.Application.Commands.AddNewLanguage
                 return Unit.Value;
             }
 
+            ListOfLanguages listOfLanguages = new ListOfLanguages();
+
+            var language = listOfLanguages.GetLanguage(request.LanguageId);
+
             Language languageToAdd = new Language
+            
             {
-                Id = request.Id,
-                LanguageCode = request.LanguageCode,
-                LanguageName = request.LanguageName,
-                LanguageNativeName = request.LanguageNativeName
+                LanguageCode = language.LanguageCode,
+                LanguageName = language.LanguageName,
+                LanguageNativeName = language.LanguageNativeName
             };
 
             user.Languages.Add(languageToAdd);

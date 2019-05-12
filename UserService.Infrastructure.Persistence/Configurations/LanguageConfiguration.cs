@@ -8,7 +8,8 @@ namespace UserService.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Language> builder)
         {
-            builder.Property(a => a.Id).ValueGeneratedNever();
+            builder.Property (e => e.Id)
+                .HasColumnName ("LanguageID");
         }
     }
 }

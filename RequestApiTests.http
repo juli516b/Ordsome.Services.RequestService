@@ -1,0 +1,80 @@
+@hostname = localhost
+###
+@port = 7001
+@hostrequest = {{hostname}}:{{port}}
+###
+@portUser = 7002
+@hostuser = {{hostname}}:{{portUser}}
+###
+@contentType = application/json
+@token = {{login.response.body.$.token}}
+@userid = {{newGuid.response.body.$.newGuid}}
+
+@userName = jmkockkkkkk
+@password = wuuhuu
+
+###
+# @name newGuid
+GET http://{{hostuser}}/api/users/new
+
+###
+# @name register
+POST http://{{hostuser}}/api/users/register HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "id": "{{userid}}",
+    "userName": "{{userName}}",
+    "password": "{{password}}"
+}
+
+
+###
+# @name login
+POST http://{{hostuser}}/api/users/login HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "userName": "{{userName}}",
+    "password": "{{password}}"
+}
+
+###
+# @name userDetails
+GET http://{{hostuser}}/api/users/{{userid}} HTTP/1.1
+Authorization: {{token}}
+
+###
+# @name addLanguage
+PATCH http://{{hostuser}}/api/users/newLanguage HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: {{token}}
+
+{
+  "userId": "{{userid}}",
+  "languageId": 40,
+}
+
+###
+# @name getAllRequests
+GET http://{{hostrequest}}/api/requests HTTP/1.1
+
+###
+# @name makeRequest
+POST http://{{hostrequest}}/api/requests HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "languageOriginId": 0,
+  "languageTargetId": 40,
+  "textToTranslate": "string",
+  "userId": "{{userid}}"
+}
+
+###
+# @name getAllRequestsByUserId
+GET http://{{hostuser}}/api/users/{{userid}}/requests HTTP/1.1
+
+###
+# @name getAllAnswersByUserId
+GET http://{{hostuser}}/api/users/{{userid}}/answers HTTP/1.1

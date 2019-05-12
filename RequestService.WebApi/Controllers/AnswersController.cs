@@ -1,8 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RequestService.Application.Commands.Answers.AnswerCreation;
 using RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer;
+using RequestService.Application.Queries.Answers.GetanswersByUserId;
+using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 
 namespace RequestService.WebApi.Controllers
 {
@@ -33,6 +38,14 @@ namespace RequestService.WebApi.Controllers
             await Mediator.Publish (command);
 
             return NoContent ();
+        }
+
+        [HttpGet("/u/{userId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AnswerDto>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetAllAnswersByUserId(Guid userId)
+        {
+            return Ok(await Mediator.Send(new GetAnswersByUserIdQuery { UserId = userId }));
         }
     }
 

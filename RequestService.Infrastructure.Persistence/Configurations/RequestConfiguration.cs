@@ -10,7 +10,7 @@ namespace RequestService.Infrastructure.Persistence.Configurations
         {
             builder.Property (e => e.Id)
                 .HasColumnName ("RequestID");
-
+            builder.Property(e => e.UserId).IsRequired();
             builder.Property (e => e.LanguageTarget).IsRequired ();
             builder.Property (e => e.TextToTranslate).IsRequired ();
         }

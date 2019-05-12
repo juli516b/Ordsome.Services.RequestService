@@ -10,8 +10,8 @@ using UserService.Infrastructure.Persistence;
 namespace UserService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(UserServiceDbContext))]
-    [Migration("20190507162447_Language")]
-    partial class Language
+    [Migration("20190509180556_LanguageAdded")]
+    partial class LanguageAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,10 @@ namespace UserService.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("UserService.Domain.Users.Language", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("LanguageID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("LanguageCode");
 

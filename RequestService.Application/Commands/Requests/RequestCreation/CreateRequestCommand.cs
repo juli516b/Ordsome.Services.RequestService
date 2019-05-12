@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -11,21 +11,20 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
 {
     public class CreateRequestCommand : IRequest
     {
-        public int LanguageOrignId { get; set; }
-        public int LanguageTargetlId { get; set; }
+        public int LanguageOriginId { get; set; }
+        public int LanguageTargetId { get; set; }
         public string TextToTranslate { get; set; }
+        public Guid UserId { get; set; }
     }
 
     public class Handler : IRequestHandler<CreateRequestCommand, Unit>
     {
         private readonly RequestServiceDbContext _context;
-        private readonly INotificationService _notificationService;
         private readonly IMediator _mediator;
 
         public Handler (RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
         {
             _context = context;
-            _notificationService = notificationService;
             _mediator = mediator;
         }
 
@@ -33,22 +32,40 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
         {
             ListOfLanguages listOfLanguages = new ListOfLanguages ();
 
-            var getAndCheckIfLanguageOriginExists = listOfLanguages.GetLanguage (request.LanguageOrignId);
+            var getAndCheckIfLanguageOriginExists = listOfLanguages.GetLanguage (request.LanguageOriginId);
 
-            var getAndCheckIfLanguageTargetExists = listOfLanguages.GetLanguage (request.LanguageTargetlId);
+            var getAndCheckIfLanguageTargetExists = listOfLanguages.GetLanguage (request.LanguageTargetId);
 
-            var entity = new Request
+            if (getAndCheckIfLanguageTargetExists == null)
             {
-                LanguageTarget = getAndCheckIfLanguageTargetExists.LanguageName,
-                LanguageOrigin = getAndCheckIfLanguageOriginExists.LanguageName,
-                TextToTranslate = request.TextToTranslate
-            };
+                throw new Exception();
+            }
 
-            _context.Requests.Add (entity);
+            if (getAndCheckIfLanguageOriginExists == null)
+            {
+                string emptyLanguage = "Not set";
+                var entity = new Request
+                {
+                    LanguageTarget = getAndCheckIfLanguageTargetExists.LanguageName,
+                    LanguageOrigin = emptyLanguage,
+                    TextToTranslate = request.TextToTranslate,
+                    UserId = request.UserId
+                };
+
+                _context.Requests.Add(entity);
+
+            } else
+            {
+                var entity = new Request
+                {
+                    LanguageTarget = getAndCheckIfLanguageTargetExists.LanguageName,
+                    LanguageOrigin = getAndCheckIfLanguageOriginExists.LanguageName,
+                    TextToTranslate = request.TextToTranslate,
+                    UserId = request.UserId
+                };
+            }
 
             await _context.SaveChangesAsync (cancellationToken).ConfigureAwait (false);
-
-            await _mediator.Publish (new RequestCreated { RequestId = entity.Id }).ConfigureAwait (false);
 
             return Unit.Value;
         }

@@ -58,7 +58,7 @@ namespace UserService.Application.Commands.Login
 
             LoginToken tokenToReturn = new LoginToken
             {
-                Token = tokenHandler.WriteToken (token)
+                Token = "Bearer " + tokenHandler.WriteToken (token)
             };
             return tokenToReturn;
         }

@@ -6,8 +6,10 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
     {
         public CreateRequestCommandValidator ()
         {
-            RuleFor (x => x.LanguageTargetlId).NotEmpty ().NotNull ();
+            RuleFor (x => x.LanguageTargetId).NotEmpty ().NotNull ();
             RuleFor (x => x.TextToTranslate).NotEmpty ().NotNull ();
+            RuleFor(x => x.UserId).NotEmpty().NotEmpty();
         }
+
     }
 }

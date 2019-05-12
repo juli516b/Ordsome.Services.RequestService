@@ -1,9 +1,10 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UserService.Infrastructure.Persistence.Migrations
 {
-    public partial class Language : Migration
+    public partial class LanguageAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +12,8 @@ namespace UserService.Infrastructure.Persistence.Migrations
                 name: "Language",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    LanguageID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     LanguageCode = table.Column<string>(nullable: true),
                     LanguageName = table.Column<string>(nullable: true),
                     LanguageNativeName = table.Column<string>(nullable: true),
@@ -19,7 +21,7 @@ namespace UserService.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Language", x => x.Id);
+                    table.PrimaryKey("PK_Language", x => x.LanguageID);
                     table.ForeignKey(
                         name: "FK_Language_Users_UserId",
                         column: x => x.UserId,

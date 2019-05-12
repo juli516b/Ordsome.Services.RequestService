@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190507122157_AddedLanguage.cs" />
     <Compile Remove="Migrations\20190507161512_fixIdColoumn.cs" />
+    <Compile Remove="Migrations\20190507162447_Language.cs" />
+    <Compile Remove="Migrations\20190509174826_LanguageEdited.cs" />
   </ItemGroup>
 
   <ItemGroup>

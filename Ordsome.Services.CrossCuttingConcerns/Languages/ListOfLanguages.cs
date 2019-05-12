@@ -15,11 +15,6 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
         {
             var language = _list.FirstOrDefault(x => x.Id == id);
             
-            if (language == null)
-                {
-                    return null;
-                }
-            
             return language;
         }
 

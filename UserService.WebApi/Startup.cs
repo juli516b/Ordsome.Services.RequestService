@@ -14,6 +14,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.Reflection;
 using System.Text;
 using UserService.Application.Commands.Register;
+using UserService.Application.Queries.GetRequestsBasedOnUserId;
+using UserService.Application.RestClients;
 using UserService.Infrastructure.Persistence;
 using UserService.WebApi.Filters;
 
@@ -30,7 +32,9 @@ namespace UserService.WebApi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {     
+        {
+            //Add rest clients
+            services.AddRestServices();
             // Add AutoMapper
             //  services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
@@ -38,7 +42,7 @@ namespace UserService.WebApi
             //services.AddTransient<INotificationService, NotificationService>();
 
             // Add MediatR - muligt at tilføje logging af alle requests via mediatr her.
-            services.AddMediatR(typeof(RegisterCommandHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(GetRequestsBasedOnUserIdQueryHandler).GetTypeInfo().Assembly);
 
             // Add DbContext using SQL Server Provider
             services.AddDbContext<UserServiceDbContext>(options =>

@@ -9,9 +9,6 @@ namespace UserService.Application.Commands.AddNewLanguage
     public class AddNewLanguageCommand : IRequest
     {
         public Guid UserId { get; set; }
-        public int Id { get; set; }
-        public string LanguageCode { get; set; }
-        public string LanguageName { get; set; }
-        public string LanguageNativeName { get; set; }
+        public int LanguageId { get; set; }
     }
 }
