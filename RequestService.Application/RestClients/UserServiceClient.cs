@@ -5,12 +5,14 @@ using RestEase;
 
 namespace RequestService.Application.RestClients
 {
-    public interface IUserServiceClient
+    public class UserServiceClient : IUserServiceClient
     {
-        [Path("userId")]
-        Guid UserId { get; set; }
+        public Guid UserId { get; set; }
 
-        [Get("{userId}")]
-        Task<bool> CheckUserId();
+        public async Task<bool> CheckUserId(Guid userId)
+        {
+            IUserServiceClient api = RestClient.For<IUserServiceClient>("http://localhost:7002/api/users");
+            return await api.CheckUserId(userId);
+        }
     }
 }

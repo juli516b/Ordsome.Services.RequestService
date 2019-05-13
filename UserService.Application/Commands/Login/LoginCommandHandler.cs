@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using UserService.Application.Exceptions;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Application.Commands.Login
@@ -29,10 +30,10 @@ namespace UserService.Application.Commands.Login
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
 
             if (user == null)
-                return null;
+                throw new NotFoundException($"{request.Username}", user);
 
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-                return null;
+                throw new ForbiddenException($"{request.Username}", user);
 
             var claims = new []
             {

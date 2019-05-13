@@ -36,6 +36,9 @@ namespace RequestService.WebApi.Controllers
             return Ok(await Mediator.Send(new GetRequestsQuery()));
         }
 
+        /// <summary>
+        /// Gets all requests based on UserId
+        /// </summary>
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("u/{userId}")]
         [Produces("application/json")]
@@ -118,19 +121,6 @@ namespace RequestService.WebApi.Controllers
         }
 
         /// <summary>
-        /// Sets the bool 'isClosed' for a request.
-        /// </summary>
-        [HttpPatch("isClosed")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> CloseRequest([FromBody] CloseRequestCommand command)
-        {
-            await Mediator.Send(command).ConfigureAwait(false);
-
-            return NoContent();
-        }
-
-        /// <summary>
         /// A user can vote on one of the answers already supplied. (Logic: but not one of his own)
         /// </summary>
         [HttpPost("{id}/answers/{answerId}/vote")]
@@ -143,5 +133,17 @@ namespace RequestService.WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Sets the bool 'isClosed' for a request.
+        /// </summary>
+        [HttpPatch("isClosed")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> CloseRequest([FromBody] CloseRequestCommand command)
+        {
+            await Mediator.Send(command).ConfigureAwait(false);
+
+            return NoContent();
+        }
     }
 }
