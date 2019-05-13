@@ -28,7 +28,7 @@ namespace RequestService.WebApi.Controllers
         /// <summary>
         /// Gets all requests submitted by users
         /// </summary>
-        [HttpGet("")]
+        [HttpGet()]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetAll()
@@ -36,6 +36,7 @@ namespace RequestService.WebApi.Controllers
             return Ok(await Mediator.Send(new GetRequestsQuery()));
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("u/{userId}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
@@ -89,22 +90,6 @@ namespace RequestService.WebApi.Controllers
         {
             return Ok(await Mediator.Send(new GetCountOfAnswersByRequestIdQuery { RequestId = id }));
         }
-
-        // [HttpPatch("{id}/answers/{answerId}/{isPreferred}")]
-        // [ProducesResponseType(StatusCodes.Status204NoContent)]
-        // [ProducesDefaultResponseType]
-        // public async Task<IActionResult> SetAnswerAsCorrectAnswer([FromBody] int id, int answerId, bool isPreferred)
-        // {
-        //     await Mediator.Publish(new SetAnswerAsCorrectAnswerCommand { RequestId = id, AnswerId = answerId, IsPreferred = isPreferred });
-
-        //     return NoContent();
-        // }
-
-        //[HttpGet()]
-        //public async Task<ActionResult<RequestsWithoutAnswersViewModel>> GetAllWithoutAnswers()
-        //{
-        //    return Ok(await Mediator.Send(new GetRequestsWithoutAnswersListQuery()).ConfigureAwait(false));
-        //}
 
         /// <summary>
         /// Create a request.

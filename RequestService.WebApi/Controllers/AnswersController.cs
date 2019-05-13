@@ -40,6 +40,7 @@ namespace RequestService.WebApi.Controllers
             return NoContent();
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("/u/{userId}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<AnswerDto>), (int)HttpStatusCode.OK)]

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RequestService.Application.Exceptions;
 using RequestService.Application.Interfaces;
 using RequestService.Infrastructure.Persistence;
 
@@ -27,7 +28,16 @@ namespace RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer
         {
             var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(x => x.Id == notification.RequestId);
 
+            if (entity == null)
+            {
+                throw new NotFoundException($"{entity.Id}", entity);
+            }
             var answerToEdit = entity.Answers.FirstOrDefault(a => a.Id == notification.AnswerId);
+            
+            if (answerToEdit == null)
+            {
+                throw new NotFoundException($"{answerToEdit.Id}", answerToEdit);
+            }
 
             answerToEdit.IsPreferred = notification.IsPreferred;
 

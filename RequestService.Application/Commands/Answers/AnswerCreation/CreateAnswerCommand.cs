@@ -1,6 +1,9 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using RequestService.Application.Exceptions;
 using RequestService.Application.Interfaces;
 using RequestService.Domain.Requests;
 using RequestService.Infrastructure.Persistence;
@@ -28,6 +31,12 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
 
         public async Task<AnswerIdDto> Handle(CreateAnswerCommand request, CancellationToken cancellationToken)
         {
+            var requestToCheck = await _context.Requests.FirstOrDefaultAsync(x => x.Id == request.RequestId);
+            if (requestToCheck == null)
+            {
+                throw new NotFoundException($"{request.RequestId}", request);
+            }
+            
             var entity = new Answer
             {
                 RequestId = request.RequestId,

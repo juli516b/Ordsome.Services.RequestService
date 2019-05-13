@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RequestService.Application.Exceptions;
 using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 using RequestService.Infrastructure.Persistence;
 
@@ -20,12 +22,16 @@ namespace RequestService.Application.Queries.Answers.GetanswersByUserId
         }
         public async Task<ICollection<AnswerDto>> Handle(GetAnswersByUserIdQuery request, CancellationToken cancellationToken)
         {
-            var answers = await _context.Answers.ToListAsync();
+            var answers = await _context.Answers.Where(x => x.UserId == request.UserId).ToListAsync();
+
+            if (answers == null)
+            {
+                throw new NotFoundException($"{request.UserId}", answers);
+            }
 
             ICollection<AnswerDto> answersToReturn = new List<AnswerDto>();
             foreach (var item in answers)
             {
-                if (item.UserId == request.UserId)
                 {
                     answersToReturn.Add(new AnswerDto
                     {

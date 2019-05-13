@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RequestService.Application.Exceptions;
 
 namespace RequestService.Application.Commands.Answers.VoteOnAnswer
 {
@@ -24,21 +25,19 @@ namespace RequestService.Application.Commands.Answers.VoteOnAnswer
 
             if (request == null)
             {
-                throw new Exception();
+                throw new NotFoundException($"{command.RequestId}", request);
             }
 
             var answer = request.Answers.FirstOrDefault(x => x.Id == command.AnswerId);
 
             if (answer == null)
             {
-                throw new Exception();
+                throw new NotFoundException($"{command.AnswerId}", answer);
             }
 
-            bool answerContainsRightUserId = answer.UserId.Equals(command.UserId);
-
-            if (answerContainsRightUserId == true)
+            if (answer.UserId.Equals(command.UserId) == true)
             {
-                throw new Exception();
+                throw new ForbiddenException($"{command.UserId}", answer);
             }
 
             var answerToSave = new Domain.Requests.AnswerVote
