@@ -14,30 +14,30 @@ namespace RequestService.Infrastructure.AutoMapper
 
     public static class MapperProfileHelper
     {
-        public static IList<Map> LoadStandardMappings (Assembly rootAssembly)
+        public static IList<Map> LoadStandardMappings(Assembly rootAssembly)
         {
-            var types = rootAssembly.GetExportedTypes ();
+            var types = rootAssembly.GetExportedTypes();
 
             var mapsFrom = (
-                from type in types from instance in type.GetInterfaces () where instance.IsGenericType && instance.GetGenericTypeDefinition () == typeof (IMapFrom<>) &&
+                from type in types from instance in type.GetInterfaces()where instance.IsGenericType && instance.GetGenericTypeDefinition() == typeof(IMapFrom<>) &&
                 !type.IsAbstract &&
                 !type.IsInterface select new Map
                 {
-                    Source = type.GetInterfaces ().First ().GetGenericArguments ().First (),
+                    Source = type.GetInterfaces().First().GetGenericArguments().First(),
                         Destination = type
-                }).ToList ();
+                }).ToList();
 
             return mapsFrom;
         }
 
-        public static IList<IHaveCustomMapping> LoadCustomMappings (Assembly rootAssembly)
+        public static IList<IHaveCustomMapping> LoadCustomMappings(Assembly rootAssembly)
         {
-            var types = rootAssembly.GetExportedTypes ();
+            var types = rootAssembly.GetExportedTypes();
 
             var mapsFrom = (
-                from type in types from instance in type.GetInterfaces () where typeof (IHaveCustomMapping).IsAssignableFrom (type) &&
+                from type in types from instance in type.GetInterfaces()where typeof(IHaveCustomMapping).IsAssignableFrom(type) &&
                 !type.IsAbstract &&
-                !type.IsInterface select (IHaveCustomMapping) Activator.CreateInstance (type)).ToList ();
+                !type.IsInterface select(IHaveCustomMapping)Activator.CreateInstance(type)).ToList();
 
             return mapsFrom;
         }

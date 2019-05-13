@@ -6,7 +6,7 @@ namespace RequestService.Application.Commands.Requests
     {
         public Request UpdatedRequest { get; set; }
 
-        public RequestUpdatedEvent (Request updatedRequest)
+        public RequestUpdatedEvent(Request updatedRequest)
         {
             UpdatedRequest = updatedRequest;
         }

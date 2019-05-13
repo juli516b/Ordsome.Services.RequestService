@@ -32,7 +32,7 @@ namespace UserService.Application.Commands.AddNewLanguage
             var language = listOfLanguages.GetLanguage(request.LanguageId);
 
             Language languageToAdd = new Language
-            
+
             {
                 LanguageCode = language.LanguageCode,
                 LanguageName = language.LanguageName,

@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+using System.Reflection;
+using System.Text;
+using AutoMapper;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,8 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Steeltoe.Discovery.Client;
 using Swashbuckle.AspNetCore.Swagger;
-using System.Reflection;
-using System.Text;
 using UserService.Application.Commands.Register;
 using UserService.Application.Queries.GetRequestsBasedOnUserId;
 using UserService.Application.RestClients;
@@ -65,11 +65,11 @@ namespace UserService.WebApi
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                            .GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                    .GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
                     };
                 });
         }

@@ -4,6 +4,6 @@ namespace RequestService.Application.Interfaces.Mapping
 {
     public interface IHaveCustomMapping
     {
-        void CreateMappings (Profile configuration);
+        void CreateMappings(Profile configuration);
     }
 }

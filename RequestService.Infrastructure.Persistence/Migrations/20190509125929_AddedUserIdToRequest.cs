@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RequestService.Infrastructure.Persistence.Migrations
@@ -10,8 +10,8 @@ namespace RequestService.Infrastructure.Persistence.Migrations
             migrationBuilder.AddColumn<Guid>(
                 name: "UserId",
                 table: "Requests",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+                nullable : false,
+                defaultValue : new Guid("00000000-0000-0000-0000-000000000000"));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

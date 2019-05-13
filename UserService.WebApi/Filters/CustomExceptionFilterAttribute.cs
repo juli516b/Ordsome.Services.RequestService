@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using UserService.Application.Exceptions;
 
 namespace UserService.WebApi.Filters
@@ -32,8 +32,8 @@ namespace UserService.WebApi.Filters
             context.HttpContext.Response.StatusCode = (int)code;
             context.Result = new JsonResult(new
             {
-                error = new[] { context.Exception.Message },
-                stackTrace = context.Exception.StackTrace
+                error = new [] { context.Exception.Message },
+                    stackTrace = context.Exception.StackTrace
             });
         }
     }

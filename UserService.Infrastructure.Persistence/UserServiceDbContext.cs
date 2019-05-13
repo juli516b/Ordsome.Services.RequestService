@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
 using System;
+using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Users;
 
 namespace UserService.Infrastructure.Persistence
@@ -7,8 +7,7 @@ namespace UserService.Infrastructure.Persistence
     public class UserServiceDbContext : DbContext
     {
         public UserServiceDbContext(DbContextOptions<UserServiceDbContext> options) : base(options)
-        {
-        }
+        { }
 
         public DbSet<User> Users { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -16,35 +16,35 @@ namespace RequestService.Infrastructure.Persistence.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "TextTranslated",
                 table: "Answers",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldNullable: true);
+                nullable : false,
+                oldClrType : typeof(string),
+                oldNullable : true);
 
             migrationBuilder.AddColumn<Guid>(
                 name: "UserId",
                 table: "Answers",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+                nullable : false,
+                defaultValue : new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.CreateTable(
                 name: "AnswerVotes",
-                columns: table => new
+                columns : table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AnswerId = table.Column<int>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    Like = table.Column<bool>(nullable: false)
+                        AnswerId = table.Column<int>(nullable: false),
+                        UserId = table.Column<Guid>(nullable: false),
+                        Like = table.Column<bool>(nullable: false)
                 },
-                constraints: table =>
+                constraints : table =>
                 {
                     table.PrimaryKey("PK_AnswerVotes", x => x.Id);
                     table.ForeignKey(
                         name: "FK_AnswerVotes_Answers_AnswerId",
-                        column: x => x.AnswerId,
+                        column : x => x.AnswerId,
                         principalTable: "Answers",
                         principalColumn: "AnswerID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete : ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -70,8 +70,8 @@ namespace RequestService.Infrastructure.Persistence.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "TextTranslated",
                 table: "Answers",
-                nullable: true,
-                oldClrType: typeof(string));
+                nullable : true,
+                oldClrType : typeof(string));
         }
     }
 }

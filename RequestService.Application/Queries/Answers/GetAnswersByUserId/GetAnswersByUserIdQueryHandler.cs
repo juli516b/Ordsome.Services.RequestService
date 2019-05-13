@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -30,9 +30,9 @@ namespace RequestService.Application.Queries.Answers.GetanswersByUserId
                     answersToReturn.Add(new AnswerDto
                     {
                         AnswerId = item.Id,
-                        IsPreferred = item.IsPreferred,
-                        RequestId = item.RequestId,
-                        TextTranslated = item.TextTranslated
+                            IsPreferred = item.IsPreferred,
+                            RequestId = item.RequestId,
+                            TextTranslated = item.TextTranslated
                     });
                 }
             }

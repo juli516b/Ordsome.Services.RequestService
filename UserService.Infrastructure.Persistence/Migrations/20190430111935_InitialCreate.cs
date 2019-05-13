@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UserService.Infrastructure.Persistence.Migrations
@@ -9,14 +9,14 @@ namespace UserService.Infrastructure.Persistence.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "Users",
-                columns: table => new
+                columns : table => new
                 {
                     UserID = table.Column<Guid>(nullable: false),
-                    Username = table.Column<string>(nullable: true),
-                    PasswordHash = table.Column<byte[]>(nullable: false),
-                    PasswordSalt = table.Column<byte[]>(nullable: false)
+                        Username = table.Column<string>(nullable: true),
+                        PasswordHash = table.Column<byte[]>(nullable: false),
+                        PasswordSalt = table.Column<byte[]>(nullable: false)
                 },
-                constraints: table =>
+                constraints : table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserID);
                 });

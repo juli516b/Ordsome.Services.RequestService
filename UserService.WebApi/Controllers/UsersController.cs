@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -52,7 +52,7 @@ namespace UserService.WebApi.Controllers
         {
             return Ok(await Mediator.Send(command));
         }
-        
+
         /// <summary>
         /// Adds a new language to a user.
         /// </summary>
@@ -69,31 +69,32 @@ namespace UserService.WebApi.Controllers
         [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetUserInformation(Guid id) 
+        public async Task<ActionResult> GetUserInformation(Guid id)
         {
-            var result = await Mediator.Send(new GetUserQuery{ UserId = id });
+            var result = await Mediator.Send(new GetUserQuery { UserId = id });
 
-            return Ok (result);
+            return Ok(result);
         }
-        
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("check/{id}")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> CheckUserId(Guid id)
         {
-            var result = await Mediator.Send(new CheckUserIdQuery{ UserId = id});
+            var result = await Mediator.Send(new CheckUserIdQuery { UserId = id });
 
             return Ok(result);
         }
 
         [HttpGet("{id}/requests")]
         [ProducesResponseType(typeof(ICollection<UserRequestsDto>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetRequestsBasedOnUserId(Guid id) 
+        public async Task<ActionResult> GetRequestsBasedOnUserId(Guid id)
         {
             var result = await Mediator.Send(new GetRequestsBasedOnUserIdQuery { UserId = id });
 
-            return Ok (result);
+            return Ok(result);
         }
+
         [HttpGet("{id}/answers")]
         [ProducesResponseType(typeof(ICollection<UserAnswersDto>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetAnswersBasedOnUserId(Guid id)

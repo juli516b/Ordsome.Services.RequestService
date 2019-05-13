@@ -6,7 +6,7 @@ namespace RequestService.Infrastructure
 {
     public class NotificationService : INotificationService
     {
-        public Task SendAsync (Message message)
+        public Task SendAsync(Message message)
         {
             return Task.CompletedTask;
         }

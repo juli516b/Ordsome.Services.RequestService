@@ -14,15 +14,15 @@ namespace RequestService.Application.Queries.Requests.GetCountOfAnswersByRequest
     {
         private RequestServiceDbContext _context;
 
-        public GetCountOfAnswersByRequestIdQueryHandler (RequestServiceDbContext context)
+        public GetCountOfAnswersByRequestIdQueryHandler(RequestServiceDbContext context)
         {
             _context = context;
         }
 
-        public async Task<CountOfAnswersDto> Handle (GetCountOfAnswersByRequestIdQuery request, CancellationToken cancellationToken)
+        public async Task<CountOfAnswersDto> Handle(GetCountOfAnswersByRequestIdQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Requests.Include (a => a.Answers).
-            FirstOrDefaultAsync (r => r.Id == request.RequestId);
+            var entity = await _context.Requests.Include(a => a.Answers).
+            FirstOrDefaultAsync(r => r.Id == request.RequestId);
 
             CountOfAnswersDto countOfAnswersDto = new CountOfAnswersDto
             {

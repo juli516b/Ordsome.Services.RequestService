@@ -1,54 +1,54 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace UserService.Infrastructure.Persistence.SharedKernel
 {
-    public abstract class DesignTimeDbContextFactoryBase<TContext> :
-            IDesignTimeDbContextFactory<TContext> where TContext : DbContext
-    {
-        private const string ConnectionStringName = "UserServiceDb";
-        private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
-
-        public TContext CreateDbContext(string[] args)
+    public abstract class DesignTimeDbContextFactoryBase<TContext>:
+        IDesignTimeDbContextFactory<TContext> where TContext : DbContext
         {
-            var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}UserService.WebApi", Path.DirectorySeparatorChar);
-            return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
-        }
+            private const string ConnectionStringName = "UserServiceDb";
+            private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
 
-        protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
-
-        private TContext Create(string basePath, string environmentName)
-        {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(basePath)
-                .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.Local.json", optional: true)
-                .AddJsonFile($"appsettings.{environmentName}.json", optional: true)
-                .AddEnvironmentVariables()
-                .Build();
-
-            var connectionString = configuration.GetConnectionString(ConnectionStringName);
-
-            return Create(connectionString);
-        }
-
-        private TContext Create(string connectionString)
-        {
-            if (string.IsNullOrEmpty(connectionString))
+            public TContext CreateDbContext(string[] args)
             {
-                throw new ArgumentException($"Connection string '{ConnectionStringName}' is null or empty.", nameof(connectionString));
+                var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}UserService.WebApi", Path.DirectorySeparatorChar);
+                return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
             }
 
-            Console.WriteLine($"DesignTimeDbContextFactoryBase.Create(string): Connection string: '{connectionString}'.");
+            protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
 
-            var optionsBuilder = new DbContextOptionsBuilder<TContext>();
+            private TContext Create(string basePath, string environmentName)
+            {
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(basePath)
+                    .AddJsonFile("appsettings.json")
+                    .AddJsonFile($"appsettings.Local.json", optional : true)
+                    .AddJsonFile($"appsettings.{environmentName}.json", optional : true)
+                    .AddEnvironmentVariables()
+                    .Build();
 
-            optionsBuilder.UseSqlServer(connectionString);
+                var connectionString = configuration.GetConnectionString(ConnectionStringName);
 
-            return CreateNewInstance(optionsBuilder.Options);
+                return Create(connectionString);
+            }
+
+            private TContext Create(string connectionString)
+            {
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    throw new ArgumentException($"Connection string '{ConnectionStringName}' is null or empty.", nameof(connectionString));
+                }
+
+                Console.WriteLine($"DesignTimeDbContextFactoryBase.Create(string): Connection string: '{connectionString}'.");
+
+                var optionsBuilder = new DbContextOptionsBuilder<TContext>();
+
+                optionsBuilder.UseSqlServer(connectionString);
+
+                return CreateNewInstance(optionsBuilder.Options);
+            }
         }
-    }
 }

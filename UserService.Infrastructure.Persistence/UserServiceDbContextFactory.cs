@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using UserService.Infrastructure.Persistence.SharedKernel;
 
 namespace UserService.Infrastructure.Persistence

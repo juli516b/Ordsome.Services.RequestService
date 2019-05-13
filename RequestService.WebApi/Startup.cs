@@ -26,7 +26,7 @@ namespace RequestService.WebApi
 {
     public class Startup
     {
-        public Startup (IConfiguration configuration)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -34,77 +34,77 @@ namespace RequestService.WebApi
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices (IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             // Add AutoMapper
-            services.AddAutoMapper (new Assembly[] { typeof (AutoMapperProfile).GetTypeInfo ().Assembly });
+            services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
             // Add framework services.
-            services.AddTransient<INotificationService, NotificationService> ();
+            services.AddTransient<INotificationService, NotificationService>();
 
             // Add MediatR - muligt at tilføje logging af alle requests via mediatr her.
-            services.AddMediatR (typeof (GetAnswersByRequestIdQueryHandler).GetTypeInfo ().Assembly);
+            services.AddMediatR(typeof(GetAnswersByRequestIdQueryHandler).GetTypeInfo().Assembly);
 
             // Add DbContext using SQL Server Provider
-            services.AddDbContext<RequestServiceDbContext> (options =>
-                options.UseSqlServer (Configuration.GetConnectionString ("RequestDbService")));
+            services.AddDbContext<RequestServiceDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("RequestDbService")));
 
             services
-                .AddMvc (options => options.Filters.Add (typeof (CustomExceptionFilterAttribute)))
-                .SetCompatibilityVersion (CompatibilityVersion.Version_2_1)
-                .AddFluentValidation (fv => fv.RegisterValidatorsFromAssemblyContaining<CreateRequestCommandValidator> ());
+                .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateRequestCommandValidator>());
 
             // Customise default API behavour
-            services.Configure<ApiBehaviorOptions> (options => options.SuppressModelStateInvalidFilter = true);
+            services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
             // Swagger
-            services.AddSwaggerGen (c => c.SwaggerDoc ("v1", new Info { Title = "RequestServiceApi", Version = "v1" }));
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Info { Title = "RequestServiceApi", Version = "v1" }));
 
             // Security
 
-            services.AddAuthentication (JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer (options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey (Encoding.ASCII
-                    .GetBytes (Configuration.GetSection ("AppSettings:Secret").Value)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                    .GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                     };
                 });
 
-           // services.AddUserServiceRestClient();
+            // services.AddUserServiceRestClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure (IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment ())
+            if (env.IsDevelopment())
             {
                 IdentityModelEventSource.ShowPII = true;
-                app.UseDeveloperExceptionPage ();
-                app.UseDatabaseErrorPage ();
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
-                app.UseExceptionHandler ("/Error");
+                app.UseExceptionHandler("/Error");
             }
 
-            app.UseStaticFiles ();
-            app.UseSwagger (c =>
+            app.UseStaticFiles();
+            app.UseSwagger(c =>
             {
                 c.RouteTemplate = "requestapi/docs/{documentName}/swagger.json";
             });
-            app.UseSwaggerUI (c =>
+            app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint ("/requestapi/docs/v1/swagger.json", "RequestAPI");
+                c.SwaggerEndpoint("/requestapi/docs/v1/swagger.json", "RequestAPI");
                 c.RoutePrefix = "requestapi/docs";
             });
-            app.UseAuthentication ();
+            app.UseAuthentication();
 
-            app.UseMvc ();
+            app.UseMvc();
         }
     }
 }

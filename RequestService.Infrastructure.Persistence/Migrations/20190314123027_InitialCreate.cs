@@ -5,33 +5,33 @@ namespace RequestService.Infrastructure.Persistence.Migrations
 {
     public partial class InitialCreate : Migration
     {
-        protected override void Up (MigrationBuilder migrationBuilder)
+        protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable (
+            migrationBuilder.CreateTable(
                 name: "Requests",
                 columns : table => new
                 {
-                    RequestID = table.Column<int> (nullable: false)
-                        .Annotation ("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                        LanguageOrigin = table.Column<string> (nullable: true),
-                        LanguageTarget = table.Column<string> (nullable: false),
-                        TextToTranslate = table.Column<string> (nullable: false)
+                    RequestID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        LanguageOrigin = table.Column<string>(nullable: true),
+                        LanguageTarget = table.Column<string>(nullable: false),
+                        TextToTranslate = table.Column<string>(nullable: false)
                 },
-                constraints : table => table.PrimaryKey ("PK_Requests", x => x.RequestID));
+                constraints : table => table.PrimaryKey("PK_Requests", x => x.RequestID));
 
-            migrationBuilder.CreateTable (
+            migrationBuilder.CreateTable(
                 name: "Answer",
                 columns : table => new
                 {
-                    Id = table.Column<int> (nullable: false)
-                        .Annotation ("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                        TextTranslated = table.Column<string> (nullable: true),
-                        RequestId = table.Column<int> (nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        TextTranslated = table.Column<string>(nullable: true),
+                        RequestId = table.Column<int>(nullable: false)
                 },
                 constraints : table =>
                 {
-                    table.PrimaryKey ("PK_Answer", x => x.Id);
-                    table.ForeignKey (
+                    table.PrimaryKey("PK_Answer", x => x.Id);
+                    table.ForeignKey(
                         name: "FK_Answer_Requests_RequestId",
                         column : x => x.RequestId,
                         principalTable: "Requests",
@@ -39,18 +39,18 @@ namespace RequestService.Infrastructure.Persistence.Migrations
                         onDelete : ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex (
+            migrationBuilder.CreateIndex(
                 name: "IX_Answer_RequestId",
                 table: "Answer",
                 column: "RequestId");
         }
 
-        protected override void Down (MigrationBuilder migrationBuilder)
+        protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable (
+            migrationBuilder.DropTable(
                 name: "Answer");
 
-            migrationBuilder.DropTable (
+            migrationBuilder.DropTable(
                 name: "Requests");
         }
     }

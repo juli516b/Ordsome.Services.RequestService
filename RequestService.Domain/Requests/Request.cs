@@ -6,9 +6,9 @@ namespace RequestService.Domain.Requests
 {
     public class Request : BaseEntity
     {
-        public Request ()
+        public Request()
         {
-            Answers = new HashSet<Answer> ();
+            Answers = new HashSet<Answer>();
         }
         public Guid UserId { get; set; }
         public string LanguageOrigin { get; set; }

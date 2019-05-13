@@ -16,7 +16,8 @@ namespace UserService.Application.Queries.GetGuid
 
         public async Task<GetGuidDto> Handle(GetGuidQuery request, CancellationToken cancellationToken)
         {
-            return new GetGuidDto{
+            return new GetGuidDto
+            {
                 NewGuid = Guid.NewGuid()
             };
         }

@@ -11,14 +11,14 @@ namespace RequestService.Application.Queries.Requests.GetRequest
     {
         private readonly RequestServiceDbContext _context;
 
-        public GetAnswersByRequestIdQueryHandler (RequestServiceDbContext context)
+        public GetAnswersByRequestIdQueryHandler(RequestServiceDbContext context)
         {
             _context = context;
         }
 
-        public async Task<RequestPreviewDto> Handle (GetRequestQuery request, CancellationToken cancellationToken)
+        public async Task<RequestPreviewDto> Handle(GetRequestQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Requests.Include (a => a.Answers).FirstOrDefaultAsync (r => r.Id == request.RequestId);
+            var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.RequestId);
 
             if (entity == null)
             {

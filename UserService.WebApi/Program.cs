@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
@@ -13,8 +13,8 @@ namespace UserService.WebApi
 
         public static IWebHost CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls($"http://localhost:7002")
-                .UseStartup<Startup>()
-                .Build();
+            .UseUrls($"http://localhost:7002")
+            .UseStartup<Startup>()
+            .Build();
     }
 }

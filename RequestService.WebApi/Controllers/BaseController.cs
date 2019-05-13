@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace RequestService.WebApi.Controllers
 {
-    [Route ("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public abstract class BaseController : Controller
     {
@@ -12,6 +12,6 @@ namespace RequestService.WebApi.Controllers
 
         protected IMediator Mediator => _mediator ?? (_mediator = HttpContext
             .RequestServices
-            .GetService<IMediator> ());
+            .GetService<IMediator>());
     }
 }

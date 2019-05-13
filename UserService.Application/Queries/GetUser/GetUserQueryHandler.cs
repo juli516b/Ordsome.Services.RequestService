@@ -1,10 +1,10 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using UserService.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using UserService.Infrastructure.Persistence;
 
 namespace UserService.Application.Queries.GetUser
 {
@@ -27,7 +27,7 @@ namespace UserService.Application.Queries.GetUser
             {
                 return null;
             }
-            
+
             List<LanguagePreviewDto> listOfLanguages = new List<LanguagePreviewDto>();
 
             foreach (var language in user.Languages)
@@ -43,9 +43,10 @@ namespace UserService.Application.Queries.GetUser
                 listOfLanguages.Add(langaugeToAdd);
             }
 
-            return new UserDto {
+            return new UserDto
+            {
                 Username = user.Username,
-                Languages = listOfLanguages
+                    Languages = listOfLanguages
             };
         }
     }

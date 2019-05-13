@@ -10,27 +10,27 @@ namespace Ordsome.ApiGway
 {
     public class Program
     {
-        public static void Main (string[] args)
+        public static void Main(string[] args)
         {
-            BuildWebHost (args).Run ();
+            BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost (string[] args)
+        public static IWebHost BuildWebHost(string[] args)
         {
-            return WebHost.CreateDefaultBuilder (args)
-                .UseUrls ("https://localhost:7000")
-                .ConfigureAppConfiguration ((hostingContext, config) =>
+            return WebHost.CreateDefaultBuilder(args)
+                .UseUrls("https://localhost:7000")
+                .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config
-                        .SetBasePath (hostingContext.HostingEnvironment.ContentRootPath)
-                        .AddJsonFile ("appsettings.json", true, true)
-                        .AddJsonFile ($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true,
+                        .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+                        .AddJsonFile("appsettings.json", true, true)
+                        .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true,
                             true)
-                        .AddJsonFile ("ocelot.json", false, true)
-                        .AddEnvironmentVariables ();
+                        .AddJsonFile("ocelot.json", false, true)
+                        .AddEnvironmentVariables();
                 })
-                .UseStartup<Startup> ()
-                .Build ();
+                .UseStartup<Startup>()
+                .Build();
         }
     }
 }

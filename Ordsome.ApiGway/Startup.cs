@@ -12,44 +12,45 @@ namespace Ordsome.ApiGway
 {
     public class Startup
     {
-        public Startup (IHostingEnvironment env)
+        public Startup(IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder ();
-            builder.SetBasePath (env.ContentRootPath)
-                .AddJsonFile ("appsettings.json")
-                .AddJsonFile ("ocelot.json", optional : false, reloadOnChange : true)
-                .AddEnvironmentVariables ();
+            var builder = new ConfigurationBuilder();
+            builder.SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile("ocelot.json", optional : false, reloadOnChange : true)
+                .AddEnvironmentVariables();
 
-            Configuration = builder.Build ();
+            Configuration = builder.Build();
         }
 
         public IConfigurationRoot Configuration { get; }
 
-        public void ConfigureServices (IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication (JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer (options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey (Encoding.ASCII
-                    .GetBytes (Configuration.GetSection ("AppSettings:Secret").Value)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                    .GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                     };
                 });
             services.AddSwaggerForOcelot(Configuration);
-            services.AddOcelot (Configuration);
+            services.AddOcelot(Configuration);
         }
 
-        public async void Configure (IApplicationBuilder app, IHostingEnvironment env)
-        {            
-            app.UseAuthentication ();
-            app.UseSwaggerForOcelotUI(Configuration, opt => {
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            app.UseAuthentication();
+            app.UseSwaggerForOcelotUI(Configuration, opt =>
+            {
                 opt.EndPointBasePath = "/swagger/docs";
             });
-            await app.UseOcelot ();
+            await app.UseOcelot();
         }
     }
 }

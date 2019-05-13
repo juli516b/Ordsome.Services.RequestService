@@ -8,7 +8,7 @@ namespace RequestService.Application.Queries.Requests.GetRequests
 {
     public class RequestPreviewDto
     {
-        public RequestPreviewDto () { }
+        public RequestPreviewDto() { }
 
         public int RequestId { get; set; }
         public string LanguageOrigin { get; set; }

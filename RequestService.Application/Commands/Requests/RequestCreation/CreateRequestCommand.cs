@@ -22,19 +22,19 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
         private readonly RequestServiceDbContext _context;
         private readonly IMediator _mediator;
 
-        public Handler (RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+        public Handler(RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
 
-        public async Task<Unit> Handle (CreateRequestCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateRequestCommand request, CancellationToken cancellationToken)
         {
-            ListOfLanguages listOfLanguages = new ListOfLanguages ();
+            ListOfLanguages listOfLanguages = new ListOfLanguages();
 
-            var getAndCheckIfLanguageOriginExists = listOfLanguages.GetLanguage (request.LanguageOriginId);
+            var getAndCheckIfLanguageOriginExists = listOfLanguages.GetLanguage(request.LanguageOriginId);
 
-            var getAndCheckIfLanguageTargetExists = listOfLanguages.GetLanguage (request.LanguageTargetId);
+            var getAndCheckIfLanguageTargetExists = listOfLanguages.GetLanguage(request.LanguageTargetId);
 
             if (getAndCheckIfLanguageTargetExists == null)
             {
@@ -54,7 +54,8 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
 
                 _context.Requests.Add(entity);
 
-            } else
+            }
+            else
             {
                 var entity = new Request
                 {
@@ -65,7 +66,7 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
                 };
             }
 
-            await _context.SaveChangesAsync (cancellationToken).ConfigureAwait (false);
+            await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
             return Unit.Value;
         }

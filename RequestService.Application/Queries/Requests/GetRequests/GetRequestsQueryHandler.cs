@@ -12,20 +12,20 @@ namespace RequestService.Application.Queries.Requests.GetRequests
     {
         private readonly RequestServiceDbContext _context;
 
-        public GetRequestsQueryHandler (RequestServiceDbContext context)
+        public GetRequestsQueryHandler(RequestServiceDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<RequestPreviewDto>> Handle (GetRequestsQuery request, CancellationToken cancellationToken)
+        public async Task<List<RequestPreviewDto>> Handle(GetRequestsQuery request, CancellationToken cancellationToken)
         {
-            var entities = await _context.Requests.Include (a => a.Answers).ToListAsync ();
+            var entities = await _context.Requests.Include(a => a.Answers).ToListAsync();
 
-            List<RequestPreviewDto> entitiesToReturn = new List<RequestPreviewDto> ();
+            List<RequestPreviewDto> entitiesToReturn = new List<RequestPreviewDto>();
 
             foreach (var entity in entities)
             {
-                entitiesToReturn.Add (
+                entitiesToReturn.Add(
                     new RequestPreviewDto
                     {
                         RequestId = entity.Id,

@@ -6,17 +6,17 @@ using RequestService.Application.Exceptions;
 
 namespace RequestService.WebApi.Filters
 {
-    [AttributeUsage (AttributeTargets.Class | AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        public override void OnException (ExceptionContext context)
+        public override void OnException(ExceptionContext context)
         {
             if (context.Exception is ValidationException)
             {
                 context.HttpContext.Response.ContentType = "application/json";
-                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-                context.Result = new JsonResult (
-                    ((ValidationException) context.Exception).Failures);
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                context.Result = new JsonResult(
+                    ((ValidationException)context.Exception).Failures);
 
                 return;
             }
@@ -29,8 +29,8 @@ namespace RequestService.WebApi.Filters
             }
 
             context.HttpContext.Response.ContentType = "application/json";
-            context.HttpContext.Response.StatusCode = (int) code;
-            context.Result = new JsonResult (new
+            context.HttpContext.Response.StatusCode = (int)code;
+            context.Result = new JsonResult(new
             {
                 error = new [] { context.Exception.Message },
                     stackTrace = context.Exception.StackTrace

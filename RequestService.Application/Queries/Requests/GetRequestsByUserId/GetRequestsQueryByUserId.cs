@@ -37,11 +37,11 @@ namespace RequestService.Application.Queries.Requests.GetRequestsByUserId
                     requestsToReturn.Add(new RequestPreviewDto
                     {
                         RequestId = item.Id,
-                        LanguageOrigin = item.LanguageOrigin,
-                        LanguageTarget = item.LanguageTarget,
-                        TextToTranslate = item.TextToTranslate,
-                        NoOfAnswers = item.Answers.Count,
-                        IsClosed = item.IsClosed
+                            LanguageOrigin = item.LanguageOrigin,
+                            LanguageTarget = item.LanguageTarget,
+                            TextToTranslate = item.TextToTranslate,
+                            NoOfAnswers = item.Answers.Count,
+                            IsClosed = item.IsClosed
                     });
                 }
             }

@@ -5,16 +5,16 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
 {
     public class LanguageDto
     {
-        [JsonProperty ("id")]
+        [JsonProperty("id")]
         public int Id { get; set; }
 
-        [JsonProperty ("code")]
+        [JsonProperty("code")]
         public string LanguageCode { get; set; }
 
-        [JsonProperty ("name")]
+        [JsonProperty("name")]
         public string LanguageName { get; set; }
 
-        [JsonProperty ("nativeName")]
+        [JsonProperty("nativeName")]
         public string LanguageNativeName { get; set; }
     }
 }

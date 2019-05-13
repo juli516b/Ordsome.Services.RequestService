@@ -11,33 +11,33 @@ using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 
 namespace RequestService.WebApi.Controllers
 {
-    [Route ("api/answers")]
+    [Route("api/answers")]
     public class AnswersController : BaseController
     {
         /// <summary>
         /// Creates an answer for a request.
         /// </summary>
         [HttpPost]
-        [ProducesResponseType (StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create ([FromBody] CreateAnswerCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateAnswerCommand command)
         {
-            await Mediator.Send (command);
+            await Mediator.Send(command);
 
-            return NoContent ();
+            return NoContent();
         }
 
         /// <summary>
         /// Sets a answer's bool 'isPreferred'.
         /// </summary>
-        [HttpPatch ("isPreferred")]
-        [ProducesResponseType (StatusCodes.Status204NoContent)]
+        [HttpPatch("isPreferred")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> IsPreferred ([FromBody] SetAnswerAsCorrectAnswerCommand command)
+        public async Task<IActionResult> IsPreferred([FromBody] SetAnswerAsCorrectAnswerCommand command)
         {
-            await Mediator.Publish (command);
+            await Mediator.Publish(command);
 
-            return NoContent ();
+            return NoContent();
         }
 
         [HttpGet("/u/{userId}")]

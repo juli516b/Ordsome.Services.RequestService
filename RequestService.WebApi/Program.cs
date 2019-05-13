@@ -6,15 +6,15 @@ namespace RequestService.WebApi
 {
     public class Program
     {
-        public static void Main (string[] args)
+        public static void Main(string[] args)
         {
-            CreateWebHostBuilder (args).Run ();
+            CreateWebHostBuilder(args).Run();
         }
 
-        public static IWebHost CreateWebHostBuilder (string[] args) =>
-            WebHost.CreateDefaultBuilder (args)
-            .UseUrls ($"http://localhost:7001")
-            .UseStartup<Startup> ()
-            .Build ();
+        public static IWebHost CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+            .UseUrls($"http://localhost:7001")
+            .UseStartup<Startup>()
+            .Build();
     }
 }
