@@ -15,10 +15,10 @@ using Microsoft.IdentityModel.Tokens;
 using RequestService.Application.Commands.Requests.RequestCreation;
 using RequestService.Application.Interfaces;
 using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
+using RequestService.Application.RestClients;
 using RequestService.Infrastructure;
 using RequestService.Infrastructure.AutoMapper;
 using RequestService.Infrastructure.Persistence;
-using RequestService.Application.RestClients;
 using RequestService.WebApi.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 

@@ -36,7 +36,7 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
             {
                 throw new NotFoundException($"{request.RequestId}", request);
             }
-            
+
             var entity = new Answer
             {
                 RequestId = request.RequestId,

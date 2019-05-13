@@ -33,7 +33,7 @@ namespace RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer
                 throw new NotFoundException($"{entity.Id}", entity);
             }
             var answerToEdit = entity.Answers.FirstOrDefault(a => a.Id == notification.AnswerId);
-            
+
             if (answerToEdit == null)
             {
                 throw new NotFoundException($"{answerToEdit.Id}", answerToEdit);
