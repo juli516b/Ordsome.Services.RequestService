@@ -28,7 +28,7 @@ namespace RequestService.WebApi.Controllers
         /// <summary>
         /// Gets all requests submitted by users
         /// </summary>
-        [HttpGet()]
+        [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetAll()

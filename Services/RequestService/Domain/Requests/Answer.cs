@@ -1,9 +1,10 @@
 using System;
+using Domain.SharedKernel;
 using RequestService.Domain.SharedKernel;
 
 namespace RequestService.Domain.Requests
 {
-    public class Answer : BaseEntity
+    public class Answer : BaseEntity, IAggregateRoot
     {
         public string TextTranslated { get; set; }
         public Request Request { get; set; }

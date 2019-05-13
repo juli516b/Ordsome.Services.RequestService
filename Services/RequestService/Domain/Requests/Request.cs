@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Domain.SharedKernel;
 using RequestService.Domain.SharedKernel;
 
 namespace RequestService.Domain.Requests
 {
-    public class Request : BaseEntity
+    public class Request : BaseEntity, IAggregateRoot
     {
         public Request()
         {
