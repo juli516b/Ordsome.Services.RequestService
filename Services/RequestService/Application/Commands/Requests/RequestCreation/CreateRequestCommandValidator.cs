@@ -8,7 +8,7 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
         {
             RuleFor(x => x.LanguageTargetId).NotEmpty().NotNull();
             RuleFor(x => x.TextToTranslate).NotEmpty().NotNull();
-            RuleFor(x => x.UserId).NotEmpty().NotEmpty();
+            RuleFor(x => x.UserId).NotEmpty().NotNull();
         }
 
     }

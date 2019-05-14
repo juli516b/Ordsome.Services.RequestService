@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RequestService.Application.Interfaces;
-using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Application.Commands.Requests.CloseRequest
 {
@@ -11,11 +11,11 @@ namespace RequestService.Application.Commands.Requests.CloseRequest
     {
         public class Handler : IRequestHandler<CloseRequestCommand, Unit>
         {
-            private readonly RequestServiceDbContext _context;
+            private readonly IRequestServiceDbContext _context;
             private readonly INotificationService _notificationService;
             private readonly IMediator _mediator;
 
-            public Handler(RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+            public Handler(IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
             {
                 _context = context;
                 _notificationService = notificationService;
@@ -28,7 +28,7 @@ namespace RequestService.Application.Commands.Requests.CloseRequest
 
                 entity.IsClosed = request.isClosed;
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(cancellationToken);
 
                 return Unit.Value;
             }

@@ -53,11 +53,11 @@ namespace RequestService.WebApi.Controllers
         /// </summary>
         [HttpGet("languages")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(ListOfLanguages), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IList<LanguageDto>), (int)HttpStatusCode.OK)]
         public IActionResult GetAllLanguages()
         {
             ListOfLanguages listOfLanguages = new ListOfLanguages();
-            return Ok(listOfLanguages._list);
+            return Ok(listOfLanguages.GetList());
         }
 
         /// <summary>

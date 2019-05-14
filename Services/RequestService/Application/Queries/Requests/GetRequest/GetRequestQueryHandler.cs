@@ -1,17 +1,18 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RequestService.Application.Exceptions;
 using RequestService.Application.Queries.Requests.GetRequests;
-using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Application.Queries.Requests.GetRequest
 {
     public class GetAnswersByRequestIdQueryHandler : IRequestHandler<GetRequestQuery, RequestPreviewDto>
     {
-        private readonly RequestServiceDbContext _context;
+        private readonly IRequestServiceDbContext _context;
 
-        public GetAnswersByRequestIdQueryHandler(RequestServiceDbContext context)
+        public GetAnswersByRequestIdQueryHandler(IRequestServiceDbContext context)
         {
             _context = context;
         }
@@ -22,7 +23,7 @@ namespace RequestService.Application.Queries.Requests.GetRequest
 
             if (entity == null)
             {
-                return null;
+                throw new NotFoundException($"{request.RequestId}", entity);
             }
 
             return new RequestPreviewDto

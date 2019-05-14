@@ -1,9 +1,11 @@
+using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using RequestService.Domain.Requests;
 
+
 namespace RequestService.Infrastructure.Persistence
 {
-    public class RequestServiceDbContext : DbContext
+    public class RequestServiceDbContext : DbContext, IRequestServiceDbContext
     {
         public RequestServiceDbContext(DbContextOptions<RequestServiceDbContext> options) : base(options) { }
 

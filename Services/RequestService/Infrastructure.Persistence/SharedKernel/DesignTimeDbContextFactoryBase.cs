@@ -14,7 +14,7 @@ namespace RequestService.Infrastructure.Persistence.SharedKernel
 
             public TContext CreateDbContext(string[] args)
             {
-                var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}RequestService.WebApi", Path.DirectorySeparatorChar);
+                var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}WebApi", Path.DirectorySeparatorChar);
                 return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
             }
 

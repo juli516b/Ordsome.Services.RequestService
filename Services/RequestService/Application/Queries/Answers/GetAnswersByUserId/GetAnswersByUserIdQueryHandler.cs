@@ -2,20 +2,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RequestService.Application.Exceptions;
 using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
-using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Application.Queries.Answers.GetanswersByUserId
 {
     public class GetAnswersByUserIdQueryHandler : IRequestHandler<GetAnswersByUserIdQuery, ICollection<AnswerDto>>
     {
-        private readonly RequestServiceDbContext _context;
+        private readonly IRequestServiceDbContext _context;
         private readonly IMediator _mediator;
 
-        public GetAnswersByUserIdQueryHandler(RequestServiceDbContext context, IMediator mediator)
+        public GetAnswersByUserIdQueryHandler(IRequestServiceDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;

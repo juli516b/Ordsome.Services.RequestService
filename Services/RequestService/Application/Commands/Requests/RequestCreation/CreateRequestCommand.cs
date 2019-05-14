@@ -1,11 +1,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
 using RequestService.Application.Interfaces;
 using RequestService.Domain.Requests;
-using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Application.Commands.Requests.RequestCreation
 {
@@ -19,10 +19,10 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
 
     public class Handler : IRequestHandler<CreateRequestCommand, Unit>
     {
-        private readonly RequestServiceDbContext _context;
+        private readonly IRequestServiceDbContext _context;
         private readonly IMediator _mediator;
 
-        public Handler(RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+        public Handler(IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;

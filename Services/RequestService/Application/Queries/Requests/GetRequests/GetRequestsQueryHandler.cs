@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RequestService.Domain.Requests;
-using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Application.Queries.Requests.GetRequests
 {
     public class GetRequestsQueryHandler : IRequestHandler<GetRequestsQuery, List<RequestPreviewDto>>
     {
-        private readonly RequestServiceDbContext _context;
+        private readonly IRequestServiceDbContext _context;
 
-        public GetRequestsQueryHandler(RequestServiceDbContext context)
+        public GetRequestsQueryHandler(IRequestServiceDbContext context)
         {
             _context = context;
         }
@@ -33,7 +33,8 @@ namespace RequestService.Application.Queries.Requests.GetRequests
                             LanguageOrigin = entity.LanguageOrigin,
                             LanguageTarget = entity.LanguageTarget,
                             TextToTranslate = entity.TextToTranslate,
-                            IsClosed = entity.IsClosed
+                            IsClosed = entity.IsClosed,
+                            UserId = entity.UserId
                     });
             }
             return entitiesToReturn;

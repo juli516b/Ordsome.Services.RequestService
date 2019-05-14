@@ -2,8 +2,6 @@
 using RequestService.Domain.Requests;
 using RequestService.Infrastructure.Persistence;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Application.Tests
 {
@@ -19,10 +17,12 @@ namespace Application.Tests
 
             context.Database.EnsureCreated();
 
-            context.Answers.AddRange(new []
+            context.Answers.AddRange(new[]
             {
                 new Answer { }
-            })
+            });
+
+            return null;
         }
     }
 }

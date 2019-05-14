@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RequestService.Application.Exceptions;
 using RequestService.Application.Interfaces;
-using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer
 {
     public class SetAnswerAsCorrectAnswerCommandHandler : INotificationHandler<SetAnswerAsCorrectAnswerCommand>
     {
-        private readonly RequestServiceDbContext _context;
+        private readonly IRequestServiceDbContext _context;
         private readonly INotificationService _notificationService;
         private readonly IMediator _mediator;
 
-        public SetAnswerAsCorrectAnswerCommandHandler(RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+        public SetAnswerAsCorrectAnswerCommandHandler(IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
         {
             _context = context;
             _notificationService = notificationService;
@@ -41,7 +41,7 @@ namespace RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer
 
             answerToEdit.IsPreferred = notification.IsPreferred;
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

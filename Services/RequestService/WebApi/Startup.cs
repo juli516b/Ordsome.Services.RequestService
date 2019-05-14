@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using Application.Interfaces;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -46,16 +47,18 @@ namespace RequestService.WebApi
             services.AddMediatR(typeof(GetAnswersByRequestIdQueryHandler).GetTypeInfo().Assembly);
 
             // Add DbContext using SQL Server Provider
-            services.AddDbContext<RequestServiceDbContext>(options =>
+            services.AddDbContext<IRequestServiceDbContext, RequestServiceDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("RequestDbService")));
 
             services
                 .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateRequestCommandValidator>());
-
-            // Customise default API behavour
-            services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddFluentValidation(fv => 
+                    {
+                        fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                        fv.RegisterValidatorsFromAssemblyContaining<CreateRequestCommandValidator>();
+                        fv.LocalizationEnabled = false;
+                    });
 
             // Swagger
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Info { Title = "RequestServiceApi", Version = "v1" }));

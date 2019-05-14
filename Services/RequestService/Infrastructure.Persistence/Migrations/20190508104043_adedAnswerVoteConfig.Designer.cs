@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Infrastructure.Persistence.Migrations
-{
+{ 
     [DbContext(typeof(RequestServiceDbContext))]
     [Migration("20190508104043_adedAnswerVoteConfig")]
     partial class adedAnswerVoteConfig

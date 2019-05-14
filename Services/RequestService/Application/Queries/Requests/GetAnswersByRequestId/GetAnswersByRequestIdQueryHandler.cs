@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RequestService.Infrastructure.Persistence;
+using RequestService.Application.Exceptions;
 
 namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
 {
     public class GetAnswersByRequestIdQueryHandler : IRequestHandler<GetAnswersByRequestIdQuery, IEnumerable<AnswerDto>>
     {
-        private readonly RequestServiceDbContext _context;
+        private readonly IRequestServiceDbContext _context;
 
-        public GetAnswersByRequestIdQueryHandler(RequestServiceDbContext context)
+        public GetAnswersByRequestIdQueryHandler(IRequestServiceDbContext context)
         {
             _context = context;
         }
@@ -21,7 +22,7 @@ namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
             var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.RequestId);
 
             if (entity == null)
-                return null;
+                throw new NotFoundException($"{request.RequestId}", entity);
 
             List<AnswerDto> listOfAnswers = new List<AnswerDto>();
 
@@ -36,9 +37,7 @@ namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
                 });
             }
 
-            IEnumerable<AnswerDto> answersToReturn = listOfAnswers;
-
-            return answersToReturn;
+            return listOfAnswers;
         }
     }
 }

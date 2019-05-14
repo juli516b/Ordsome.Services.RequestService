@@ -1,11 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RequestService.Application.Exceptions;
 using RequestService.Application.Interfaces;
 using RequestService.Domain.Requests;
-using RequestService.Infrastructure.Persistence;
 
 namespace RequestService.Application.Commands.Answers.AnswerCreation
 {
@@ -17,11 +17,11 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
 
     public class Handler : IRequestHandler<CreateAnswerCommand, AnswerIdDto>
     {
-        private readonly RequestServiceDbContext _context;
+        private readonly IRequestServiceDbContext _context;
         private readonly INotificationService _notificationService;
         private readonly IMediator _mediator;
 
-        public Handler(RequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+        public Handler(global::Application.Interfaces.IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
         {
             _context = context;
             _notificationService = notificationService;

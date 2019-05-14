@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RequestService.Application.Exceptions;
@@ -10,9 +11,9 @@ namespace RequestService.Application.Commands.Answers.VoteOnAnswer
 {
     public class VoteOnAnswerCommandHandler : IRequestHandler<VoteOnAnswerCommand, Unit>
     {
-        private readonly Infrastructure.Persistence.RequestServiceDbContext _context;
+        private readonly IRequestServiceDbContext _context;
         private readonly IMediator _mediator;
-        public VoteOnAnswerCommandHandler(Infrastructure.Persistence.RequestServiceDbContext context, IMediator mediator)
+        public VoteOnAnswerCommandHandler(IRequestServiceDbContext context, IMediator mediator)
         {
             _mediator = mediator;
             _context = context;
@@ -48,7 +49,7 @@ namespace RequestService.Application.Commands.Answers.VoteOnAnswer
             };
 
             await _context.AnswerVotes.AddAsync(answerToSave);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }
