@@ -19,11 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Services\RequestService\Infrastructure.Persistence\Infrastructure.Persistence.csproj" />
-    <ProjectReference Include="..\Services\RequestService\WebApi\WebApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Microsoft.AspNetCore">
       <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.dll</HintPath>
     </Reference>
@@ -31,6 +26,10 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Answer\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\WebApi\WebApi.csproj" />
   </ItemGroup>
 
 </Project>
