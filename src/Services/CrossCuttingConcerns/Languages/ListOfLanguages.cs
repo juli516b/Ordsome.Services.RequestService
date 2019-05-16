@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -9,7 +10,7 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
 {
     public class ListOfLanguages
     {
-        string json = @"{ 'list': [
+        private readonly string json = @"{ 'list': [
     {'id':1,'code':'ab','name':'Abkhaz','nativeName':'аҧсуа'},
     {'id':2,'code':'aa','name':'Afar','nativeName':'Afaraf'},
     {'id':3,'code':'af','name':'Afrikaans','nativeName':'Afrikaans'},
@@ -193,7 +194,7 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
     {'id':182,'code':'yo','name':'Yoruba','nativeName':'Yorùbá'},
     {'id':183,'code':'za','name':'Zhuang, Chuang','nativeName':'Saɯ cueŋƅ, Saw cuengh'}]}";
 
-        public LanguageDto GetLanguage(int id)
+        public LanguageDto GetLanguageById(int id)
         {
             JObject o = JObject.Parse(json);
             JArray a = (JArray)o["list"];
@@ -202,12 +203,20 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
             return _list.FirstOrDefault(x => x.Id == id);
         }
 
+        public LanguageDto GetLanguageByCode(string code)
+        {
+            JObject o = JObject.Parse(json);
+            JArray a = (JArray)o["list"];
+            IList<LanguageDto> _list = a.ToObject<IList<LanguageDto>>();
+
+            return _list.FirstOrDefault(x => x.LanguageCode == code);
+        }
+
         public IList<LanguageDto> GetList()
         {
             JObject o = JObject.Parse(json);
             JArray a = (JArray)o["list"];
             return a.ToObject<IList<LanguageDto>>();
         }
-
     }
 }

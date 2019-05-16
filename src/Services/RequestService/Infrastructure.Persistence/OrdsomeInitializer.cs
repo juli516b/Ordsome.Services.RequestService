@@ -35,9 +35,9 @@ namespace Infrastructure.Persistence
         {
             var answervotes = new[]
             {
-                new AnswerVote { AnswerId = 1, UserId = Guid.Parse("cb23e0db-208f-421d-9210-4b976576056f"), Like = true},
-                new AnswerVote { AnswerId = 2, UserId = Guid.Parse("b8f632a1-ef73-4ef1-9582-87850f1b7e91"), Like = true},
-                new AnswerVote { AnswerId = 3, UserId = Guid.Parse("1e48921b-9736-47df-8863-9c8395c74bab"), Like = true}
+                new AnswerVote { AnswerId = 1, UserId = Guid.Parse("8e3f52d0-ee7e-4353-8941-ab1b75bbdf76"), Like = true},
+                new AnswerVote { AnswerId = 2, UserId = Guid.Parse("50c41b86-1620-4912-9b5d-561b34dc27f7"), Like = true},
+                new AnswerVote { AnswerId = 3, UserId = Guid.Parse("0e8e8abd-0f47-4164-9a1d-55ed125db66b"), Like = true}
             };
 
             context.AnswerVotes.AddRange(answervotes);
@@ -49,27 +49,27 @@ namespace Infrastructure.Persistence
         {
             var answersForRequest1 = new[]
             {
-                new Answer { IsPreferred = false, RequestId = 1,TextTranslated = "Det er en ko", UserId = Guid.Parse("b8f632a1-ef73-4ef1-9582-87850f1b7e91")},
-                new Answer { IsPreferred = false, RequestId = 1,TextTranslated = "Det en ko", UserId = Guid.Parse("1e48921b-9736-47df-8863-9c8395c74bab")},
+                new Answer { IsPreferred = false, RequestId = 1,TextTranslated = "Det er en ko", UserId = Guid.Parse("50c41b86-1620-4912-9b5d-561b34dc27f7")},
+                new Answer { IsPreferred = false, RequestId = 1,TextTranslated = "Det en ko", UserId = Guid.Parse("0e8e8abd-0f47-4164-9a1d-55ed125db66b")},
             };
 
             var answersForRequest2 = new[]
             {
-                new Answer { IsPreferred = false, RequestId = 2,TextTranslated = "Det er en mand", UserId = Guid.Parse("cb23e0db-208f-421d-9210-4b976576056f")},
-                new Answer { IsPreferred = false, RequestId = 2,TextTranslated = "Det en mand", UserId = Guid.Parse("1e48921b-9736-47df-8863-9c8395c74bab")},
+                new Answer { IsPreferred = false, RequestId = 2,TextTranslated = "Det er en mand", UserId = Guid.Parse("8e3f52d0-ee7e-4353-8941-ab1b75bbdf76")},
+                new Answer { IsPreferred = false, RequestId = 2,TextTranslated = "Det en mand", UserId = Guid.Parse("0e8e8abd-0f47-4164-9a1d-55ed125db66b")},
             };
 
             var answersForRequest3 = new[]
             {
-                new Answer { IsPreferred = false, RequestId = 3,TextTranslated = "Det er en kat!", UserId = Guid.Parse("bab8a434-4892-4834-949c-3a603b49b426")},
-                new Answer { IsPreferred = false, RequestId = 3,TextTranslated = "Det en kat", UserId = Guid.Parse("8531802a-95e0-4287-8edf-16f7fecc3204")},
+                new Answer { IsPreferred = false, RequestId = 3,TextTranslated = "Det er en kat!", UserId = Guid.Parse("8e3f52d0-ee7e-4353-8941-ab1b75bbdf76")},
+                new Answer { IsPreferred = false, RequestId = 3,TextTranslated = "Det en kat", UserId = Guid.Parse("50c41b86-1620-4912-9b5d-561b34dc27f7")},
             };
 
             var requests = new[]
             {
-                new Request { LanguageOrigin = "en", LanguageTarget="dk", IsClosed = false, TextToTranslate="Its a cow", UserId = Guid.Parse("cb23e0db-208f-421d-9210-4b976576056f"), Answers = answersForRequest1},
-                new Request { LanguageOrigin = "en", LanguageTarget="dk", IsClosed = false, TextToTranslate="Its a man!", UserId = Guid.Parse("b8f632a1-ef73-4ef1-9582-87850f1b7e91"), Answers = answersForRequest2  },
-                new Request { LanguageOrigin = "en", LanguageTarget="dk", IsClosed = false, TextToTranslate="Its a cat", UserId = Guid.Parse("1e48921b-9736-47df-8863-9c8395c74bab"), Answers = answersForRequest3  }
+                new Request { LanguageOrigin = "en", LanguageTarget="dk", IsClosed = false, TextToTranslate="Its a cow", UserId = Guid.Parse("8e3f52d0-ee7e-4353-8941-ab1b75bbdf76"), Answers = answersForRequest1},
+                new Request { LanguageOrigin = "en", LanguageTarget="dk", IsClosed = false, TextToTranslate="Its a man!", UserId = Guid.Parse("50c41b86-1620-4912-9b5d-561b34dc27f7"), Answers = answersForRequest2  },
+                new Request { LanguageOrigin = "en", LanguageTarget="dk", IsClosed = false, TextToTranslate="Its a cat", UserId = Guid.Parse("0e8e8abd-0f47-4164-9a1d-55ed125db66b"), Answers = answersForRequest3  }
             };
             context.Requests.AddRange(requests);
 

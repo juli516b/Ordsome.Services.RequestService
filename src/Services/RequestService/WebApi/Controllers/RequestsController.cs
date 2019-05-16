@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Application.Queries.Requests.GetAnswersByLanguageCode;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,8 +18,6 @@ using RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId;
 using RequestService.Application.Queries.Requests.GetRequest;
 using RequestService.Application.Queries.Requests.GetRequests;
 using RequestService.Application.Queries.Requests.GetRequestsByUserId;
-using RequestService.RequestService.WebApi.RestClients;
-using RestEase;
 
 namespace RequestService.WebApi.Controllers
 {
@@ -31,10 +30,19 @@ namespace RequestService.WebApi.Controllers
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult> GetAll([FromQuery] GetRequestsQuery request)
         {
-            return Ok(await Mediator.Send(new GetRequestsQuery()));
+            return Ok(await Mediator.Send(request));
         }
+
+        //[Authorize]
+        //[HttpGet()]
+        //[Produces("application/json")]
+        //[ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
+        //public async Task<ActionResult> GetAllRequestsByLanguageCode([FromQuery] string fromLanguage, string toLanguage)
+        //{
+        //    return Ok(await Mediator.Send(new GetRequestByLanguageUrlQuery { FromLanguage = fromLanguage, ToLanguage = toLanguage}));
+        //}
 
         /// <summary>
         /// Gets all requests based on UserId

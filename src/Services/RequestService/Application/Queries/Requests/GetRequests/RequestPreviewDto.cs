@@ -14,6 +14,5 @@ namespace RequestService.Application.Queries.Requests.GetRequests
         public string TextToTranslate { get; set; }
         public int NoOfAnswers { get; set; }
         public bool IsClosed { get; set; }
-        public Guid UserId { get; set; }
     }
 }

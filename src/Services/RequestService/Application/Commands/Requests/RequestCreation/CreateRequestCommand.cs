@@ -23,7 +23,7 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
         private readonly IRequestServiceDbContext _context;
         private readonly IMediator _mediator;
 
-        public Handler(IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+        public Handler(IRequestServiceDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
@@ -33,9 +33,9 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
         {
             ListOfLanguages listOfLanguages = new ListOfLanguages();
 
-            var languageOrigin = listOfLanguages.GetLanguage(request.LanguageOriginId);
+            var languageOrigin = listOfLanguages.GetLanguageById(request.LanguageOriginId);
 
-            var languageTarget = listOfLanguages.GetLanguage(request.LanguageTargetId);
+            var languageTarget = listOfLanguages.GetLanguageById(request.LanguageTargetId);
 
             if (languageTarget == null)
             {
@@ -44,10 +44,10 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
 
             if (languageOrigin == null)
             {
-                string emptyLanguage = "Not set";
+                const string emptyLanguage = "Not set";
                 var entity = new Request
                 {
-                    LanguageTarget = languageTarget.LanguageName,
+                    LanguageTarget = languageTarget.LanguageCode,
                     LanguageOrigin = emptyLanguage,
                     TextToTranslate = request.TextToTranslate,
                     UserId = request.UserId
@@ -58,8 +58,8 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
             {
                 var entity = new Request
                 {
-                    LanguageTarget = languageTarget.LanguageName,
-                    LanguageOrigin = languageOrigin.LanguageName,
+                    LanguageTarget = languageTarget.LanguageCode,
+                    LanguageOrigin = languageOrigin.LanguageCode,
                     TextToTranslate = request.TextToTranslate,
                     UserId = request.UserId
                 };

@@ -65,7 +65,6 @@ namespace UserService.WebApi.Controllers
             return NoContent();
         }
 
-        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetUserInformation(Guid id)

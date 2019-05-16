@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Application.Interfaces;
@@ -53,7 +54,7 @@ namespace RequestService.WebApi
             services
                 .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddFluentValidation(fv => 
+                .AddFluentValidation(fv =>
                     {
                         fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                         fv.RegisterValidatorsFromAssemblyContaining<CreateRequestCommandValidator>();
@@ -61,7 +62,11 @@ namespace RequestService.WebApi
                     });
 
             // Swagger
-            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Info { Title = "RequestServiceApi", Version = "v1" }));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "RequestServiceApi", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            });
 
             // Security
 
@@ -99,11 +104,13 @@ namespace RequestService.WebApi
             app.UseSwagger(c =>
             {
                 c.RouteTemplate = "requestapi/docs/{documentName}/swagger.json";
+
             });
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/requestapi/docs/v1/swagger.json", "RequestAPI");
                 c.RoutePrefix = "requestapi/docs";
+
             });
             app.UseAuthentication();
 

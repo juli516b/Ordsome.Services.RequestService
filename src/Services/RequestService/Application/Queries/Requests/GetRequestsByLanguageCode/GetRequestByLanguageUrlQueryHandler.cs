@@ -1,24 +1,30 @@
+﻿using Application.Interfaces;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using RequestService.Application.Queries.Requests.GetRequests;
+using RequestService.Application.RestClients;
+using RequestService.Domain.Requests;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using RequestService.Domain.Requests;
 
-namespace RequestService.Application.Queries.Requests.GetRequests
+namespace Application.Queries.Requests.GetAnswersByLanguageCode
 {
-    public class GetRequestsQueryHandler : IRequestHandler<GetRequestsQuery, List<RequestPreviewDto>>
+    public class GetRequestByLanguageUrlQueryHandler : IRequestHandler<GetRequestByLanguageUrlQuery, IEnumerable<RequestPreviewDto>>
     {
         private readonly IRequestServiceDbContext _context;
+        private readonly IMediator _mediator;
+        private readonly IUserServiceClient _client;
 
-        public GetRequestsQueryHandler(IRequestServiceDbContext context)
+        public GetRequestByLanguageUrlQueryHandler(IRequestServiceDbContext context, IMediator mediator, IUserServiceClient client)
         {
             _context = context;
+            _mediator = mediator;
+            _client = client;
         }
 
-        public async Task<List<RequestPreviewDto>> Handle(GetRequestsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<RequestPreviewDto>> Handle(GetRequestByLanguageUrlQuery request, CancellationToken cancellationToken)
         {
             var entities = new List<Request>();
 
@@ -38,7 +44,6 @@ namespace RequestService.Application.Queries.Requests.GetRequests
                     RequestId = item.Id,
                     LanguageOrigin = item.LanguageOrigin,
                     LanguageTarget = item.LanguageTarget,
-                    TextToTranslate = item.TextToTranslate,
                     NoOfAnswers = item.Answers.Count,
                     IsClosed = item.IsClosed
                 });

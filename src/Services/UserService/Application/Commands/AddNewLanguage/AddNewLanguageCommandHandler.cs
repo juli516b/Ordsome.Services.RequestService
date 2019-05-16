@@ -29,7 +29,7 @@ namespace UserService.Application.Commands.AddNewLanguage
 
             ListOfLanguages listOfLanguages = new ListOfLanguages();
 
-            var language = listOfLanguages.GetLanguage(request.LanguageId);
+            var language = listOfLanguages.GetLanguageById(request.LanguageId);
 
             Language languageToAdd = new Language
 
