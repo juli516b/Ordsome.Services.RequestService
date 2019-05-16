@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Ordsome.Services.CrossCuttingConcerns.Languages;
 using RequestService.Application.Queries.Requests.GetRequests;
 using RequestService.Application.RestClients;
 using RequestService.Domain.Requests;
@@ -28,12 +29,13 @@ namespace Application.Queries.Requests.GetAnswersByLanguageCode
         {
             var entities = new List<Request>();
 
-            if (!string.IsNullOrWhiteSpace(request.FromLanguage) && !string.IsNullOrWhiteSpace(request.ToLanguage))
+            if (LanguageValidationHelpers.BeALanguage(request.FromLanguage) && LanguageValidationHelpers.BeALanguage(request.ToLanguage))
             {
                 entities = await _context.Requests.Include(x => x.Answers).Where(x => x.LanguageOrigin == request.FromLanguage && x.LanguageTarget == request.ToLanguage).ToListAsync();
+            } else
+            {
+                entities = await _context.Requests.Include(x => x.Answers).ToListAsync();
             }
-
-            entities = await _context.Requests.Include(x => x.Answers).ToListAsync();
 
             List<RequestPreviewDto> requestPreviewDtos = new List<RequestPreviewDto>();
 

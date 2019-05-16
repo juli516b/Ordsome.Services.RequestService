@@ -4,15 +4,19 @@ using System.Text;
 
 namespace Ordsome.Services.CrossCuttingConcerns.Languages
 {
-    public class LanguageValidationHelpers
+    public static class LanguageValidationHelpers
     {
-        public bool BeALanguage(string arg)
+        public static bool BeALanguage(string arg)
         {
             ListOfLanguages listOfLanguages = new ListOfLanguages();
 
             var language = listOfLanguages.GetLanguageByCode(arg);
 
-            return language == null;
+            if (language == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
