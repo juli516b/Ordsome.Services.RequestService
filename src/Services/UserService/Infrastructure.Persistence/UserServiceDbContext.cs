@@ -1,10 +1,12 @@
 using System;
+using Application;
+using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Users;
 
 namespace UserService.Infrastructure.Persistence
 {
-    public class UserServiceDbContext : DbContext
+    public class UserServiceDbContext : DbContext, IUserServiceDbContext
     {
         public UserServiceDbContext(DbContextOptions<UserServiceDbContext> options) : base(options) { }
 

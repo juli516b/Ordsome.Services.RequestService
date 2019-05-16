@@ -12,7 +12,8 @@ namespace RequestService.Application.RestClients
         public async Task<bool> CheckUserId(Guid userId)
         {
             IUserServiceClient api = RestClient.For<IUserServiceClient>("http://localhost:7002/api/users");
-            return await api.CheckUserId(userId);
+            bool boolToReturn = await api.CheckUserId(userId);
+            return boolToReturn;
         }
     }
 }

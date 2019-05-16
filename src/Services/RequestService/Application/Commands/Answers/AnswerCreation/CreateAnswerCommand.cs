@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
@@ -13,6 +14,7 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
     {
         public string TextTranslated { get; set; }
         public int RequestId { get; set; }
+        public Guid UserId { get; set; }
     }
 
     public class Handler : IRequestHandler<CreateAnswerCommand, AnswerIdDto>
@@ -21,7 +23,7 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
         private readonly INotificationService _notificationService;
         private readonly IMediator _mediator;
 
-        public Handler(global::Application.Interfaces.IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+        public Handler(IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
         {
             _context = context;
             _notificationService = notificationService;

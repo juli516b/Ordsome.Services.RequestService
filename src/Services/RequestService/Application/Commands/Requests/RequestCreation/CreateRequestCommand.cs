@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Application.Interfaces;
 using MediatR;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
+using RequestService.Application.Exceptions;
 using RequestService.Application.Interfaces;
 using RequestService.Domain.Requests;
 
@@ -32,38 +33,38 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
         {
             ListOfLanguages listOfLanguages = new ListOfLanguages();
 
-            var getAndCheckIfLanguageOriginExists = listOfLanguages.GetLanguage(request.LanguageOriginId);
+            var languageOrigin = listOfLanguages.GetLanguage(request.LanguageOriginId);
 
-            var getAndCheckIfLanguageTargetExists = listOfLanguages.GetLanguage(request.LanguageTargetId);
+            var languageTarget = listOfLanguages.GetLanguage(request.LanguageTargetId);
 
-            if (getAndCheckIfLanguageTargetExists == null)
+            if (languageTarget == null)
             {
-                throw new Exception();
+                throw new NotFoundException($"{request.LanguageTargetId}", languageOrigin);
             }
 
-            if (getAndCheckIfLanguageOriginExists == null)
+            if (languageOrigin == null)
             {
                 string emptyLanguage = "Not set";
                 var entity = new Request
                 {
-                    LanguageTarget = getAndCheckIfLanguageTargetExists.LanguageName,
+                    LanguageTarget = languageTarget.LanguageName,
                     LanguageOrigin = emptyLanguage,
                     TextToTranslate = request.TextToTranslate,
                     UserId = request.UserId
                 };
-
                 _context.Requests.Add(entity);
-
             }
             else
             {
                 var entity = new Request
                 {
-                    LanguageTarget = getAndCheckIfLanguageTargetExists.LanguageName,
-                    LanguageOrigin = getAndCheckIfLanguageOriginExists.LanguageName,
+                    LanguageTarget = languageTarget.LanguageName,
+                    LanguageOrigin = languageOrigin.LanguageName,
                     TextToTranslate = request.TextToTranslate,
                     UserId = request.UserId
                 };
+
+                _context.Requests.Add(entity);
             }
 
             await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

@@ -4,22 +4,23 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Application;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using UserService.Application.Exceptions;
-using UserService.Infrastructure.Persistence;
 
 namespace UserService.Application.Commands.Login
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginToken>
     {
-        private UserServiceDbContext _context;
-        private IMediator _mediator;
-        private IConfiguration _config;
+        private readonly IUserServiceDbContext _context;
+        private readonly IMediator _mediator;
+        private readonly IConfiguration _config;
 
-        public LoginCommandHandler(UserServiceDbContext context, IMediator mediator, IConfiguration config)
+        public LoginCommandHandler(IUserServiceDbContext context, IMediator mediator, IConfiguration config)
         {
             _context = context;
             _mediator = mediator;

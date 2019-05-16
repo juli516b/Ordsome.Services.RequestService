@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text;
-using AutoMapper;
+using Application;
+using Application.Interfaces;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Steeltoe.Discovery.Client;
 using Swashbuckle.AspNetCore.Swagger;
 using UserService.Application.Commands.Register;
 using UserService.Application.Queries.GetRequestsBasedOnUserId;
@@ -45,7 +45,7 @@ namespace UserService.WebApi
             services.AddMediatR(typeof(GetRequestsBasedOnUserIdQueryHandler).GetTypeInfo().Assembly);
 
             // Add DbContext using SQL Server Provider
-            services.AddDbContext<UserServiceDbContext>(options =>
+            services.AddDbContext<IUserServiceDbContext , UserServiceDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UserServiceDb")));
 
             services

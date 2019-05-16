@@ -1,7 +1,9 @@
 ﻿using System;
+using Application;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,7 +15,7 @@ namespace WebApi.Tests.Common
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.ConfigureServices(services =>
+            builder.ConfigureTestServices(services =>
             {
                 // Create a new service provider.
                 var serviceProvider = new ServiceCollection()
@@ -32,7 +34,7 @@ namespace WebApi.Tests.Common
                 var sp = services.BuildServiceProvider();
 
                 // Create a scope to obtain a reference to the database
-                // context (NorthwindDbContext)
+                // context (RequestServiceDbContext)
                 using (var scope = sp.CreateScope())
                 {
                     var scopedServices = scope.ServiceProvider;

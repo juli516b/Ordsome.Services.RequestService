@@ -51,6 +51,42 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
 
             Assert.Equal("BadRequest", response.StatusCode.ToString());
         }
+
+        [Fact]
+        public async Task CreateNewRequestWithBadLanguage_ReturnsBadRequest()
+        {
+            var command = new CreateRequestCommand
+            {
+                LanguageOriginId = 400,
+                LanguageTargetId = 600,
+                TextToTranslate = "Bobby har svært ved dansk",
+                UserId = Guid.NewGuid()
+            };
+
+            var content = Utilities.GetRequestContent(command);
+
+            var response = await _client.PostAsync("/api/requests", content);
+
+            Assert.Equal("NotFound", response.StatusCode.ToString());
+        }
+
+        [Fact]
+        public async Task CreateNewRequestWithNoLanguageOrigin_ReturnsSuccesCode()
+        {
+            var command = new CreateRequestCommand
+            {
+                LanguageTargetId = 20,
+                TextToTranslate = "Bobby har svært ved dansk",
+                UserId = Guid.NewGuid()
+            };
+
+            var content = Utilities.GetRequestContent(command);
+
+            var response = await _client.PostAsync("/api/requests", content);
+
+            response.EnsureSuccessStatusCode();
+
+        }
     }
 }
 

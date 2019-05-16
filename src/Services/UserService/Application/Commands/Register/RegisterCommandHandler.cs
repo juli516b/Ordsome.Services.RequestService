@@ -1,27 +1,27 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Users;
-using UserService.Infrastructure.Persistence;
 
 namespace UserService.Application.Commands.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Unit>
     {
-        private UserServiceDbContext _context;
-        private IMediator _mediator;
+        private IUserServiceDbContext _context;
+        private readonly IMediator _mediator;
 
-        public RegisterCommandHandler(UserServiceDbContext context, IMediator mediator)
+        public RegisterCommandHandler(IUserServiceDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            Guid outputGuid;
-            bool parsedGuid = Guid.TryParse(request.Id, out outputGuid);
+            bool parsedGuid = Guid.TryParse(request.Id, out Guid outputGuid);
 
             if (outputGuid == Guid.Empty)
             {
@@ -35,7 +35,7 @@ namespace UserService.Application.Commands.Register
                 var user = await MakeUser(outputGuid, request.Username, request.Password);
                 await _context.Users.AddAsync(user);
             }
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }
@@ -66,9 +66,8 @@ namespace UserService.Application.Commands.Register
                 throw new Exception();
             }
 
-            byte[] passwordHash, passwordSalt;
 
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
 
             User user = new User
             {

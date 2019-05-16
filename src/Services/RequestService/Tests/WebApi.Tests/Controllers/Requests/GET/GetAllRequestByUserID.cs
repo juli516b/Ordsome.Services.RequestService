@@ -21,7 +21,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
         [Fact]
         public async Task ReturnsIEnumerableRequestPreviewDtoByUserId()
         {
-            var userid = "f5868e20-f943-4027-9cf9-a222df814d1f";
+            var userid = "cb23e0db-208f-421d-9210-4b976576056f";
             var response = await _client.GetAsync($"/api/requests/u/{userid}");
 
             response.EnsureSuccessStatusCode();

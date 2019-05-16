@@ -1,17 +1,18 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using UserService.Infrastructure.Persistence;
 
 namespace UserService.Application.Queries.CheckUserId
 {
     public class CheckUserIdQueryHandler : IRequestHandler<CheckUserIdQuery, bool>
     {
-        private readonly UserServiceDbContext _context;
+        private readonly IUserServiceDbContext _context;
         private readonly IMediator _mediator;
 
-        public CheckUserIdQueryHandler(UserServiceDbContext context, IMediator mediator)
+        public CheckUserIdQueryHandler(IUserServiceDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;

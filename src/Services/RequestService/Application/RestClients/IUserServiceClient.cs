@@ -9,7 +9,7 @@ namespace RequestService.Application.RestClients
         [Path("userId")]
         Guid UserId { get; set; }
 
-        [Get("{userId}")]
+        [Get("check/{userId}")]
         Task<bool> CheckUserId([Path] Guid userId);
     }
 }

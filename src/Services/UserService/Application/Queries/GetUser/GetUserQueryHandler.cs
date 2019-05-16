@@ -1,19 +1,19 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using UserService.Infrastructure.Persistence;
 
 namespace UserService.Application.Queries.GetUser
 {
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserDto>
     {
-        private UserServiceDbContext _context;
-        private IMediator _mediator;
+        private readonly IUserServiceDbContext _context;
+        private readonly IMediator _mediator;
 
-        public GetUserQueryHandler(UserServiceDbContext context, IMediator mediator)
+        public GetUserQueryHandler(IUserServiceDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;

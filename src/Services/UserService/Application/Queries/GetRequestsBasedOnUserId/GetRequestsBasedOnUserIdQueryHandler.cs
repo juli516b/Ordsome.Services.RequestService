@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using UserService.Application.RestClients;
-using UserService.Infrastructure.Persistence;
 
 namespace UserService.Application.Queries.GetRequestsBasedOnUserId
 {
     public class GetRequestsBasedOnUserIdQueryHandler : IRequestHandler<GetRequestsBasedOnUserIdQuery, ICollection<UserRequestsDto>>
     {
-        private readonly UserServiceDbContext _context;
+        private readonly IUserServiceDbContext _context;
         private readonly IMediator _mediator;
         private readonly IRequestServiceClient _client;
 
-        public GetRequestsBasedOnUserIdQueryHandler(IMediator mediator, UserServiceDbContext context, IRequestServiceClient client)
+        public GetRequestsBasedOnUserIdQueryHandler(IMediator mediator, IUserServiceDbContext context, IRequestServiceClient client)
         {
             _context = context;
             _mediator = mediator;
