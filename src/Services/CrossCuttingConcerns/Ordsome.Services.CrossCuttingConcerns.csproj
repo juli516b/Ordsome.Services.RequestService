@@ -12,6 +12,18 @@
     <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions">
       <HintPath>c:\program files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.hosting.abstractions\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
     </Reference>
+      <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+          <HintPath>C:\Users\jmath\.nuget\packages\microsoft.aspnetcore.http.abstractions\2.1.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+          <HintPath>c:\program files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.configuration.abstractions\2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+          <HintPath>c:\program files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.dependencyinjection.abstractions\2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Swashbuckle.AspNetCore.Swagger, Version=4.0.1.0, Culture=neutral, PublicKeyToken=62657d7474907593">
+          <HintPath>C:\Users\jmath\.nuget\packages\swashbuckle.aspnetcore.swagger\4.0.1\lib\netstandard2.0\Swashbuckle.AspNetCore.Swagger.dll</HintPath>
+      </Reference>
   </ItemGroup>
 
 

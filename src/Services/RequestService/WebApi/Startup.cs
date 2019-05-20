@@ -36,7 +36,6 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
             services.AddTransient<INotificationService, NotificationService>();
 
             // Add MediatR - muligt at tilføje logging af alle requests via mediatr her.
@@ -56,6 +55,9 @@ namespace WebApi
                     fv.RegisterValidatorsFromAssemblyContaining<CreateRequestCommandValidator>();
                     fv.LocalizationEnabled = false;
                 });
+
+            // Customise default API behaviour
+            services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 
             // Swagger
             services.AddSwaggerGen(c =>
@@ -81,6 +83,7 @@ namespace WebApi
 
             services.AddRestServices();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

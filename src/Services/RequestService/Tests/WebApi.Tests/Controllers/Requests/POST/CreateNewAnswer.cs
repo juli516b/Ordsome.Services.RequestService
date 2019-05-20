@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Application.Commands.Answers.AnswerCreation;
-using Microsoft.AspNetCore.Mvc.Testing;
 using RequestService.WebApi.Tests.Common;
 using WebApi;
 using Xunit;
@@ -11,7 +10,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
 {
     public class CreateNewAnswer : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        public CreateNewAnswer(WebApplicationFactory<Startup> factory)
+        public CreateNewAnswer(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }

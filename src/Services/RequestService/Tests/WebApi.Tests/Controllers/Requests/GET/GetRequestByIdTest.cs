@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Application.Queries.Requests.GetRequests;
-using Microsoft.AspNetCore.Mvc.Testing;
 using RequestService.WebApi.Tests.Common;
 using WebApi;
 using Xunit;
@@ -11,7 +10,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
 {
     public class GetRequestByIdTest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        public GetRequestByIdTest(WebApplicationFactory<Startup> factory)
+        public GetRequestByIdTest(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }

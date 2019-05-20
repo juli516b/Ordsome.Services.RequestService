@@ -31,15 +31,6 @@ namespace WebApi.Controllers
             return Ok(await Mediator.Send(request));
         }
 
-        //[Authorize]
-        //[HttpGet()]
-        //[Produces("application/json")]
-        //[ProducesResponseType(typeof(IEnumerable<RequestPreviewDto>), (int)HttpStatusCode.OK)]
-        //public async Task<ActionResult> GetAllRequestsByLanguageCode([FromQuery] string fromLanguage, string toLanguage)
-        //{
-        //    return Ok(await Mediator.Send(new GetRequestByLanguageUrlQuery { FromLanguage = fromLanguage, ToLanguage = toLanguage}));
-        //}
-
         /// <summary>
         ///     Gets all requests based on UserId
         /// </summary>

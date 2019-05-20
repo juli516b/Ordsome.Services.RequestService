@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Application.Queries.Requests.GetCountOfAnswersByRequestId;
-using Microsoft.AspNetCore.Mvc.Testing;
 using RequestService.WebApi.Tests.Common;
 using WebApi;
 using Xunit;
@@ -11,7 +10,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
 {
     public class GetsTheCountOfAnswersByRequestIdTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        public GetsTheCountOfAnswersByRequestIdTests(WebApplicationFactory<Startup> factory)
+        public GetsTheCountOfAnswersByRequestIdTests(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
