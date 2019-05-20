@@ -1,22 +1,23 @@
-﻿using RequestService.Application.Queries.Requests.GetRequests;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using WebApi.Tests.Common;
+using Application.Queries.Requests.GetRequests;
+using Microsoft.AspNetCore.Mvc.Testing;
+using RequestService.WebApi.Tests.Common;
+using WebApi;
 using Xunit;
 
 namespace RequestService.WebApi.Tests.Controllers.Requests.GET
 {
     public class GetAllRequestByUserIDTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private readonly HttpClient _client;
-
-        public GetAllRequestByUserIDTests(CustomWebApplicationFactory<Startup> factory)
+        public GetAllRequestByUserIDTests(WebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
+
+        private readonly HttpClient _client;
 
         [Fact]
         public async Task ReturnsIEnumerableRequestPreviewDtoByUserId()
@@ -30,16 +31,16 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
 
             Assert.NotEmpty(requests);
         }
+
         [Fact]
         public async Task ReturnsRightStatusCodeIfUserIdIsNotFound()
         {
             var userid = Guid.NewGuid();
             var response = await _client.GetAsync($"/api/requests/u/{userid}");
 
-            var statuscode = response.StatusCode;
+            var statusCode = response.StatusCode;
 
-            Assert.Equal("NotFound", statuscode.ToString());
+            Assert.Equal("NotFound", statusCode.ToString());
         }
-
     }
 }

@@ -1,8 +1,8 @@
 using System;
 using System.Linq.Expressions;
-using RequestService.Domain.Requests;
+using Domain.Requests;
 
-namespace RequestService.Application.Queries.Requests.GetRequests
+namespace Application.Queries.Requests.GetRequests
 {
     public class AnswerPreviewDto
     {

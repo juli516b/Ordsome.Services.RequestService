@@ -1,24 +1,24 @@
-﻿using RequestService.Application.Commands.Answers.AnswerCreation;
-using System;
-using System.Collections;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using WebApi.Tests.Common;
+using Application.Commands.Answers.AnswerCreation;
+using Microsoft.AspNetCore.Mvc.Testing;
+using RequestService.WebApi.Tests.Common;
+using WebApi;
 using Xunit;
 
 namespace RequestService.WebApi.Tests.Controllers.Requests.POST
 {
-
     public class CreateNewAnswer : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private readonly HttpClient _client;
-
-        public CreateNewAnswer(CustomWebApplicationFactory<Startup> factory)
+        public CreateNewAnswer(WebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
 
-        public async Task<bool> IsBadRequest(CreateAnswerCommand command)
+        private readonly HttpClient _client;
+
+        private async Task<bool> IsBadRequest(CreateAnswerCommand command)
         {
             var content = Utilities.GetRequestContent(command);
 
@@ -36,7 +36,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
             return response.StatusCode.ToString() == "NotFound";
         }
 
-        public async Task<bool> IsSuccessStatusCode(CreateAnswerCommand command)
+        private async Task<bool> IsSuccessStatusCode(CreateAnswerCommand command)
         {
             var content = Utilities.GetRequestContent(command);
 
@@ -46,10 +46,11 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
         }
 
 
-
         [Theory]
-        [MemberData(nameof(TestDataGenerator.GetCreateAnswerCommandsFromDataGenerator), MemberType = typeof(TestDataGenerator))]
-        public async void CreateNewAnswer_ReturnsBadRequest(CreateAnswerCommand a, CreateAnswerCommand b, CreateAnswerCommand c )
+        [MemberData(nameof(TestDataGenerator.GetCreateAnswerCommandsFromDataGenerator), MemberType =
+            typeof(TestDataGenerator))]
+        public async void CreateNewAnswer_ReturnsBadRequest(CreateAnswerCommand a, CreateAnswerCommand b,
+            CreateAnswerCommand c)
         {
             Assert.True(await IsBadRequest(a));
             Assert.True(await IsBadRequest(b));

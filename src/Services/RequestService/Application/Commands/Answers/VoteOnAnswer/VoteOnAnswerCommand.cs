@@ -1,7 +1,7 @@
 using System;
 using MediatR;
 
-namespace RequestService.Application.Commands.Answers.VoteOnAnswer
+namespace Application.Commands.Answers.VoteOnAnswer
 {
     public class VoteOnAnswerCommand : IRequest
     {

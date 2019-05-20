@@ -1,14 +1,14 @@
 ﻿using System;
 using Application.Interfaces;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RequestService.Infrastructure.Persistence;
 
-namespace WebApi.Tests.Common
+namespace RequestService.WebApi.Tests.Common
 {
     public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
@@ -41,7 +41,7 @@ namespace WebApi.Tests.Common
                     var logger = scopedServices
                         .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 
-                    var concreteContext = (RequestServiceDbContext)context;
+                    var concreteContext = (RequestServiceDbContext) context;
 
                     // Ensure the database is created.
                     concreteContext.Database.EnsureCreated();
@@ -53,7 +53,7 @@ namespace WebApi.Tests.Common
                     }
                     catch (Exception ex)
                     {
-                        logger.LogError(ex, $"An error occurred seeding the " +
+                        logger.LogError(ex, "An error occurred seeding the " +
                                             "database with test messages. Error: {ex.Message}");
                     }
                 }

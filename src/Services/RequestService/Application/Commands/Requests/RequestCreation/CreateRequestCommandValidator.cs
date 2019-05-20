@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace RequestService.Application.Commands.Requests.RequestCreation
+namespace Application.Commands.Requests.RequestCreation
 {
     public class CreateRequestCommandValidator : AbstractValidator<CreateRequestCommand>
     {
@@ -10,6 +10,5 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
             RuleFor(x => x.TextToTranslate).NotEmpty().NotNull();
             RuleFor(x => x.UserId).NotEmpty().NotNull();
         }
-
     }
 }

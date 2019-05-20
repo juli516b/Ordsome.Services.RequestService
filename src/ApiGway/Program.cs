@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
 
-namespace Ordsome.ApiGway
+namespace ApiGway
 {
     public class Program
     {
@@ -15,7 +11,7 @@ namespace Ordsome.ApiGway
             BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args)
+        private static IWebHost BuildWebHost(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls("https://localhost:7000")

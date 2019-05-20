@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
-namespace Ordsome.ApiGway
+namespace ApiGway
 {
     public class Startup
     {
@@ -17,13 +17,13 @@ namespace Ordsome.ApiGway
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile("ocelot.json", optional : false, reloadOnChange : true)
+                .AddJsonFile("ocelot.json", false, true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; }
+        private IConfigurationRoot Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -32,11 +32,11 @@ namespace Ordsome.ApiGway
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                    .GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                            .GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
                     };
                 });
             services.AddSwaggerForOcelot(Configuration);
@@ -46,10 +46,7 @@ namespace Ordsome.ApiGway
         public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseAuthentication();
-            app.UseSwaggerForOcelotUI(Configuration, opt =>
-            {
-                opt.EndPointBasePath = "/swagger/docs";
-            });
+            app.UseSwaggerForOcelotUI(Configuration, opt => { opt.EndPointBasePath = "/swagger/docs"; });
             await app.UseOcelot();
         }
     }

@@ -1,10 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using UserService.Application.Interfaces;
 
-namespace UserService.Application.Queries.CheckUserId
+namespace Application.Queries.CheckUserId
 {
     public class CheckUserIdQueryHandler : IRequestHandler<CheckUserIdQuery, bool>
     {
@@ -19,13 +19,9 @@ namespace UserService.Application.Queries.CheckUserId
 
         public async Task<bool> Handle(CheckUserIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.UserId);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken);
 
-            if (user == null)
-            {
-                return false;
-            }
-            return true;
+            return user != null;
         }
     }
 }

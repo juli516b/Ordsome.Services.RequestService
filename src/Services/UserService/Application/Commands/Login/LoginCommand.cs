@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using MediatR;
 
-namespace UserService.Application.Commands.Login
+namespace Application.Commands.Login
 {
     public class LoginCommand : IRequest<LoginToken>
     {

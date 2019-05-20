@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using UserService.Domain.Users;
+using Domain.Users;
+using Microsoft.EntityFrameworkCore;
 
-namespace UserService.Application.Interfaces
+namespace Application.Interfaces
 {
     public interface IUserServiceDbContext
     {

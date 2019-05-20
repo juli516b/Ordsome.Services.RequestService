@@ -1,15 +1,14 @@
+using System;
+using System.IO;
+using Application.Interfaces;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using UserService.Application.Interfaces;
-using UserService.Infrastructure.Persistence;
 
-namespace UserService.WebApi
+namespace WebApi
 {
     public class Program
     {
@@ -23,7 +22,7 @@ namespace UserService.WebApi
                 {
                     var context = scope.ServiceProvider.GetService<IUserServiceDbContext>();
 
-                    var concreteContext = (UserServiceDbContext)context;
+                    var concreteContext = (UserServiceDbContext) context;
                     concreteContext.Database.Migrate();
                     OrdsomeInitializer.Initialize(concreteContext);
                 }
@@ -37,16 +36,17 @@ namespace UserService.WebApi
             host.Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            new WebHostBuilder()
+        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var env = hostingContext.HostingEnvironment;
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.Local.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile("appsettings.json", true, true)
+                        .AddJsonFile("appsettings.Local.json", true, true)
+                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
                     config.AddEnvironmentVariables();
                 })
                 .ConfigureLogging((hostingContext, logging) =>
@@ -56,5 +56,6 @@ namespace UserService.WebApi
                     logging.AddDebug();
                 })
                 .UseStartup<Startup>();
+        }
     }
 }

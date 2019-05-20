@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using RequestService.Domain.Requests;
-
-namespace RequestService.Application.Queries.Requests.GetRequests
+namespace Application.Queries.Requests.GetRequests
 {
     public class RequestPreviewDto
     {

@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using RequestService.Application.Interfaces;
-using RequestService.Application.Models;
+using Application.Interfaces;
+using Application.Models;
 
-namespace RequestService.Infrastructure
+namespace Infrastructure
 {
     public class NotificationService : INotificationService
     {

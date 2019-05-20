@@ -1,11 +1,8 @@
-﻿using FluentValidation;
+﻿using Application.RestClients;
+using FluentValidation;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
-using RequestService.Application.RestClients;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Application.Queries.Requests.GetAnswersByLanguageCode
+namespace Application.Queries.Requests.GetRequestsByLanguageCode
 {
     public class GetRequestsByLanguageQueryValidator : AbstractValidator<GetRequestByLanguageUrlQuery>
     {
@@ -16,12 +13,11 @@ namespace Application.Queries.Requests.GetAnswersByLanguageCode
             _client = client;
             RuleFor(x => x.FromLanguage).Must(BeALanguage);
             RuleFor(x => x.ToLanguage).Must(BeALanguage);
-
         }
 
         private bool BeALanguage(string arg)
         {
-            ListOfLanguages listOfLanguages = new ListOfLanguages();
+            var listOfLanguages = new ListOfLanguages();
 
             var language = listOfLanguages.GetLanguageByCode(arg);
 

@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace RequestService.Application.Commands.Requests.RequestCreation
+namespace Application.Commands.Requests.RequestCreation
 {
     public partial class RequestCreated : INotification
     {

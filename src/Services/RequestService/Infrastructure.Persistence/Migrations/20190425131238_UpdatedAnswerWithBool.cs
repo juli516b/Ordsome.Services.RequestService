@@ -1,23 +1,23 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RequestService.Infrastructure.Persistence.Migrations
+namespace Infrastructure.Persistence.Migrations
 {
     public partial class UpdatedAnswerWithBool : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "IsCorrectAnswer",
-                table: "Answers",
-                nullable : false,
-                defaultValue : false);
+                "IsCorrectAnswer",
+                "Answers",
+                nullable: false,
+                defaultValue: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsCorrectAnswer",
-                table: "Answers");
+                "IsCorrectAnswer",
+                "Answers");
         }
     }
 }

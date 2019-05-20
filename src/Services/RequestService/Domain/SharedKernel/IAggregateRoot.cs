@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Domain.SharedKernel
+﻿namespace Domain.SharedKernel
 {
     public interface IAggregateRoot
     {

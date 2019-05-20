@@ -1,7 +1,7 @@
 using System;
 using MediatR;
 
-namespace UserService.Application.Commands.AddNewLanguage
+namespace Application.Commands.AddNewLanguage
 {
     public class AddNewLanguageCommand : IRequest
     {

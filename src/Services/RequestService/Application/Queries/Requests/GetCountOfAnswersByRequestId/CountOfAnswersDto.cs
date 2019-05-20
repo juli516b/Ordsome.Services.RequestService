@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId
+namespace Application.Queries.Requests.GetCountOfAnswersByRequestId
 {
     public class CountOfAnswersDto
     {

@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace UserService.WebApi.Tests
@@ -8,7 +7,6 @@ namespace UserService.WebApi.Tests
         [Fact]
         public void Test1()
         {
-
         }
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using UserService.Domain.SharedKernel;
+using Domain.SharedKernel;
 
-namespace UserService.Domain.Users
+namespace Domain.Users
 {
     public class User : BaseEntity
     {
@@ -9,6 +9,5 @@ namespace UserService.Domain.Users
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public ICollection<Language> Languages { get; set; }
-
     }
 }

@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace UserService.Domain.Users
+namespace Domain.Users
 {
     public class Language
     {

@@ -1,12 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Exceptions;
 using Application.Interfaces;
+using Application.Queries.Requests.GetRequests;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RequestService.Application.Exceptions;
-using RequestService.Application.Queries.Requests.GetRequests;
 
-namespace RequestService.Application.Queries.Requests.GetRequest
+namespace Application.Queries.Requests.GetRequest
 {
     public class GetAnswersByRequestIdQueryHandler : IRequestHandler<GetRequestQuery, RequestPreviewDto>
     {
@@ -19,21 +19,19 @@ namespace RequestService.Application.Queries.Requests.GetRequest
 
         public async Task<RequestPreviewDto> Handle(GetRequestQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.RequestId);
+            var entity = await _context.Requests.Include(a => a.Answers)
+                .FirstOrDefaultAsync(r => r.Id == request.RequestId, cancellationToken);
 
-            if (entity == null)
-            {
-                throw new NotFoundException($"{request.RequestId}", entity);
-            }
+            if (entity == null) throw new NotFoundException($"{request.RequestId}", entity);
 
             return new RequestPreviewDto
             {
                 IsClosed = entity.IsClosed,
-                    RequestId = entity.Id,
-                    LanguageOrigin = entity.LanguageOrigin,
-                    LanguageTarget = entity.LanguageTarget,
-                    TextToTranslate = entity.TextToTranslate,
-                    NoOfAnswers = entity.Answers.Count
+                RequestId = entity.Id,
+                LanguageOrigin = entity.LanguageOrigin,
+                LanguageTarget = entity.LanguageTarget,
+                TextToTranslate = entity.TextToTranslate,
+                NoOfAnswers = entity.Answers.Count
             };
         }
     }

@@ -1,6 +1,4 @@
-using System;
-
-namespace UserService.Application.Queries.GetAnswersBasedOnUserId
+namespace Application.Queries.GetAnswersBasedOnUserId
 {
     public class UserAnswersDto
     {

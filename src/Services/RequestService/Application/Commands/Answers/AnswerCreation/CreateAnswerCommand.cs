@@ -1,14 +1,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Exceptions;
 using Application.Interfaces;
+using Domain.Requests;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RequestService.Application.Exceptions;
-using RequestService.Application.Interfaces;
-using RequestService.Domain.Requests;
 
-namespace RequestService.Application.Commands.Answers.AnswerCreation
+namespace Application.Commands.Answers.AnswerCreation
 {
     public class CreateAnswerCommand : IRequest<AnswerIdDto>
     {
@@ -20,8 +19,8 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
     public class Handler : IRequestHandler<CreateAnswerCommand, AnswerIdDto>
     {
         private readonly IRequestServiceDbContext _context;
-        private readonly INotificationService _notificationService;
         private readonly IMediator _mediator;
+        private readonly INotificationService _notificationService;
 
         public Handler(IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
         {
@@ -32,11 +31,9 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
 
         public async Task<AnswerIdDto> Handle(CreateAnswerCommand request, CancellationToken cancellationToken)
         {
-            var requestToCheck = await _context.Requests.FirstOrDefaultAsync(x => x.Id == request.RequestId);
-            if (requestToCheck == null)
-            {
-                throw new NotFoundException($"{request.RequestId}", request);
-            }
+            var requestToCheck =
+                await _context.Requests.FirstOrDefaultAsync(x => x.Id == request.RequestId, cancellationToken);
+            if (requestToCheck == null) throw new NotFoundException($"{request.RequestId}", request);
 
             var entity = new Answer
             {
@@ -48,7 +45,7 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            await _mediator.Publish(new AnswerCreated { AnswerId = entity.Id });
+            await _mediator.Publish(new AnswerCreated {AnswerId = entity.Id});
 
             return new AnswerIdDto
             {

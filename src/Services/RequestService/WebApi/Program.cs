@@ -2,15 +2,13 @@ using System;
 using System.IO;
 using Application.Interfaces;
 using Infrastructure.Persistence;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RequestService.Infrastructure.Persistence;
 
-namespace RequestService.WebApi
+namespace WebApi
 {
     public class Program
     {
@@ -24,9 +22,12 @@ namespace RequestService.WebApi
                 {
                     var context = scope.ServiceProvider.GetService<IRequestServiceDbContext>();
 
-                    var concreteContext = (RequestServiceDbContext)context;
-                    concreteContext.Database.Migrate();
+                    var concreteContext = (RequestServiceDbContext) context;
+                    concreteContext
+                        .Database
+                        .Migrate();
                     OrdsomeInitializer.Initialize(concreteContext);
+                    host.Run();
                 }
                 catch (Exception ex)
                 {
@@ -34,20 +35,19 @@ namespace RequestService.WebApi
                     logger.LogError(ex, "An error occurred while migrating or initializing the database.");
                 }
             }
-
-            host.Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            new WebHostBuilder()
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var env = hostingContext.HostingEnvironment;
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.Local.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile("appsettings.json", true, true)
+                        .AddJsonFile("appsettings.Local.json", true, true)
+                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
                     config.AddEnvironmentVariables();
                 })
                 .ConfigureLogging((hostingContext, logging) =>
@@ -57,5 +57,6 @@ namespace RequestService.WebApi
                     logging.AddDebug();
                 })
                 .UseStartup<Startup>();
+        }
     }
 }

@@ -2,20 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Application.Commands.Answers.AnswerCreation;
+using Application.Commands.Answers.SetAnswerAsCorrectAnswer;
+using Application.Queries.Answers.GetAnswersByUserId;
+using Application.Queries.Requests.GetAnswersByRequestId;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RequestService.Application.Commands.Answers.AnswerCreation;
-using RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer;
-using RequestService.Application.Queries.Answers.GetanswersByUserId;
-using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 
-namespace RequestService.WebApi.Controllers
+namespace WebApi.Controllers
 {
     [Route("api/answers")]
     public class AnswersController : BaseController
     {
         /// <summary>
-        /// Creates an answer for a request.
+        ///     Creates an answer for a request.
         /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -28,7 +28,7 @@ namespace RequestService.WebApi.Controllers
         }
 
         /// <summary>
-        /// Sets a answer's bool 'isPreferred'.
+        ///     Sets a answer's bool 'isPreferred'.
         /// </summary>
         [HttpPatch("isPreferred")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -43,11 +43,10 @@ namespace RequestService.WebApi.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet("/u/{userId}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<AnswerDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<AnswerDto>), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> GetAllAnswersByUserId(Guid userId)
         {
-            return Ok(await Mediator.Send(new GetAnswersByUserIdQuery { UserId = userId }));
+            return Ok(await Mediator.Send(new GetAnswersByUserIdQuery {UserId = userId}));
         }
     }
-
 }

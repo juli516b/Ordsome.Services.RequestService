@@ -1,9 +1,14 @@
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Application.Commands.Requests.RequestCreation;
+using Application.Infrastructure;
 using Application.Interfaces;
-using AutoMapper;
+using Application.Queries.Requests.GetAnswersByRequestId;
+using Application.RestClients;
 using FluentValidation.AspNetCore;
+using Infrastructure;
+using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -14,17 +19,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
-using RequestService.Application.Commands.Requests.RequestCreation;
-using RequestService.Application.Interfaces;
-using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
-using RequestService.Application.RestClients;
-using RequestService.Infrastructure;
-using RequestService.Infrastructure.AutoMapper;
-using RequestService.Infrastructure.Persistence;
-using RequestService.WebApi.Filters;
 using Swashbuckle.AspNetCore.Swagger;
+using WebApi.Filters;
 
-namespace RequestService.WebApi
+namespace WebApi
 {
     public class Startup
     {
@@ -33,19 +31,18 @@ namespace RequestService.WebApi
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add AutoMapper
-            services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
-
             // Add framework services.
             services.AddTransient<INotificationService, NotificationService>();
 
             // Add MediatR - muligt at tilføje logging af alle requests via mediatr her.
             services.AddMediatR(typeof(GetAnswersByRequestIdQueryHandler).GetTypeInfo().Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+
 
             // Add DbContext using SQL Server Provider
             services.AddDbContext<IRequestServiceDbContext, RequestServiceDbContext>(options =>
@@ -55,16 +52,15 @@ namespace RequestService.WebApi
                 .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation(fv =>
-                    {
-                        fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                        fv.RegisterValidatorsFromAssemblyContaining<CreateRequestCommandValidator>();
-                        fv.LocalizationEnabled = false;
-                    });
+                {
+                    fv.RegisterValidatorsFromAssemblyContaining<CreateRequestCommandValidator>();
+                    fv.LocalizationEnabled = false;
+                });
 
             // Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "RequestServiceApi", Version = "v1" });
+                c.SwaggerDoc("v1", new Info {Title = "RequestServiceApi", Version = "v1"});
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
@@ -75,11 +71,11 @@ namespace RequestService.WebApi
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                    .GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                            .GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
                     };
                 });
 
@@ -101,16 +97,11 @@ namespace RequestService.WebApi
             }
 
             app.UseStaticFiles();
-            app.UseSwagger(c =>
-            {
-                c.RouteTemplate = "requestapi/docs/{documentName}/swagger.json";
-
-            });
+            app.UseSwagger(c => { c.RouteTemplate = "requestapi/docs/{documentName}/swagger.json"; });
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/requestapi/docs/v1/swagger.json", "RequestAPI");
                 c.RoutePrefix = "requestapi/docs";
-
             });
             app.UseAuthentication();
 

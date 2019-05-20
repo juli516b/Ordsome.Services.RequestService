@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentValidation.Results;
 
-namespace RequestService.Application.Exceptions
+namespace Application.Exceptions
 {
     public class ValidationException : Exception
     {
@@ -12,7 +12,7 @@ namespace RequestService.Application.Exceptions
             Failures = new Dictionary<string, string[]>();
         }
 
-        public ValidationException(List<ValidationFailure> failures) : this()
+        public ValidationException(IReadOnlyCollection<ValidationFailure> failures) : this()
         {
             var propertyNames = failures
                 .Select(e => e.PropertyName)

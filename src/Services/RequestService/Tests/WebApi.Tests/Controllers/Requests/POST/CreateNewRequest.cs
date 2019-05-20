@@ -1,19 +1,39 @@
-﻿using RequestService.Application.Commands.Requests.RequestCreation;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using WebApi.Tests.Common;
+using Application.Commands.Requests.RequestCreation;
+using Microsoft.AspNetCore.Mvc.Testing;
+using RequestService.WebApi.Tests.Common;
+using WebApi;
 using Xunit;
 
 namespace RequestService.WebApi.Tests.Controllers.Requests.POST
 {
     public class CreateNewRequest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private readonly HttpClient _client;
-
-        public CreateNewRequest(CustomWebApplicationFactory<Startup> factory)
+        public CreateNewRequest(WebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
+        }
+
+        private readonly HttpClient _client;
+
+        [Fact]
+        public async Task CreateNewRequest_ReturnsBadRequest()
+        {
+            var command = new CreateRequestCommand
+            {
+                LanguageOriginId = 40,
+                LanguageTargetId = 20,
+                TextToTranslate = "",
+                UserId = Guid.NewGuid()
+            };
+
+            var content = Utilities.GetRequestContent(command);
+
+            var response = await _client.PostAsync("/api/requests", content);
+
+            Assert.Equal("BadRequest", response.StatusCode.ToString());
         }
 
         [Fact]
@@ -35,24 +55,6 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
         }
 
         [Fact]
-        public async Task CreateNewRequest_ReturnsBadRequest()
-        {
-            var command = new CreateRequestCommand
-            {
-                LanguageOriginId = 40,
-                LanguageTargetId = 20,
-                TextToTranslate = "",
-                UserId = Guid.NewGuid()
-            };
-
-            var content = Utilities.GetRequestContent(command);
-
-            var response = await _client.PostAsync("/api/requests", content);
-
-            Assert.Equal("BadRequest", response.StatusCode.ToString());
-        }
-
-        [Fact]
         public async Task CreateNewRequestWithBadLanguage_ReturnsBadRequest()
         {
             var command = new CreateRequestCommand
@@ -71,7 +73,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
         }
 
         [Fact]
-        public async Task CreateNewRequestWithNoLanguageOrigin_ReturnsSuccesCode()
+        public async Task CreateNewRequestWithNoLanguageOrigin_ReturnsSuccessCode()
         {
             var command = new CreateRequestCommand
             {
@@ -85,9 +87,6 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
             var response = await _client.PostAsync("/api/requests", content);
 
             response.EnsureSuccessStatusCode();
-
         }
     }
 }
-
-

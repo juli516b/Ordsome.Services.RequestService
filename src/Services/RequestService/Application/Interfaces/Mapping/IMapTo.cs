@@ -1,4 +1,6 @@
-namespace RequestService.Application.Interfaces.Mapping
+namespace Application.Interfaces.Mapping
 {
-    public interface IMapTo<TEntity> { }
+    public interface IMapTo<TEntity>
+    {
+    }
 }

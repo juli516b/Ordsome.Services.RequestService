@@ -1,8 +1,7 @@
 using System;
 using Domain.SharedKernel;
-using RequestService.Domain.SharedKernel;
 
-namespace RequestService.Domain.Requests
+namespace Domain.Requests
 {
     public class Answer : BaseEntity, IAggregateRoot
     {

@@ -3,12 +3,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using Domain.Requests;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Ordsome.Services.CrossCuttingConcerns.Languages;
-using RequestService.Domain.Requests;
 
-namespace RequestService.Application.Queries.Requests.GetRequests
+namespace Application.Queries.Requests.GetRequests
 {
     public class GetRequestsQueryHandler : IRequestHandler<GetRequestsQuery, List<RequestPreviewDto>>
     {
@@ -21,21 +20,19 @@ namespace RequestService.Application.Queries.Requests.GetRequests
 
         public async Task<List<RequestPreviewDto>> Handle(GetRequestsQuery request, CancellationToken cancellationToken)
         {
-            var entities = new List<Request>();
+            List<Request> entities;
 
             if (string.IsNullOrWhiteSpace(request.FromLanguage) || string.IsNullOrWhiteSpace(request.ToLanguage))
-            {
-                entities = await _context.Requests.Include(x => x.Answers).ToListAsync();
-            }
+                entities = await _context.Requests.Include(x => x.Answers)
+                    .ToListAsync(cancellationToken);
             else
-            {
-                entities = await _context.Requests.Include(x => x.Answers).Where(x => x.LanguageOrigin == request.FromLanguage && x.LanguageTarget == request.ToLanguage).ToListAsync();
-            }
+                entities = await _context.Requests.Include(x => x.Answers).Where(x =>
+                        x.LanguageOrigin == request.FromLanguage && x.LanguageTarget == request.ToLanguage)
+                    .ToListAsync(cancellationToken);
 
-            List<RequestPreviewDto> requestPreviewDtos = new List<RequestPreviewDto>();
+            var requestPreviewDtos = new List<RequestPreviewDto>();
 
             foreach (var item in entities)
-            {
                 requestPreviewDtos.Add(new RequestPreviewDto
                 {
                     RequestId = item.Id,
@@ -45,7 +42,6 @@ namespace RequestService.Application.Queries.Requests.GetRequests
                     NoOfAnswers = item.Answers.Count,
                     IsClosed = item.IsClosed
                 });
-            }
             return requestPreviewDtos;
         }
     }

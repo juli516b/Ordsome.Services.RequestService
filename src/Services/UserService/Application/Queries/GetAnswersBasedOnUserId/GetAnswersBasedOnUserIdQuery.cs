@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MediatR;
 
-namespace UserService.Application.Queries.GetAnswersBasedOnUserId
+namespace Application.Queries.GetAnswersBasedOnUserId
 {
     public class GetAnswersBasedOnUserIdQuery : IRequest<ICollection<UserAnswersDto>>
     {

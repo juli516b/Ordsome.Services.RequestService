@@ -1,6 +1,6 @@
 using System;
 
-namespace UserService.Application.Queries.GetGuid
+namespace Application.Queries.GetGuid
 {
     public class GetGuidDto
     {

@@ -1,8 +1,8 @@
+using Domain.Requests;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RequestService.Domain.Requests;
 
-namespace RequestService.Infrastructure.Persistence.Configurations
+namespace Infrastructure.Persistence.Configurations
 {
     public class AnswerVoteConfiguration : IEntityTypeConfiguration<AnswerVote>
     {

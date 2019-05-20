@@ -1,4 +1,4 @@
-namespace RequestService.Application.Queries.Answers.GetAnswer
+namespace Application.Queries.Answers.GetAnswer
 {
     public class AnswerViewModel
     {

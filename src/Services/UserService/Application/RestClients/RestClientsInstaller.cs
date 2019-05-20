@@ -1,7 +1,6 @@
-
 using Microsoft.Extensions.DependencyInjection;
 
-namespace UserService.Application.RestClients
+namespace Application.RestClients
 {
     public static class RestClientsInstaller
     {

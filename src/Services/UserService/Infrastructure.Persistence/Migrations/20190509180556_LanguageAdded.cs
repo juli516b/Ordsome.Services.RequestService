@@ -2,44 +2,45 @@ using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace UserService.Infrastructure.Persistence.Migrations
+namespace Infrastructure.Persistence.Migrations
 {
     public partial class LanguageAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Language",
-                columns : table => new
+                "Language",
+                table => new
                 {
-                    LanguageID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                        LanguageCode = table.Column<string>(nullable: true),
-                        LanguageName = table.Column<string>(nullable: true),
-                        LanguageNativeName = table.Column<string>(nullable: true),
-                        UserId = table.Column<Guid>(nullable: true)
+                    LanguageID = table.Column<int>()
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
+                    LanguageCode = table.Column<string>(nullable: true),
+                    LanguageName = table.Column<string>(nullable: true),
+                    LanguageNativeName = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true)
                 },
-                constraints : table =>
+                constraints: table =>
                 {
                     table.PrimaryKey("PK_Language", x => x.LanguageID);
                     table.ForeignKey(
-                        name: "FK_Language_Users_UserId",
-                        column : x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserID",
-                        onDelete : ReferentialAction.Restrict);
+                        "FK_Language_Users_UserId",
+                        x => x.UserId,
+                        "Users",
+                        "UserID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Language_UserId",
-                table: "Language",
-                column: "UserId");
+                "IX_Language_UserId",
+                "Language",
+                "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Language");
+                "Language");
         }
     }
 }

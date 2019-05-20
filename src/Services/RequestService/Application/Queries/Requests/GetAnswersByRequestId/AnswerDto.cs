@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
+namespace Application.Queries.Requests.GetAnswersByRequestId
 {
     public class AnswerDto
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace UserService.Domain.SharedKernel
+namespace Domain.SharedKernel
 {
     public abstract class BaseEntity
     {

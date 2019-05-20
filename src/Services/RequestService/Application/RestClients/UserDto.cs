@@ -1,13 +1,11 @@
-﻿using Ordsome.Services.CrossCuttingConcerns.Languages;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Ordsome.Services.CrossCuttingConcerns.Languages;
 
 namespace Application.RestClients
 {
     public class UserDto
     {
         public string Username { get; set; }
-        public IList<LanguageDto> Langauges { get; set; }
+        public IList<LanguageDto> Languages { get; set; }
     }
 }

@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
 using MediatR;
 
-namespace UserService.Application.Queries.CheckUserId
+namespace Application.Queries.CheckUserId
 {
     public class CheckUserIdQuery : IRequest<bool>
     {

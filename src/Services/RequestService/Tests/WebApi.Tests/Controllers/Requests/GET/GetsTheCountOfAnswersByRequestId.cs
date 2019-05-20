@@ -1,22 +1,22 @@
-﻿using RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using WebApi.Tests.Common;
+using Application.Queries.Requests.GetCountOfAnswersByRequestId;
+using Microsoft.AspNetCore.Mvc.Testing;
+using RequestService.WebApi.Tests.Common;
+using WebApi;
 using Xunit;
 
 namespace RequestService.WebApi.Tests.Controllers.Requests.GET
 {
     public class GetsTheCountOfAnswersByRequestIdTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private readonly HttpClient _client;
-
-        public GetsTheCountOfAnswersByRequestIdTests(CustomWebApplicationFactory<Startup> factory)
+        public GetsTheCountOfAnswersByRequestIdTests(WebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
+
+        private readonly HttpClient _client;
 
         [Fact]
         public async Task GetsTheCountOfAnswersByRequestId()
@@ -29,17 +29,17 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
 
             var request = await Utilities.GetResponseContent<CountOfAnswersDto>(response);
         }
+
         [Fact]
         public async Task ReturnsRightStatusCodeIfRequestIdIsNotFound()
         {
-            Random random = new Random();
-            int id = random.Next(1000, 2000);
+            var random = new Random();
+            var id = random.Next(1000, 2000);
             var response = await _client.GetAsync($"/api/requests/{id}/answers/count");
 
-            var statuscode = response.StatusCode;
+            var statusCode = response.StatusCode;
 
-            Assert.Equal("NotFound", statuscode.ToString());
+            Assert.Equal("NotFound", statusCode.ToString());
         }
-
     }
 }

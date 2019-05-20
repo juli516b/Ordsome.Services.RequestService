@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using MediatR;
 
-namespace RequestService.Application.Commands.Answers.SetAnswerAsCorrectAnswer
+namespace Application.Commands.Answers.SetAnswerAsCorrectAnswer
 {
     public class SetAnswerAsCorrectAnswerCommand : INotification
     {

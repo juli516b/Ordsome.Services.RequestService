@@ -1,8 +1,7 @@
+using Application.Queries.Requests.GetRequests;
 using MediatR;
-using RequestService.Application.Queries.Requests.GetRequests;
-using RequestService.Domain.Requests;
 
-namespace RequestService.Application.Queries.Requests.GetRequest
+namespace Application.Queries.Requests.GetRequest
 {
     public class GetRequestQuery : IRequest<RequestPreviewDto>
     {

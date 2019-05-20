@@ -1,10 +1,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.RestClients;
 using FluentValidation;
-using RequestService.Application.RestClients;
 
-namespace RequestService.Application.Commands.Answers.AnswerCreation
+namespace Application.Commands.Answers.AnswerCreation
 {
     public class CreateAnswerCommandValidator : AbstractValidator<CreateAnswerCommand>
     {
@@ -21,7 +21,7 @@ namespace RequestService.Application.Commands.Answers.AnswerCreation
 
         private async Task<bool> IdExists(Guid arg1, CancellationToken arg2)
         {
-            bool exists = await _client.CheckUserId(arg1);
+            var exists = await _client.CheckUserId(arg1);
             return exists;
         }
     }

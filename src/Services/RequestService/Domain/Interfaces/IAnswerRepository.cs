@@ -1,10 +1,9 @@
-﻿using Domain.SeedWork;
-using RequestService.Domain.Requests;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.Requests;
+using Domain.SeedWork;
 
-namespace RequestService.Domain.Interfaces
+namespace Domain.Interfaces
 {
     public interface IAnswerRepository : IRepository<Answer>
     {
@@ -13,7 +12,5 @@ namespace RequestService.Domain.Interfaces
         Task<int> GetCountOfAnswersByRequestId(int id);
         Answer CreateAnswer(Answer answer);
         Answer UpdateAnswer(Answer answer);
-
     }
-
 }

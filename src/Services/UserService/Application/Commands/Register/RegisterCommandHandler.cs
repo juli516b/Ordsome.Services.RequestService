@@ -1,16 +1,18 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
+using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using UserService.Application.Interfaces;
-using UserService.Domain.Users;
 
-namespace UserService.Application.Commands.Register
+namespace Application.Commands.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Unit>
     {
-        private IUserServiceDbContext _context;
+        private readonly IUserServiceDbContext _context;
         private readonly IMediator _mediator;
 
         public RegisterCommandHandler(IUserServiceDbContext context, IMediator mediator)
@@ -18,22 +20,24 @@ namespace UserService.Application.Commands.Register
             _context = context;
             _mediator = mediator;
         }
+
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            bool parsedGuid = Guid.TryParse(request.Id, out Guid outputGuid);
+            Guid.TryParse(request.Id, out var outputGuid);
 
             if (outputGuid == Guid.Empty)
             {
-                Guid newGuid = new Guid();
+                var newGuid = new Guid();
                 var userWithoutId = await MakeUser(newGuid, request.Username, request.Password);
 
-                await _context.Users.AddAsync(userWithoutId);
+                await _context.Users.AddAsync(userWithoutId, cancellationToken);
             }
             else
             {
                 var user = await MakeUser(outputGuid, request.Username, request.Password);
-                await _context.Users.AddAsync(user);
+                await _context.Users.AddAsync(user, cancellationToken);
             }
+
             await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
@@ -41,34 +45,28 @@ namespace UserService.Application.Commands.Register
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            using(var hmac = new System.Security.Cryptography.HMACSHA512())
+            using (var hmac = new HMACSHA512())
             {
                 passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
-
         }
-        public async Task<bool> UserExists(string username)
-        {
-            if (await _context.Users.AnyAsync(x => x.Username == username))
-                return true;
 
-            return false;
+        private async Task<bool> UserExists(string username)
+        {
+            return await _context.Users.AnyAsync(x => x.Username == username);
         }
 
         private async Task<User> MakeUser(Guid id, string username, string password)
         {
             username = username.ToLower();
 
-            if (await UserExists(username) == true)
-            {
-                throw new Exception();
-            }
+            if (await UserExists(username)) throw new Exception();
 
 
-            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+            CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
 
-            User user = new User
+            var user = new User
             {
                 Id = id,
                 Username = username,

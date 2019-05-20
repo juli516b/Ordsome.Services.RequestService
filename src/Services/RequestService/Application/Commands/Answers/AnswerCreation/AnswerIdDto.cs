@@ -1,4 +1,4 @@
-namespace RequestService.Application.Commands.Answers.AnswerCreation
+namespace Application.Commands.Answers.AnswerCreation
 {
     public class AnswerIdDto
     {

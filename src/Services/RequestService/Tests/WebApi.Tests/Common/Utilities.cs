@@ -1,13 +1,12 @@
-﻿using Infrastructure.Persistence;
-using Newtonsoft.Json;
-using RequestService.Infrastructure.Persistence;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.Persistence;
+using Newtonsoft.Json;
 
-namespace WebApi.Tests.Common
+namespace RequestService.WebApi.Tests.Common
 {
-    public class Utilities
+    public static class Utilities
     {
         public static StringContent GetRequestContent(object obj)
         {

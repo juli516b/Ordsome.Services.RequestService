@@ -1,14 +1,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Exceptions;
 using Application.Interfaces;
+using Domain.Requests;
 using MediatR;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
-using RequestService.Application.Exceptions;
-using RequestService.Application.Interfaces;
-using RequestService.Domain.Requests;
 
-namespace RequestService.Application.Commands.Requests.RequestCreation
+namespace Application.Commands.Requests.RequestCreation
 {
     public class CreateRequestCommand : IRequest
     {
@@ -31,16 +30,13 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
 
         public async Task<Unit> Handle(CreateRequestCommand request, CancellationToken cancellationToken)
         {
-            ListOfLanguages listOfLanguages = new ListOfLanguages();
+            var listOfLanguages = new ListOfLanguages();
 
             var languageOrigin = listOfLanguages.GetLanguageById(request.LanguageOriginId);
 
             var languageTarget = listOfLanguages.GetLanguageById(request.LanguageTargetId);
 
-            if (languageTarget == null)
-            {
-                throw new NotFoundException($"{request.LanguageTargetId}", languageOrigin);
-            }
+            if (languageTarget == null) throw new NotFoundException($"{request.LanguageTargetId}", languageOrigin);
 
             if (languageOrigin == null)
             {

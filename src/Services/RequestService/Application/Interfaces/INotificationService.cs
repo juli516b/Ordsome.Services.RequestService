@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using RequestService.Application.Models;
+using Application.Models;
 
-namespace RequestService.Application.Interfaces
+namespace Application.Interfaces
 {
     public interface INotificationService
     {
