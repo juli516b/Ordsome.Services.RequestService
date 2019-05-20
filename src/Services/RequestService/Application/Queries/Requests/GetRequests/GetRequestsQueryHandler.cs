@@ -40,6 +40,7 @@ namespace Application.Queries.Requests.GetRequests
         private async Task<List<Request>> CheckGetRequestsQueryParams(GetRequestsQuery request,
             CancellationToken cancellationToken)
         {
+            // TODO - make this a switch statement.
             List<Request> entities = null;
 
             if (string.IsNullOrWhiteSpace(request.FromLanguage) && string.IsNullOrWhiteSpace(request.ToLanguage))

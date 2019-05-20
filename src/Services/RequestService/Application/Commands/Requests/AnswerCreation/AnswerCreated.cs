@@ -4,7 +4,7 @@ using Application.Interfaces;
 using Application.Models;
 using MediatR;
 
-namespace Application.Commands.Answers.AnswerCreation
+namespace Application.Commands.Requests.AnswerCreation
 {
     public class AnswerCreated : INotification
     {
@@ -12,6 +12,7 @@ namespace Application.Commands.Answers.AnswerCreation
 
         public class RequestCreatedHandler : INotificationHandler<AnswerCreated>
         {
+            //TODO - make a notification to the user who made the request
             private readonly INotificationService _notification;
 
             public RequestCreatedHandler(INotificationService notification)

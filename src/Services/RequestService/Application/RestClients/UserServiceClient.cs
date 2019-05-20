@@ -19,5 +19,7 @@ namespace Application.RestClients
             var api = RestClient.For<IUserServiceClient>("http://localhost:7002/api/users");
             return await api.GetUserDetails(userId);
         }
+
+        //TODO - need a getuserlanguages.
     }
 }

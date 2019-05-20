@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
@@ -7,22 +6,16 @@ using Domain.Requests;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Commands.Answers.AnswerCreation
+namespace Application.Commands.Requests.AnswerCreation
 {
-    public class CreateAnswerCommand : IRequest<AnswerIdDto>
-    {
-        public string TextTranslated { get; set; }
-        public int RequestId { get; set; }
-        public Guid UserId { get; set; }
-    }
-
-    public class Handler : IRequestHandler<CreateAnswerCommand, AnswerIdDto>
+    public class CreateAnswerCommandHandler : IRequestHandler<CreateAnswerCommand, AnswerIdDto>
     {
         private readonly IRequestServiceDbContext _context;
         private readonly IMediator _mediator;
         private readonly INotificationService _notificationService;
 
-        public Handler(IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+        public CreateAnswerCommandHandler(IRequestServiceDbContext context, INotificationService notificationService,
+            IMediator mediator)
         {
             _context = context;
             _notificationService = notificationService;

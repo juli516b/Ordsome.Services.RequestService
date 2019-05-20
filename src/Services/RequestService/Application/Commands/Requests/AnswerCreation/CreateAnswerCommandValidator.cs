@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Application.RestClients;
 using FluentValidation;
 
-namespace Application.Commands.Answers.AnswerCreation
+namespace Application.Commands.Requests.AnswerCreation
 {
     public class CreateAnswerCommandValidator : AbstractValidator<CreateAnswerCommand>
     {

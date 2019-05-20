@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
@@ -190,6 +191,9 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
     {'id':182,'code':'yo','name':'Yoruba','nativeName':'Yorùbá'},
     {'id':183,'code':'za','name':'Zhuang, Chuang','nativeName':'Saɯ cueŋƅ, Saw cuengh'}]}";
 
+        //TODO - parse the json once
+//        private Dictionary<string, object> languagesByCode = JsonConvert.DeserializeObject<string, object>(json)
+
         public LanguageDto GetLanguageById(int id)
         {
             var o = JObject.Parse(json);
@@ -206,6 +210,15 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
             var _list = a.ToObject<IList<LanguageDto>>();
 
             return _list.FirstOrDefault(x => x.LanguageCode == code);
+        }
+
+        public LanguageDto GetLanguage(Func<LanguageDto, bool> isMatch)
+        {
+            var o = JObject.Parse(json);
+            var a = (JArray) o["list"];
+            var _list = a.ToObject<IList<LanguageDto>>();
+
+            return _list.FirstOrDefault(isMatch);
         }
 
         public IList<LanguageDto> GetList()

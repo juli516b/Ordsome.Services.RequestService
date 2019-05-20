@@ -9,12 +9,10 @@ namespace Application.Queries.Requests.GetRequests
         {
             RuleFor(x => x.FromLanguage).Must(LanguageValidationHelpers.BeALanguage)
                 .When(x => !string.IsNullOrWhiteSpace(x.FromLanguage))
-//                .Unless(x => string.IsNullOrWhiteSpace(x.FromLanguage))
                 .WithMessage("Choose a correct language");
 
             RuleFor(x => x.ToLanguage).Must(LanguageValidationHelpers.BeALanguage)
                 .When(x => !string.IsNullOrWhiteSpace(x.ToLanguage))
-//                .Unless(x => string.IsNullOrWhiteSpace(x.FromLanguage))
                 .WithMessage("Choose a correct language");
         }
     }

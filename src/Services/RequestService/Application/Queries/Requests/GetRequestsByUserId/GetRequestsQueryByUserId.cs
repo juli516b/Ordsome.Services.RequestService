@@ -31,10 +31,12 @@ namespace Application.Queries.Requests.GetRequestsByUserId
         public async Task<IEnumerable<RequestPreviewDto>> Handle(GetRequestsByUserIdQuery request,
             CancellationToken cancellationToken)
         {
+            //TODO - maybe make some projection for the foreach loop?
             var requests = await _context.Requests.Where(x => x.UserId == request.UserId).Include(x => x.Answers)
                 .ToListAsync(cancellationToken);
             if (requests.Count == 0) throw new NotFoundException($"{request.UserId}", request);
             var requestsToReturn = new List<RequestPreviewDto>();
+
             foreach (var item in requests)
                 requestsToReturn.Add(new RequestPreviewDto
                 {

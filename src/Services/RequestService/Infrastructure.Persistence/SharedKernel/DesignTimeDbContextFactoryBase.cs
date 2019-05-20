@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Persistence.SharedKernel
 {
+    //TODO - move to crosscuttingconcerns use configuration instead.
     public abstract class DesignTimeDbContextFactoryBase<TContext> :
         IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {

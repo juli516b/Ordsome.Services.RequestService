@@ -13,4 +13,6 @@ namespace Domain.Interfaces
         Answer CreateAnswer(Answer answer);
         Answer UpdateAnswer(Answer answer);
     }
+
+    //TODO - implement repository pattern for mocking with Moq
 }

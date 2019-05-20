@@ -24,6 +24,7 @@ using WebApi.Filters;
 
 namespace WebApi
 {
+    //TODO - maybe make a crosscutting concern for startup. A kind of framework for new services
     public class Startup
     {
         public Startup(IConfiguration configuration)

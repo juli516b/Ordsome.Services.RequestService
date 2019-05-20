@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Application.Commands.Answers.AnswerCreation;
 using Application.Commands.Answers.SetAnswerAsCorrectAnswer;
 using Application.Queries.Answers.GetAnswersByUserId;
 using Application.Queries.Requests.GetAnswersByRequestId;
@@ -14,19 +13,6 @@ namespace WebApi.Controllers
     [Route("api/answers")]
     public class AnswersController : BaseController
     {
-        /// <summary>
-        ///     Creates an answer for a request.
-        /// </summary>
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody] CreateAnswerCommand command)
-        {
-            await Mediator.Send(command);
-
-            return NoContent();
-        }
-
         /// <summary>
         ///     Sets a answer's bool 'isPreferred'.
         /// </summary>
