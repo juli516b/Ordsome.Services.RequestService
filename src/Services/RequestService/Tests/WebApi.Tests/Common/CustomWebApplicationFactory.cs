@@ -1,5 +1,4 @@
 ﻿using System;
-using Application;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

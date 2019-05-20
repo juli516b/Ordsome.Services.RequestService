@@ -1,5 +1,3 @@
-using Application;
-using Application.Interfaces;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using UserService.Application.Interfaces;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.WebApi

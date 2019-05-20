@@ -1,10 +1,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application;
-using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using UserService.Application.Interfaces;
 using UserService.Domain.Users;
 
 namespace UserService.Application.Commands.Register

@@ -47,7 +47,7 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
     {'id':34,'code':'cr','name':'Cree','nativeName':'ᓀᐦᐃᔭᐍᐏᐣ'},
     {'id':35,'code':'hr','name':'Croatian','nativeName':'hrvatski'},
     {'id':36,'code':'cs','name':'Czech','nativeName':'česky, čeština'},
-    {'id':37,'code':'da','name':'Danish','nativeName':'dansk'},
+    {'id':37,'code':'dk','name':'Danish','nativeName':'dansk'},
     {'id':38,'code':'dv','name':'Divehi; Dhivehi; Maldivian;','nativeName':'ދިވެހި'},
     {'id':39,'code':'nl','name':'Dutch','nativeName':'Nederlands, Vlaams'},
     {'id':40,'code':'en','name':'English','nativeName':'English'},

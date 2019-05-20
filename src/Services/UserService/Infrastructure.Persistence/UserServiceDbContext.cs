@@ -1,6 +1,5 @@
 using System;
-using Application;
-using Application.Interfaces;
+using UserService.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Users;
 

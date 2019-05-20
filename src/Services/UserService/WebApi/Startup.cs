@@ -1,7 +1,5 @@
 using System.Reflection;
 using System.Text;
-using Application;
-using Application.Interfaces;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using UserService.Application.Commands.Register;
+using UserService.Application.Interfaces;
 using UserService.Application.Queries.GetRequestsBasedOnUserId;
 using UserService.Application.RestClients;
 using UserService.Infrastructure.Persistence;

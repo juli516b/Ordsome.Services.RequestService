@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UserService.Domain.Users;
 
-namespace Application.Interfaces
+namespace UserService.Application.Interfaces
 {
     public interface IUserServiceDbContext
     {

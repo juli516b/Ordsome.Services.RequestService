@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application;
-using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using UserService.Application.Exceptions;
+using UserService.Application.Interfaces;
 using UserService.Application.RestClients;
 
 namespace UserService.Application.Queries.GetAnswersBasedOnUserId

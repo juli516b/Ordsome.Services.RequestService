@@ -23,13 +23,13 @@ namespace RequestService.Application.Queries.Requests.GetRequests
         {
             var entities = new List<Request>();
 
-            if (LanguageValidationHelpers.BeALanguage(request.FromLanguage) && LanguageValidationHelpers.BeALanguage(request.ToLanguage))
+            if (string.IsNullOrWhiteSpace(request.FromLanguage) || string.IsNullOrWhiteSpace(request.ToLanguage))
             {
-                entities = await _context.Requests.Include(x => x.Answers).Where(x => x.LanguageOrigin == request.FromLanguage && x.LanguageTarget == request.ToLanguage).ToListAsync();
+                entities = await _context.Requests.Include(x => x.Answers).ToListAsync();
             }
             else
             {
-                entities = await _context.Requests.Include(x => x.Answers).ToListAsync();
+                entities = await _context.Requests.Include(x => x.Answers).Where(x => x.LanguageOrigin == request.FromLanguage && x.LanguageTarget == request.ToLanguage).ToListAsync();
             }
 
             List<RequestPreviewDto> requestPreviewDtos = new List<RequestPreviewDto>();

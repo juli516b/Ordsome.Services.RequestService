@@ -12,11 +12,7 @@ namespace Ordsome.Services.CrossCuttingConcerns.Languages
 
             var language = listOfLanguages.GetLanguageByCode(arg);
 
-            if (language == null)
-            {
-                return false;
-            }
-            return true;
+            return language != null;
         }
     }
 }

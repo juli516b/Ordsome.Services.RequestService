@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
+using UserService.Application.Interfaces;
 using UserService.Domain.Users;
 
 namespace UserService.Application.Commands.AddNewLanguage
