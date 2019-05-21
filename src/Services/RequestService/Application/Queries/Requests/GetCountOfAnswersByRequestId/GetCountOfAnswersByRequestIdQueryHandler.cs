@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
 using Application.Interfaces;
+using Application.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

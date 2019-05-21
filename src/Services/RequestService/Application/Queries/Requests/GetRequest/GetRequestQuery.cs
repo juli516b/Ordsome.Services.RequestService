@@ -1,4 +1,4 @@
-using Application.Queries.Requests.GetRequests;
+using Application.Models;
 using MediatR;
 
 namespace Application.Queries.Requests.GetRequest

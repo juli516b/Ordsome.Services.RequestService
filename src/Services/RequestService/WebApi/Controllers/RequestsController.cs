@@ -6,6 +6,7 @@ using Application.Commands.Answers.VoteOnAnswer;
 using Application.Commands.Requests.AnswerCreation;
 using Application.Commands.Requests.CloseRequest;
 using Application.Commands.Requests.RequestCreation;
+using Application.Models;
 using Application.Queries.Requests.GetAnswersByRequestId;
 using Application.Queries.Requests.GetCountOfAnswersByRequestId;
 using Application.Queries.Requests.GetRequest;
@@ -51,8 +52,7 @@ namespace WebApi.Controllers
         [ProducesResponseType(typeof(IList<LanguageDto>), (int) HttpStatusCode.OK)]
         public IActionResult GetAllLanguages()
         {
-            var listOfLanguages = new ListOfLanguages();
-            return Ok(listOfLanguages.GetList());
+            return Ok(ListOfLanguages.GetList());
         }
 
         /// <summary>

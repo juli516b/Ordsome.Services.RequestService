@@ -6,7 +6,7 @@
         {
             var listOfLanguages = new ListOfLanguages();
 
-            var language = listOfLanguages.GetLanguageByCode(arg);
+            var language = ListOfLanguages.GetLanguageByCode(arg);
 
             return language != null;
         }

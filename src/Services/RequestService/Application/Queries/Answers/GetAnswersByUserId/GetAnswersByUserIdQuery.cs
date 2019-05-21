@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Application.Queries.Requests.GetAnswersByRequestId;
+using Application.Models;
 using MediatR;
 
 namespace Application.Queries.Answers.GetAnswersByUserId

@@ -32,9 +32,9 @@ namespace Application.Commands.Requests.RequestCreation
         {
             var listOfLanguages = new ListOfLanguages();
 
-            var languageOrigin = listOfLanguages.GetLanguageById(request.LanguageOriginId);
+            var languageOrigin = ListOfLanguages.GetLanguageById(request.LanguageOriginId);
 
-            var languageTarget = listOfLanguages.GetLanguageById(request.LanguageTargetId);
+            var languageTarget = ListOfLanguages.GetLanguageById(request.LanguageTargetId);
 
             if (languageTarget == null) throw new NotFoundException($"{request.LanguageTargetId}", languageOrigin);
 

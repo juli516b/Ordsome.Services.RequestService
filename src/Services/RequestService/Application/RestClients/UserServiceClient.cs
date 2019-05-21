@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Ordsome.Services.CrossCuttingConcerns.Languages;
 using RestEase;
 
 namespace Application.RestClients
@@ -20,6 +22,10 @@ namespace Application.RestClients
             return await api.GetUserDetails(userId);
         }
 
-        //TODO - need a getuserlanguages.
+        public async Task<IEnumerable<LanguageDto>> GetUserLanguages(Guid userId)
+        {
+            var user = await GetUserDetails(userId);
+            return user.Languages;
+        }
     }
 }

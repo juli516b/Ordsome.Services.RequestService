@@ -1,4 +1,4 @@
-namespace Application.Queries.Requests.GetCountOfAnswersByRequestId
+namespace Application.Models
 {
     public class CountOfAnswersDto
     {

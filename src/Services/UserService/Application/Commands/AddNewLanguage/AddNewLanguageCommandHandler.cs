@@ -28,7 +28,7 @@ namespace Application.Commands.AddNewLanguage
 
             var listOfLanguages = new ListOfLanguages();
 
-            var language = listOfLanguages.GetLanguageById(request.LanguageId);
+            var language = ListOfLanguages.GetLanguageById(request.LanguageId);
 
             var languageToAdd = new Language
 

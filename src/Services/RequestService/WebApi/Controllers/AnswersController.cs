@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Application.Commands.Answers.SetAnswerAsCorrectAnswer;
+using Application.Models;
 using Application.Queries.Answers.GetAnswersByUserId;
-using Application.Queries.Requests.GetAnswersByRequestId;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

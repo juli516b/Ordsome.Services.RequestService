@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Infrastructure.Mappings;
 using Application.Interfaces;
+using Application.Models;
 using Domain.Requests;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -25,15 +27,7 @@ namespace Application.Queries.Requests.GetRequests
             var requestPreviewDtos = new List<RequestPreviewDto>();
 
             foreach (var item in entities)
-                requestPreviewDtos.Add(new RequestPreviewDto
-                {
-                    RequestId = item.Id,
-                    LanguageOrigin = item.LanguageOrigin,
-                    LanguageTarget = item.LanguageTarget,
-                    TextToTranslate = item.TextToTranslate,
-                    NoOfAnswers = item.Answers.Count,
-                    IsClosed = item.IsClosed
-                });
+                requestPreviewDtos.Add(RequestMappings.ToRequestPreviewDTO(item));
             return requestPreviewDtos;
         }
 
@@ -50,7 +44,6 @@ namespace Application.Queries.Requests.GetRequests
                 entities = await _context.Requests.Include(x => x.Answers)
                     .Where(x => x.LanguageOrigin == request.FromLanguage)
                     .ToListAsync(cancellationToken);
-
             else if (string.IsNullOrWhiteSpace(request.FromLanguage) && !string.IsNullOrWhiteSpace(request.ToLanguage))
                 entities = await _context.Requests.Include(x => x.Answers)
                     .Where(x => x.LanguageTarget == request.ToLanguage)

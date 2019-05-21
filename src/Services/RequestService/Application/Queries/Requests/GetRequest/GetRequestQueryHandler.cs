@@ -1,8 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
+using Application.Infrastructure.Mappings;
 using Application.Interfaces;
-using Application.Queries.Requests.GetRequests;
+using Application.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,15 +25,7 @@ namespace Application.Queries.Requests.GetRequest
 
             if (entity == null) throw new NotFoundException($"{request.RequestId}", entity);
 
-            return new RequestPreviewDto
-            {
-                IsClosed = entity.IsClosed,
-                RequestId = entity.Id,
-                LanguageOrigin = entity.LanguageOrigin,
-                LanguageTarget = entity.LanguageTarget,
-                TextToTranslate = entity.TextToTranslate,
-                NoOfAnswers = entity.Answers.Count
-            };
+            return RequestMappings.ToRequestPreviewDTO(entity);
         }
     }
 }

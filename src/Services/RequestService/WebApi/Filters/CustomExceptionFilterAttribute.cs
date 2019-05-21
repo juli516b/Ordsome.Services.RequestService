@@ -23,7 +23,15 @@ namespace WebApi.Filters
 
             var code = HttpStatusCode.InternalServerError;
 
-            if (context.Exception is NotFoundException) code = HttpStatusCode.NotFound;
+            switch (context.Exception)
+            {
+                case NotFoundException _:
+                    code = HttpStatusCode.NotFound;
+                    break;
+                case ForbiddenException _:
+                    code = HttpStatusCode.Forbidden;
+                    break;
+            }
 
             context.HttpContext.Response.ContentType = "application/json";
             context.HttpContext.Response.StatusCode = (int) code;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Application.Queries.Requests.GetRequests;
+using Application.Models;
 using RequestService.WebApi.Tests.Common;
 using WebApi;
 using Xunit;
@@ -26,7 +26,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
 
             response.EnsureSuccessStatusCode();
 
-            var answers = await Utilities.GetResponseContent<IEnumerable<AnswerPreviewDto>>(response);
+            var answers = await Utilities.GetResponseContent<IEnumerable<AnswerDto>>(response);
 
             Assert.NotEmpty(answers);
         }

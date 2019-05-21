@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
+using Application.Infrastructure.Mappings;
 using Application.Interfaces;
+using Application.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,14 +30,7 @@ namespace Application.Queries.Requests.GetAnswersByRequestId
             if (entity == null)
                 throw new NotFoundException($"{request.RequestId}", entity);
 
-            return entity.Answers.Select(answer => new AnswerDto
-                {
-                    AnswerId = answer.Id,
-                    RequestId = answer.RequestId,
-                    TextTranslated = answer.TextTranslated,
-                    IsPreferred = answer.IsPreferred
-                })
-                .ToList();
+            return entity.Answers.Select(RequestMappings.ToAnswerDTO).ToList();
         }
     }
 }

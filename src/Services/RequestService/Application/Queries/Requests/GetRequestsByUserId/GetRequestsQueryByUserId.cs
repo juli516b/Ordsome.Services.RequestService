@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
+using Application.Infrastructure.Mappings;
 using Application.Interfaces;
-using Application.Queries.Requests.GetRequests;
+using Application.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,23 +32,13 @@ namespace Application.Queries.Requests.GetRequestsByUserId
         public async Task<IEnumerable<RequestPreviewDto>> Handle(GetRequestsByUserIdQuery request,
             CancellationToken cancellationToken)
         {
-            //TODO - maybe make some projection for the foreach loop?
             var requests = await _context.Requests.Where(x => x.UserId == request.UserId).Include(x => x.Answers)
                 .ToListAsync(cancellationToken);
             if (requests.Count == 0) throw new NotFoundException($"{request.UserId}", request);
             var requestsToReturn = new List<RequestPreviewDto>();
 
             foreach (var item in requests)
-                requestsToReturn.Add(new RequestPreviewDto
-                {
-                    RequestId = item.Id,
-                    LanguageOrigin = item.LanguageOrigin,
-                    LanguageTarget = item.LanguageTarget,
-                    TextToTranslate = item.TextToTranslate,
-                    NoOfAnswers = item.Answers.Count,
-                    IsClosed = item.IsClosed
-                });
-
+                requestsToReturn.Add(RequestMappings.ToRequestPreviewDTO(item));
             return requestsToReturn;
         }
     }

@@ -1,4 +1,4 @@
-namespace Application.Queries.Requests.GetAnswersByRequestId
+namespace Application.Models
 {
     public class AnswerDto
     {
