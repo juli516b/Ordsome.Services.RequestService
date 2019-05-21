@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
+using Application.Infrastructure.Mappings;
 using Application.Interfaces;
 using Application.Models;
 using MediatR;
@@ -26,18 +27,9 @@ namespace Application.Queries.Answers.GetAnswersByUserId
         {
             var answers = await _context.Answers.Where(x => x.UserId == request.UserId).ToListAsync(cancellationToken);
 
-            if (answers == null) throw new NotFoundException($"{request.UserId}", answers);
+            if (answers == null) throw new NotFoundException($"{request.UserId}", request);
 
-            ICollection<AnswerDto> answersToReturn = new List<AnswerDto>();
-            foreach (var item in answers)
-                answersToReturn.Add(new AnswerDto
-                {
-                    AnswerId = item.Id,
-                    IsPreferred = item.IsPreferred,
-                    RequestId = item.RequestId,
-                    TextTranslated = item.TextTranslated
-                });
-            return answersToReturn;
+            return answers.Select(RequestMappings.ToAnswerDTO).ToList();
         }
     }
 }

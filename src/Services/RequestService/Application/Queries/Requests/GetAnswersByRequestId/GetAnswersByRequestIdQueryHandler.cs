@@ -28,7 +28,7 @@ namespace Application.Queries.Requests.GetAnswersByRequestId
                     cancellationToken);
 
             if (entity == null)
-                throw new NotFoundException($"{request.RequestId}", entity);
+                throw new NotFoundException($"{request.RequestId}", request);
 
             return entity.Answers.Select(RequestMappings.ToAnswerDTO).ToList();
         }

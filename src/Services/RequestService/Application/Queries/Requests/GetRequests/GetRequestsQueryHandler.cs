@@ -24,35 +24,27 @@ namespace Application.Queries.Requests.GetRequests
         {
             var entities = await CheckGetRequestsQueryParams(request, cancellationToken);
 
-            var requestPreviewDtos = new List<RequestPreviewDto>();
-
-            foreach (var item in entities)
-                requestPreviewDtos.Add(RequestMappings.ToRequestPreviewDTO(item));
-            return requestPreviewDtos;
+            return entities.Select(RequestMappings.ToRequestPreviewDTO).ToList();
         }
 
         private async Task<List<Request>> CheckGetRequestsQueryParams(GetRequestsQuery request,
             CancellationToken cancellationToken)
         {
             // TODO - make this a switch statement.
-            List<Request> entities = null;
+            IQueryable<Request> entities = null;
 
             if (string.IsNullOrWhiteSpace(request.FromLanguage) && string.IsNullOrWhiteSpace(request.ToLanguage))
-                entities = await _context.Requests.Include(x => x.Answers)
-                    .ToListAsync(cancellationToken);
+                entities = _context.Requests.Include(x => x.Answers);
             else if (!string.IsNullOrWhiteSpace(request.FromLanguage) && string.IsNullOrWhiteSpace(request.ToLanguage))
-                entities = await _context.Requests.Include(x => x.Answers)
-                    .Where(x => x.LanguageOrigin == request.FromLanguage)
-                    .ToListAsync(cancellationToken);
+                entities = _context.Requests.Include(x => x.Answers)
+                    .Where(x => x.LanguageOrigin == request.FromLanguage);
             else if (string.IsNullOrWhiteSpace(request.FromLanguage) && !string.IsNullOrWhiteSpace(request.ToLanguage))
-                entities = await _context.Requests.Include(x => x.Answers)
-                    .Where(x => x.LanguageTarget == request.ToLanguage)
-                    .ToListAsync(cancellationToken);
+                entities = _context.Requests.Include(x => x.Answers)
+                    .Where(x => x.LanguageTarget == request.ToLanguage);
             else if (!string.IsNullOrWhiteSpace(request.FromLanguage) && !string.IsNullOrWhiteSpace(request.ToLanguage))
-                entities = await _context.Requests.Include(x => x.Answers).Where(x =>
-                        x.LanguageOrigin == request.FromLanguage && x.LanguageTarget == request.ToLanguage)
-                    .ToListAsync(cancellationToken);
-            return entities;
+                entities = _context.Requests.Include(x => x.Answers).Where(x =>
+                    x.LanguageOrigin == request.FromLanguage && x.LanguageTarget == request.ToLanguage);
+            return await entities.ToListAsync(cancellationToken);
         }
     }
 }
