@@ -6,7 +6,7 @@ using FluentValidation;
 using MediatR;
 using ValidationException = Ordsome.Services.CrossCuttingConcerns.Exceptions.ValidationException;
 
-namespace Application.Infrastructure
+namespace Ordsome.Services.CrossCuttingConcerns.Mediatr
 {
     public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
@@ -18,7 +18,8 @@ namespace Application.Infrastructure
             _validators = validators;
         }
 
-        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
+            RequestHandlerDelegate<TResponse> next)
         {
             var context = new ValidationContext(request);
 
@@ -28,10 +29,7 @@ namespace Application.Infrastructure
                 .Where(f => f != null)
                 .ToList();
 
-            if (failures.Count != 0)
-            {
-                throw new ValidationException(failures);
-            }
+            if (failures.Count != 0) throw new ValidationException(failures);
 
             return next();
         }
