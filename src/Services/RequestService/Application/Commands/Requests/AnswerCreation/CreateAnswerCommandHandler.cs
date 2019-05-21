@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
@@ -31,7 +32,7 @@ namespace Application.Commands.Requests.AnswerCreation
             var entity = new Answer
             {
                 RequestId = request.RequestId,
-                TextTranslated = request.TextTranslated
+                TextTranslated = Regex.Replace(request.TextTranslated, @"\s+", " ").Trim()
             };
 
             _context.Answers.Add(entity);
