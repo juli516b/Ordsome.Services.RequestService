@@ -1,8 +1,10 @@
+using System;
+using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RequestService.WebApi.Controllers
+namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -11,7 +13,14 @@ namespace RequestService.WebApi.Controllers
         private IMediator _mediator;
 
         protected IMediator Mediator => _mediator ?? (_mediator = HttpContext
-            .RequestServices
-            .GetService<IMediator>());
+                                            .RequestServices
+                                            .GetService<IMediator>());
+
+        protected Guid GetUserId()
+        {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return Guid.Parse(userid);
+        }
     }
 }

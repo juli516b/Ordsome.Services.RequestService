@@ -1,76 +1,78 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
+using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using UserService.Domain.Users;
-using UserService.Infrastructure.Persistence;
 
-namespace UserService.Application.Commands.Register
+namespace Application.Commands.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Unit>
     {
-        private UserServiceDbContext _context;
-        private IMediator _mediator;
+        private readonly IUserServiceDbContext _context;
+        private readonly IMediator _mediator;
 
-        public RegisterCommandHandler(UserServiceDbContext context, IMediator mediator)
+        public RegisterCommandHandler(IUserServiceDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
+
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            Guid outputGuid;
-            bool parsedGuid = Guid.TryParse(request.Id, out outputGuid);
+            Guid.TryParse(request.Id, out var outputGuid);
 
-            if (outputGuid == Guid.Empty)
-            {
-                Guid newGuid = new Guid();
-                var userWithoutId = await MakeUser(newGuid, request.Username, request.Password);
+            await CheckIfGuidIsValid(request, cancellationToken, outputGuid);
 
-                await _context.Users.AddAsync(userWithoutId);
-            }
-            else
-            {
-                var user = await MakeUser(outputGuid, request.Username, request.Password);
-                await _context.Users.AddAsync(user);
-            }
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }
 
+        private async Task CheckIfGuidIsValid(RegisterCommand request, CancellationToken cancellationToken,
+            Guid outputGuid)
+        {
+            if (outputGuid == Guid.Empty)
+            {
+                var newGuid = new Guid();
+                var userWithoutId = await MakeUser(newGuid, request.Username, request.Password);
+
+                await _context.Users.AddAsync(userWithoutId, cancellationToken);
+            }
+            else
+            {
+                var user = await MakeUser(outputGuid, request.Username, request.Password);
+                await _context.Users.AddAsync(user, cancellationToken);
+            }
+        }
+
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            using(var hmac = new System.Security.Cryptography.HMACSHA512())
+            using (var hmac = new HMACSHA512())
             {
                 passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
-
         }
-        public async Task<bool> UserExists(string username)
-        {
-            if (await _context.Users.AnyAsync(x => x.Username == username))
-                return true;
 
-            return false;
+        private async Task<bool> UserExists(string username)
+        {
+            return await _context.Users.AnyAsync(x => x.Username == username);
         }
 
         private async Task<User> MakeUser(Guid id, string username, string password)
         {
             username = username.ToLower();
 
-            if (await UserExists(username) == true)
-            {
-                throw new Exception();
-            }
+            if (await UserExists(username)) throw new Exception();
 
-            byte[] passwordHash, passwordSalt;
 
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
 
-            User user = new User
+            var user = new User
             {
                 Id = id,
                 Username = username,

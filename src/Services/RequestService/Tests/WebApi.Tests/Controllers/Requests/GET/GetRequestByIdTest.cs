@@ -1,20 +1,21 @@
-﻿using RequestService.Application.Queries.Requests.GetRequests;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using WebApi.Tests.Common;
+using Application.Models;
+using RequestService.WebApi.Tests.Common;
+using WebApi;
 using Xunit;
 
 namespace RequestService.WebApi.Tests.Controllers.Requests.GET
 {
     public class GetRequestByIdTest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private readonly HttpClient _client;
-
         public GetRequestByIdTest(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
+
+        private readonly HttpClient _client;
 
         [Fact]
         public async Task ReturnsRequestPreviewDto()
@@ -31,13 +32,13 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
         [Fact]
         public async Task ReturnsRightStatusCodeIfRequestIsNotFound()
         {
-            Random random = new Random();
-            int randomInt = random.Next(1000, 2000);
+            var random = new Random();
+            var randomInt = random.Next(1000, 2000);
             var response = await _client.GetAsync($"/api/requests/{randomInt}");
 
-            var statuscode = response.StatusCode;
+            var statusCode = response.StatusCode;
 
-            Assert.Equal("NotFound", statuscode.ToString());
+            Assert.Equal("NotFound", statusCode.ToString());
         }
     }
 }

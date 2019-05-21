@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace UserService.WebApi.Controllers
+namespace WebApi.Controllers
 {
     [ApiController]
     public abstract class BaseController : Controller
@@ -10,7 +10,7 @@ namespace UserService.WebApi.Controllers
         private IMediator _mediator;
 
         protected IMediator Mediator => _mediator ?? (_mediator = HttpContext
-            .RequestServices
-            .GetService<IMediator>());
+                                            .RequestServices
+                                            .GetService<IMediator>());
     }
 }

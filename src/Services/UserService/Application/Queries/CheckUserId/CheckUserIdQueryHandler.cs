@@ -1,17 +1,17 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using UserService.Infrastructure.Persistence;
 
-namespace UserService.Application.Queries.CheckUserId
+namespace Application.Queries.CheckUserId
 {
     public class CheckUserIdQueryHandler : IRequestHandler<CheckUserIdQuery, bool>
     {
-        private readonly UserServiceDbContext _context;
+        private readonly IUserServiceDbContext _context;
         private readonly IMediator _mediator;
 
-        public CheckUserIdQueryHandler(UserServiceDbContext context, IMediator mediator)
+        public CheckUserIdQueryHandler(IUserServiceDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
@@ -19,13 +19,9 @@ namespace UserService.Application.Queries.CheckUserId
 
         public async Task<bool> Handle(CheckUserIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.UserId);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken);
 
-            if (user == null)
-            {
-                return false;
-            }
-            return true;
+            return user != null;
         }
     }
 }

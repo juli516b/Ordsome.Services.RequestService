@@ -1,4 +1,4 @@
-namespace UserService.Application.Queries.GetRequestsBasedOnUserId
+namespace Application.Queries.GetRequestsBasedOnUserId
 {
     public class UserRequestsDto
     {

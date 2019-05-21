@@ -3,19 +3,19 @@ using System.Threading.Tasks;
 using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RequestService.Application.Interfaces;
 
-namespace RequestService.Application.Commands.Requests.CloseRequest
+namespace Application.Commands.Requests.CloseRequest
 {
     public class CloseRequestCommandHandler
     {
         public class Handler : IRequestHandler<CloseRequestCommand, Unit>
         {
             private readonly IRequestServiceDbContext _context;
-            private readonly INotificationService _notificationService;
             private readonly IMediator _mediator;
+            private readonly INotificationService _notificationService;
 
-            public Handler(IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+            public Handler(IRequestServiceDbContext context, INotificationService notificationService,
+                IMediator mediator)
             {
                 _context = context;
                 _notificationService = notificationService;
@@ -24,7 +24,8 @@ namespace RequestService.Application.Commands.Requests.CloseRequest
 
             public async Task<Unit> Handle(CloseRequestCommand request, CancellationToken cancellationToken)
             {
-                var entity = await _context.Requests.FirstOrDefaultAsync(x => x.Id == request.RequestId);
+                var entity = await _context.Requests.FirstOrDefaultAsync(x => x.Id == request.RequestId,
+                    cancellationToken);
 
                 entity.IsClosed = request.isClosed;
 

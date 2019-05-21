@@ -1,14 +1,14 @@
-using RequestService.Domain.Requests;
+using Domain.Requests;
 
-namespace RequestService.Application.Commands.Requests
+namespace Application.Commands.Requests
 {
     public class RequestUpdatedEvent
     {
-        public Request UpdatedRequest { get; set; }
-
         public RequestUpdatedEvent(Request updatedRequest)
         {
             UpdatedRequest = updatedRequest;
         }
+
+        public Request UpdatedRequest { get; set; }
     }
 }

@@ -1,8 +1,12 @@
 using System.Collections.Generic;
+using Application.Models;
 using MediatR;
-using RequestService.Domain.Requests;
 
-namespace RequestService.Application.Queries.Requests.GetRequests
+namespace Application.Queries.Requests.GetRequests
 {
-    public class GetRequestsQuery : IRequest<List<RequestPreviewDto>> { }
+    public class GetRequestsQuery : IRequest<List<RequestPreviewDto>>
+    {
+        public string FromLanguage { get; set; }
+        public string ToLanguage { get; set; }
+    }
 }

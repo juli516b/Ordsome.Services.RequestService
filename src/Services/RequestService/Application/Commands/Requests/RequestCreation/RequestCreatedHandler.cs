@@ -1,10 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
+using Application.Models;
 using MediatR;
-using RequestService.Application.Interfaces;
-using RequestService.Application.Models;
 
-namespace RequestService.Application.Commands.Requests.RequestCreation
+namespace Application.Commands.Requests.RequestCreation
 {
     public partial class RequestCreated
     {

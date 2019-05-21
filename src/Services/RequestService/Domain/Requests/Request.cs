@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Domain.SharedKernel;
-using RequestService.Domain.SharedKernel;
 
-namespace RequestService.Domain.Requests
+namespace Domain.Requests
 {
     public class Request : BaseEntity, IAggregateRoot
     {
@@ -11,6 +10,7 @@ namespace RequestService.Domain.Requests
         {
             Answers = new HashSet<Answer>();
         }
+
         public Guid UserId { get; set; }
         public string LanguageOrigin { get; set; }
         public string LanguageTarget { get; set; }

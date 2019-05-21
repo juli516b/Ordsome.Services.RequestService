@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RequestService.Domain.Requests;
-using RequestService.Infrastructure.Persistence;
-using System;
+﻿using System;
+using Domain.Requests;
+using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
-namespace Application.Tests
+namespace RequestService.Application.Tests
 {
     public class RequestServiceDbContextFactory
     {
@@ -17,10 +17,7 @@ namespace Application.Tests
 
             context.Database.EnsureCreated();
 
-            context.Answers.AddRange(new[]
-            {
-                new Answer { }
-            });
+            context.Answers.AddRange(new Answer());
 
             return null;
         }

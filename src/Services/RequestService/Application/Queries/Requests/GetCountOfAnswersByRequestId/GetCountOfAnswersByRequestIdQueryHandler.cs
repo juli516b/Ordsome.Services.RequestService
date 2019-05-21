@@ -1,33 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using Application.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RequestService.Application.Exceptions;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 
-namespace RequestService.Application.Queries.Requests.GetCountOfAnswersByRequestId
+namespace Application.Queries.Requests.GetCountOfAnswersByRequestId
 {
-    public class GetCountOfAnswersByRequestIdQueryHandler : IRequestHandler<GetCountOfAnswersByRequestIdQuery, CountOfAnswersDto>
+    public class
+        GetCountOfAnswersByRequestIdQueryHandler : IRequestHandler<GetCountOfAnswersByRequestIdQuery, CountOfAnswersDto>
     {
-        private IRequestServiceDbContext _context;
+        private readonly IRequestServiceDbContext _context;
 
         public GetCountOfAnswersByRequestIdQueryHandler(IRequestServiceDbContext context)
         {
             _context = context;
         }
 
-        public async Task<CountOfAnswersDto> Handle(GetCountOfAnswersByRequestIdQuery request, CancellationToken cancellationToken)
+        public async Task<CountOfAnswersDto> Handle(GetCountOfAnswersByRequestIdQuery request,
+            CancellationToken cancellationToken)
         {
-            var entity = await _context.Requests.Include(a => a.Answers).FirstOrDefaultAsync(r => r.Id == request.RequestId);
+            var entity = await _context.Requests.Include(a => a.Answers)
+                .FirstOrDefaultAsync(r => r.Id == request.RequestId, cancellationToken);
 
-            if (entity == null)
-            {
-                throw new NotFoundException($"{request.RequestId}", entity);
-            }
+            if (entity == null) throw new NotFoundException($"{request.RequestId}", request);
             return new CountOfAnswersDto
             {
                 noOfAnswers = entity.Answers.Count

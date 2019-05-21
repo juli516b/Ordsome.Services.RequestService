@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Application.Models;
 using MediatR;
-using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
 
-namespace RequestService.Application.Queries.Answers.GetanswersByUserId
+namespace Application.Queries.Answers.GetAnswersByUserId
 {
     public class GetAnswersByUserIdQuery : IRequest<ICollection<AnswerDto>>
     {

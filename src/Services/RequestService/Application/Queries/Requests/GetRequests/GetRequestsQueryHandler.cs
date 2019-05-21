@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Infrastructure.Mappings;
 using Application.Interfaces;
+using Application.Models;
+using Domain.Requests;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RequestService.Domain.Requests;
 
-namespace RequestService.Application.Queries.Requests.GetRequests
+namespace Application.Queries.Requests.GetRequests
 {
     public class GetRequestsQueryHandler : IRequestHandler<GetRequestsQuery, List<RequestPreviewDto>>
     {
@@ -19,25 +22,29 @@ namespace RequestService.Application.Queries.Requests.GetRequests
 
         public async Task<List<RequestPreviewDto>> Handle(GetRequestsQuery request, CancellationToken cancellationToken)
         {
-            var entities = await _context.Requests.Include(a => a.Answers).ToListAsync();
+            var entities = await CheckGetRequestsQueryParams(request, cancellationToken);
 
-            List<RequestPreviewDto> entitiesToReturn = new List<RequestPreviewDto>();
+            return entities.Select(RequestMappings.ToRequestPreviewDTO).ToList();
+        }
 
-            foreach (var entity in entities)
-            {
-                entitiesToReturn.Add(
-                    new RequestPreviewDto
-                    {
-                        RequestId = entity.Id,
-                            NoOfAnswers = entity.Answers.Count,
-                            LanguageOrigin = entity.LanguageOrigin,
-                            LanguageTarget = entity.LanguageTarget,
-                            TextToTranslate = entity.TextToTranslate,
-                            IsClosed = entity.IsClosed,
-                            UserId = entity.UserId
-                    });
-            }
-            return entitiesToReturn;
+        private async Task<List<Request>> CheckGetRequestsQueryParams(GetRequestsQuery request,
+            CancellationToken cancellationToken)
+        {
+            // TODO - make this a switch statement.
+            IQueryable<Request> entities = null;
+
+            if (string.IsNullOrWhiteSpace(request.FromLanguage) && string.IsNullOrWhiteSpace(request.ToLanguage))
+                entities = _context.Requests.Include(x => x.Answers);
+            else if (!string.IsNullOrWhiteSpace(request.FromLanguage) && string.IsNullOrWhiteSpace(request.ToLanguage))
+                entities = _context.Requests.Include(x => x.Answers)
+                    .Where(x => x.LanguageOrigin == request.FromLanguage);
+            else if (string.IsNullOrWhiteSpace(request.FromLanguage) && !string.IsNullOrWhiteSpace(request.ToLanguage))
+                entities = _context.Requests.Include(x => x.Answers)
+                    .Where(x => x.LanguageTarget == request.ToLanguage);
+            else if (!string.IsNullOrWhiteSpace(request.FromLanguage) && !string.IsNullOrWhiteSpace(request.ToLanguage))
+                entities = _context.Requests.Include(x => x.Answers).Where(x =>
+                    x.LanguageOrigin == request.FromLanguage && x.LanguageTarget == request.ToLanguage);
+            return await entities.ToListAsync(cancellationToken);
         }
     }
 }

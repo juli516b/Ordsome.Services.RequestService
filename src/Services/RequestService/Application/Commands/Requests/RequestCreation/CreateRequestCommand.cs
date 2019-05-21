@@ -2,12 +2,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using Domain.Requests;
 using MediatR;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
-using RequestService.Application.Interfaces;
-using RequestService.Domain.Requests;
 
-namespace RequestService.Application.Commands.Requests.RequestCreation
+namespace Application.Commands.Requests.RequestCreation
 {
     public class CreateRequestCommand : IRequest
     {
@@ -22,7 +22,7 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
         private readonly IRequestServiceDbContext _context;
         private readonly IMediator _mediator;
 
-        public Handler(IRequestServiceDbContext context, INotificationService notificationService, IMediator mediator)
+        public Handler(IRequestServiceDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
@@ -30,40 +30,35 @@ namespace RequestService.Application.Commands.Requests.RequestCreation
 
         public async Task<Unit> Handle(CreateRequestCommand request, CancellationToken cancellationToken)
         {
-            ListOfLanguages listOfLanguages = new ListOfLanguages();
+            var languageOrigin = ListOfLanguages.GetLanguageById(request.LanguageOriginId);
 
-            var getAndCheckIfLanguageOriginExists = listOfLanguages.GetLanguage(request.LanguageOriginId);
+            var languageTarget = ListOfLanguages.GetLanguageById(request.LanguageTargetId);
 
-            var getAndCheckIfLanguageTargetExists = listOfLanguages.GetLanguage(request.LanguageTargetId);
+            if (languageTarget == null) throw new NotFoundException($"{request.LanguageTargetId}", languageOrigin);
 
-            if (getAndCheckIfLanguageTargetExists == null)
+            if (languageOrigin == null)
             {
-                throw new Exception();
-            }
-
-            if (getAndCheckIfLanguageOriginExists == null)
-            {
-                string emptyLanguage = "Not set";
+                const string emptyLanguage = "Not set";
                 var entity = new Request
                 {
-                    LanguageTarget = getAndCheckIfLanguageTargetExists.LanguageName,
+                    LanguageTarget = languageTarget.LanguageCode,
                     LanguageOrigin = emptyLanguage,
                     TextToTranslate = request.TextToTranslate,
                     UserId = request.UserId
                 };
-
                 _context.Requests.Add(entity);
-
             }
             else
             {
                 var entity = new Request
                 {
-                    LanguageTarget = getAndCheckIfLanguageTargetExists.LanguageName,
-                    LanguageOrigin = getAndCheckIfLanguageOriginExists.LanguageName,
+                    LanguageTarget = languageTarget.LanguageCode,
+                    LanguageOrigin = languageOrigin.LanguageCode,
                     TextToTranslate = request.TextToTranslate,
                     UserId = request.UserId
                 };
+
+                _context.Requests.Add(entity);
             }
 
             await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

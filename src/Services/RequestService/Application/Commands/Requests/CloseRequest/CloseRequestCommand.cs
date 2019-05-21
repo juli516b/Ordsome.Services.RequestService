@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using MediatR;
 
-namespace RequestService.Application.Commands.Requests.CloseRequest
+namespace Application.Commands.Requests.CloseRequest
 {
     public class CloseRequestCommand : IRequest
     {

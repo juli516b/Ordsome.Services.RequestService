@@ -1,41 +1,53 @@
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces;
+using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using UserService.Application.Exceptions;
-using UserService.Infrastructure.Persistence;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 
-namespace UserService.Application.Commands.Login
+namespace Application.Commands.Login
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginToken>
     {
-        private UserServiceDbContext _context;
-        private IMediator _mediator;
-        private IConfiguration _config;
+        private readonly IConfiguration _config;
+        private readonly IUserServiceDbContext _context;
+        private readonly IMediator _mediator;
 
-        public LoginCommandHandler(UserServiceDbContext context, IMediator mediator, IConfiguration config)
+        public LoginCommandHandler(IUserServiceDbContext context, IMediator mediator, IConfiguration config)
         {
             _context = context;
             _mediator = mediator;
             _config = config;
         }
+
         public async Task<LoginToken> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == request.Username,
+                cancellationToken);
 
-            if (user == null)
-                throw new NotFoundException($"{request.Username}", user);
+            if (user == null) throw new NotFoundException($"{request.Username}", user);
 
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
                 throw new ForbiddenException($"{request.Username}", user);
 
-            var claims = new []
+            var tokenToReturn = MakeTokenToReturn(user);
+
+            return tokenToReturn;
+        }
+
+        private LoginToken MakeTokenToReturn(User user)
+        {
+            var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username)
@@ -57,22 +69,19 @@ namespace UserService.Application.Commands.Login
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            LoginToken tokenToReturn = new LoginToken
+            var tokenToReturn = new LoginToken
             {
                 Token = "Bearer " + tokenHandler.WriteToken(token)
             };
             return tokenToReturn;
         }
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+
+        private static bool VerifyPasswordHash(string password, IReadOnlyList<byte> passwordHash, byte[] passwordSalt)
         {
-            using(var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            using (var hmac = new HMACSHA512(passwordSalt))
             {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
-                {
-                    if (computedHash[i] != passwordHash[i])return false;
-                }
-                return true;
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return !computedHash.Where((t, i) => t != passwordHash[i]).Any();
             }
         }
     }

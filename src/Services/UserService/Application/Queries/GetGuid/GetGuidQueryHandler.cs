@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-namespace UserService.Application.Queries.GetGuid
+namespace Application.Queries.GetGuid
 {
     public class GetGuidQueryHandler : IRequestHandler<GetGuidQuery, GetGuidDto>
     {

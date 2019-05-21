@@ -1,57 +1,59 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RequestService.Infrastructure.Persistence.Migrations
+namespace Infrastructure.Persistence.Migrations
 {
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Requests",
-                columns : table => new
+                "Requests",
+                table => new
                 {
-                    RequestID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                        LanguageOrigin = table.Column<string>(nullable: true),
-                        LanguageTarget = table.Column<string>(nullable: false),
-                        TextToTranslate = table.Column<string>(nullable: false)
+                    RequestID = table.Column<int>()
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
+                    LanguageOrigin = table.Column<string>(nullable: true),
+                    LanguageTarget = table.Column<string>(),
+                    TextToTranslate = table.Column<string>()
                 },
-                constraints : table => table.PrimaryKey("PK_Requests", x => x.RequestID));
+                constraints: table => table.PrimaryKey("PK_Requests", x => x.RequestID));
 
             migrationBuilder.CreateTable(
-                name: "Answer",
-                columns : table => new
+                "Answer",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                        TextTranslated = table.Column<string>(nullable: true),
-                        RequestId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
+                    TextTranslated = table.Column<string>(nullable: true),
+                    RequestId = table.Column<int>()
                 },
-                constraints : table =>
+                constraints: table =>
                 {
                     table.PrimaryKey("PK_Answer", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Answer_Requests_RequestId",
-                        column : x => x.RequestId,
-                        principalTable: "Requests",
-                        principalColumn: "RequestID",
-                        onDelete : ReferentialAction.Cascade);
+                        "FK_Answer_Requests_RequestId",
+                        x => x.RequestId,
+                        "Requests",
+                        "RequestID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answer_RequestId",
-                table: "Answer",
-                column: "RequestId");
+                "IX_Answer_RequestId",
+                "Answer",
+                "RequestId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Answer");
+                "Answer");
 
             migrationBuilder.DropTable(
-                name: "Requests");
+                "Requests");
         }
     }
 }

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using Application.Models;
 using MediatR;
-using RequestService.Domain.Requests;
 
-namespace RequestService.Application.Queries.Requests.GetAnswersByRequestId
+namespace Application.Queries.Requests.GetAnswersByRequestId
 {
-    public partial class GetAnswersByRequestIdQuery : IRequest<IEnumerable<AnswerDto>>
+    public class GetAnswersByRequestIdQuery : IRequest<IEnumerable<AnswerDto>>
     {
         public int RequestId { get; set; }
     }

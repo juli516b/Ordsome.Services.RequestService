@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using MediatR;
 
-namespace UserService.Application.Commands.Register
+namespace Application.Commands.Register
 {
     public class RegisterCommand : IRequest
     {

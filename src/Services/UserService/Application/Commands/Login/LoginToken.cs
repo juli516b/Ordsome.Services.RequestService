@@ -1,4 +1,4 @@
-namespace UserService.Application.Commands.Login
+namespace Application.Commands.Login
 {
     public class LoginToken
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MediatR;
 
-namespace UserService.Application.Queries.GetRequestsBasedOnUserId
+namespace Application.Queries.GetRequestsBasedOnUserId
 {
     public class GetRequestsBasedOnUserIdQuery : IRequest<ICollection<UserRequestsDto>>
     {

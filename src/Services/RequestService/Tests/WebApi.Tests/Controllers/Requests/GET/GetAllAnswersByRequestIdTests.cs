@@ -1,22 +1,22 @@
-﻿using RequestService.Application.Queries.Requests.GetRequests;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using WebApi.Tests.Common;
+using Application.Models;
+using RequestService.WebApi.Tests.Common;
+using WebApi;
 using Xunit;
 
 namespace RequestService.WebApi.Tests.Controllers.Requests.GET
 {
     public class GetAllAnswersByRequestIdTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private readonly HttpClient _client;
-
         public GetAllAnswersByRequestIdTests(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
+
+        private readonly HttpClient _client;
 
         [Fact]
         public async Task GetAllAnswersByRequestId()
@@ -26,7 +26,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
 
             response.EnsureSuccessStatusCode();
 
-            var answers = await Utilities.GetResponseContent<IEnumerable<AnswerPreviewDto>>(response);
+            var answers = await Utilities.GetResponseContent<IEnumerable<AnswerDto>>(response);
 
             Assert.NotEmpty(answers);
         }
@@ -34,13 +34,13 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
         [Fact]
         public async Task ReturnsRightStatusCodeIfRequestIdIsNotFound()
         {
-            Random random = new Random();
-            int randomId = random.Next(2000, 4000);
+            var random = new Random();
+            var randomId = random.Next(2000, 4000);
             var response = await _client.GetAsync($"/api/requests/{randomId}/answers");
 
-            var statuscode = response.StatusCode;
+            var statusCode = response.StatusCode;
 
-            Assert.Equal("NotFound", statuscode.ToString());
+            Assert.Equal("NotFound", statusCode.ToString());
         }
     }
 }

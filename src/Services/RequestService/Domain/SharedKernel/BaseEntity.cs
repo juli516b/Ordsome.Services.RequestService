@@ -1,4 +1,4 @@
-namespace RequestService.Domain.SharedKernel
+namespace Domain.SharedKernel
 {
     public abstract class BaseEntity
     {

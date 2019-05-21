@@ -1,7 +1,7 @@
+using Infrastructure.Persistence.SharedKernel;
 using Microsoft.EntityFrameworkCore;
-using UserService.Infrastructure.Persistence.SharedKernel;
 
-namespace UserService.Infrastructure.Persistence
+namespace Infrastructure.Persistence
 {
     public class UserServiceDbContextFactory : DesignTimeDbContextFactoryBase<UserServiceDbContext>
     {

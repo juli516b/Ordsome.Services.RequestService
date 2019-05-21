@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace UserService.Application.Queries.GetUser
+namespace Application.Queries.GetUser
 {
     public class UserDto
     {

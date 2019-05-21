@@ -2,14 +2,17 @@ using System;
 using System.Threading.Tasks;
 using RestEase;
 
-namespace RequestService.Application.RestClients
+namespace Application.RestClients
 {
     public interface IUserServiceClient
     {
-        [Path("userId")]
-        Guid UserId { get; set; }
+        [Path("userId")] Guid UserId { get; set; }
+
+        [Get("check/{userId}")]
+        Task<bool> CheckUserId([Path] Guid userId);
+
 
         [Get("{userId}")]
-        Task<bool> CheckUserId([Path] Guid userId);
+        Task<UserDto> GetUserDetails([Path] Guid userId);
     }
 }

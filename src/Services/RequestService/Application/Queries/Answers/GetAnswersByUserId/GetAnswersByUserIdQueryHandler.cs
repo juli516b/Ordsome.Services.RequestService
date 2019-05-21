@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Infrastructure.Mappings;
 using Application.Interfaces;
+using Application.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RequestService.Application.Exceptions;
-using RequestService.Application.Queries.Requests.GetAnswersByRequestId;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 
-namespace RequestService.Application.Queries.Answers.GetanswersByUserId
+namespace Application.Queries.Answers.GetAnswersByUserId
 {
     public class GetAnswersByUserIdQueryHandler : IRequestHandler<GetAnswersByUserIdQuery, ICollection<AnswerDto>>
     {
@@ -20,29 +21,15 @@ namespace RequestService.Application.Queries.Answers.GetanswersByUserId
             _context = context;
             _mediator = mediator;
         }
-        public async Task<ICollection<AnswerDto>> Handle(GetAnswersByUserIdQuery request, CancellationToken cancellationToken)
+
+        public async Task<ICollection<AnswerDto>> Handle(GetAnswersByUserIdQuery request,
+            CancellationToken cancellationToken)
         {
-            var answers = await _context.Answers.Where(x => x.UserId == request.UserId).ToListAsync();
+            var answers = await _context.Answers.Where(x => x.UserId == request.UserId).ToListAsync(cancellationToken);
 
-            if (answers == null)
-            {
-                throw new NotFoundException($"{request.UserId}", answers);
-            }
+            if (answers == null) throw new NotFoundException($"{request.UserId}", request);
 
-            ICollection<AnswerDto> answersToReturn = new List<AnswerDto>();
-            foreach (var item in answers)
-            {
-                {
-                    answersToReturn.Add(new AnswerDto
-                    {
-                        AnswerId = item.Id,
-                            IsPreferred = item.IsPreferred,
-                            RequestId = item.RequestId,
-                            TextTranslated = item.TextTranslated
-                    });
-                }
-            }
-            return answersToReturn;
+            return answers.Select(RequestMappings.ToAnswerDTO).ToList();
         }
     }
 }

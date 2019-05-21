@@ -1,4 +1,4 @@
-namespace UserService.Application.Queries.GetUser
+namespace Application.Queries.GetUser
 {
     public class LanguagePreviewDto
     {

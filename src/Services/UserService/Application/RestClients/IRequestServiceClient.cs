@@ -2,12 +2,11 @@ using System;
 using System.Threading.Tasks;
 using RestEase;
 
-namespace UserService.Application.RestClients
+namespace Application.RestClients
 {
     public interface IRequestServiceClient
     {
-        [Path("userId")]
-        Guid UserId { get; set; }
+        [Path("userId")] Guid UserId { get; set; }
 
         [Get("u/{userId}")]
         Task<string> GetRequests([Path] Guid userId);
