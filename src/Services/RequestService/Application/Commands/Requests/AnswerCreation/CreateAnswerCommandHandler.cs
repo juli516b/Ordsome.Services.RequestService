@@ -1,10 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Requests;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 
 namespace Application.Commands.Requests.AnswerCreation
 {

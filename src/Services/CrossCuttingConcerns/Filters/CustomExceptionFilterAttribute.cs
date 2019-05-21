@@ -1,24 +1,32 @@
 using System;
 using System.Net;
-using Application.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
+using ValidationException = Ordsome.Services.CrossCuttingConcerns.Exceptions.ValidationException;
 
-namespace WebApi.Filters
+namespace Ordsome.Services.CrossCuttingConcerns.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
     {
         public override void OnException(ExceptionContext context)
         {
-            if (context.Exception is ValidationException exception)
+            switch (context.Exception)
             {
-                context.HttpContext.Response.ContentType = "application/json";
-                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-                context.Result = new JsonResult(
-                    exception.Failures);
+                case ValidationException exception:
+                    context.HttpContext.Response.ContentType = "application/json";
+                    context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    context.Result = new JsonResult(
+                        exception.Failures);
 
-                return;
+                    return;
+                case ArgumentNullException _:
+                    context.HttpContext.Response.ContentType = "application/json";
+                    context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    context.Result = new JsonResult($"A command cant be null. Please provide the properties for this command");
+
+                    return;
             }
 
             var code = HttpStatusCode.InternalServerError;

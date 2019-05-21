@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Exceptions;
 using Application.Infrastructure.Mappings;
 using Application.Interfaces;
 using Application.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 
 namespace Application.Queries.Requests.GetAnswersByRequestId
 {

@@ -1,10 +1,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Requests;
 using MediatR;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
 
 namespace Application.Commands.Requests.RequestCreation
@@ -30,8 +30,6 @@ namespace Application.Commands.Requests.RequestCreation
 
         public async Task<Unit> Handle(CreateRequestCommand request, CancellationToken cancellationToken)
         {
-            var listOfLanguages = new ListOfLanguages();
-
             var languageOrigin = ListOfLanguages.GetLanguageById(request.LanguageOriginId);
 
             var languageTarget = ListOfLanguages.GetLanguageById(request.LanguageTargetId);

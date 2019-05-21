@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Ordsome.Services.CrossCuttingConcerns.Languages
 {
-    public class ListOfLanguages
+    public static class ListOfLanguages
     {
         private const string json = @"[{""id"":1,""code"":""ab"",""name"":""Abkhaz"",""nativeName"":""аҧсуа""},
   {""id"":2,""code"":""aa"",""name"":""Afar"",""nativeName"":""Afaraf""},

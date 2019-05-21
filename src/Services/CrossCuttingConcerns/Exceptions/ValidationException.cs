@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentValidation.Results;
 
-namespace Application.Exceptions
+namespace Ordsome.Services.CrossCuttingConcerns.Exceptions
 {
     public class ValidationException : Exception
     {
@@ -12,7 +12,7 @@ namespace Application.Exceptions
             Failures = new Dictionary<string, string[]>();
         }
 
-        public ValidationException(IReadOnlyCollection<ValidationFailure> failures) : this()
+        public ValidationException(List<ValidationFailure> failures) : this()
         {
             var propertyNames = failures
                 .Select(e => e.PropertyName)

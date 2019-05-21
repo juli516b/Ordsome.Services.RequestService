@@ -1,6 +1,6 @@
 using System;
 
-namespace Application.Exceptions
+namespace Ordsome.Services.CrossCuttingConcerns.Exceptions
 {
     public class ForbiddenException : Exception
     {

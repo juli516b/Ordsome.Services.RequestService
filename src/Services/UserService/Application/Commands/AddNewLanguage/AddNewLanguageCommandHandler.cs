@@ -1,10 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 using Ordsome.Services.CrossCuttingConcerns.Languages;
 
 namespace Application.Commands.AddNewLanguage

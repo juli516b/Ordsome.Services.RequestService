@@ -2,13 +2,18 @@
 {
     public static class LanguageValidationHelpers
     {
-        public static bool BeALanguage(string arg)
+        public static bool BeALanguageByCode(string arg)
         {
-            var listOfLanguages = new ListOfLanguages();
-
             var language = ListOfLanguages.GetLanguageByCode(arg);
 
             return language != null;
         }
+
+        public static bool BeALanguageById(int id)
+        { 
+            var language = ListOfLanguages.GetLanguageById(id);
+
+            return language != null;
+        }    
     }
 }

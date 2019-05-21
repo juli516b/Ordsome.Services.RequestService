@@ -15,8 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Ordsome.Services.CrossCuttingConcerns.Filters;
 using Swashbuckle.AspNetCore.Swagger;
-using WebApi.Filters;
 
 namespace WebApi
 {
@@ -46,6 +46,7 @@ namespace WebApi
             // Add DbContext using SQL Server Provider
             services.AddDbContext<IUserServiceDbContext, UserServiceDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UserServiceDb")));
+
 
             services
                 .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))

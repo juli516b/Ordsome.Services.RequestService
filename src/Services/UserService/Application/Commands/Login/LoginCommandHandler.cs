@@ -7,13 +7,13 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 
 namespace Application.Commands.Login
 {

@@ -7,7 +7,7 @@ namespace Application.Commands.AddNewLanguage
     {
         public AddNewLanguageCommandValidator()
         {
-            RuleFor(x => x.LanguageCode).Must(LanguageValidationHelpers.BeALanguage)
+            RuleFor(x => x.LanguageCode).Must(LanguageValidationHelpers.BeALanguageByCode)
                 .WithMessage("The language is not a real language. Please try with a real language code");
         }
     }

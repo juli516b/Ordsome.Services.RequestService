@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Exceptions;
 using Application.Interfaces;
 using Application.RestClients;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 
 namespace Application.Queries.GetAnswersBasedOnUserId
 {

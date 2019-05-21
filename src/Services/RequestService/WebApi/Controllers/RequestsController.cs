@@ -96,7 +96,7 @@ namespace WebApi.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Create([FromBody] CreateRequestCommand command)
         {
-            await Mediator.Send(command).ConfigureAwait(false);
+            await Mediator.Send(command);
 
             return NoContent();
         }

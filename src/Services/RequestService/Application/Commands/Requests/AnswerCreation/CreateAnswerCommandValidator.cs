@@ -21,8 +21,7 @@ namespace Application.Commands.Requests.AnswerCreation
 
         private async Task<bool> IdExists(Guid arg1, CancellationToken arg2)
         {
-            var exists = await _client.CheckUserId(arg1);
-            return exists;
+            return await _client.CheckUserId(arg1);
         }
     }
 }

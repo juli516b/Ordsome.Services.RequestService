@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using Application.Commands.Answers.VoteOnAnswer;
 using Application.Commands.Requests.AnswerCreation;
+using Application.Commands.Requests.RequestCreation;
 
 namespace RequestService.WebApi.Tests.Controllers.Requests.POST
 {
-    public class TestDataGenerator
+    public static class TestDataGenerator
     {
         public static IEnumerable<object[]> GetCreateAnswerCommandsFromDataGenerator()
         {
@@ -29,6 +30,55 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
                     RequestId = 1,
                     UserId = Guid.NewGuid()
                 }
+            };
+        }
+
+        private static Guid TryParseGuidFromString(string str)
+        {
+            Guid.TryParse(str, out var result);
+            Guid.Parse(result.ToString());
+            return result;
+        }
+        
+        public static IEnumerable<object[]> GetCreateNewRequestCommandsFromDataGenerator()
+        {
+            yield return new object[]
+            {
+                new CreateRequestCommand
+                {
+                    LanguageOriginId = 0,
+                    LanguageTargetId = 0,
+                    UserId = TryParseGuidFromString("dafuqqqasd"),
+                    TextToTranslate = string.Empty
+                },
+                new CreateRequestCommand
+                {
+                    LanguageOriginId = 1,
+                    LanguageTargetId = 0,
+                    UserId = TryParseGuidFromString("dgfsdcasdcsdfeaw"),
+                    TextToTranslate = "Meget spændende"
+                },
+                new CreateRequestCommand
+                {
+                    LanguageOriginId = int.MaxValue,
+                    LanguageTargetId = int.MaxValue,
+                    UserId = Guid.Parse("cb23e0db-208f-421d-9210-4b976576056f"),
+                    TextToTranslate = string.Empty
+                },
+                new CreateRequestCommand
+                {
+                    LanguageOriginId = int.MinValue,
+                    LanguageTargetId = int.MinValue,
+                    UserId = Guid.Parse("cb23e0db-208f-421d-9210-4b976576056f"),
+                    TextToTranslate = string.Empty
+                },
+                new CreateRequestCommand
+                {
+                LanguageOriginId = int.MinValue,
+                LanguageTargetId = int.MinValue,
+                UserId = TryParseGuidFromString("c"),
+                TextToTranslate = "DDDDDDDD                                 DDDDDDDD                 DDDDDD"
+                },
             };
         }
 
