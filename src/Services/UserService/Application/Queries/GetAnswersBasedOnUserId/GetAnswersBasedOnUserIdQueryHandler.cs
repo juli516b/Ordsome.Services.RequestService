@@ -31,7 +31,7 @@ namespace Application.Queries.GetAnswersBasedOnUserId
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.UserId,
                 cancellationToken);
 
-            if (user == null) throw new NotFoundException(request.UserId.ToString(), user);
+            if (user == null) throw new NotFoundException(request.UserId.ToString(), request);
             _client.UserId = request.UserId;
 
             var resultToReturn =

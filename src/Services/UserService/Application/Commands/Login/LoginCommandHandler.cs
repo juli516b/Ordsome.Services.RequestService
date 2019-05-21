@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
 using Application.Interfaces;
+using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,12 +35,18 @@ namespace Application.Commands.Login
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == request.Username,
                 cancellationToken);
 
-            if (user == null)
-                throw new NotFoundException($"{request.Username}", user);
+            if (user == null) throw new NotFoundException($"{request.Username}", user);
 
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
                 throw new ForbiddenException($"{request.Username}", user);
 
+            var tokenToReturn = MakeTokenToReturn(user);
+
+            return tokenToReturn;
+        }
+
+        private LoginToken MakeTokenToReturn(User user)
+        {
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),

@@ -24,7 +24,7 @@ namespace Application.Queries.Requests.GetCountOfAnswersByRequestId
             var entity = await _context.Requests.Include(a => a.Answers)
                 .FirstOrDefaultAsync(r => r.Id == request.RequestId, cancellationToken);
 
-            if (entity == null) throw new NotFoundException($"{request.RequestId}", entity);
+            if (entity == null) throw new NotFoundException($"{request.RequestId}", request);
             return new CountOfAnswersDto
             {
                 noOfAnswers = entity.Answers.Count

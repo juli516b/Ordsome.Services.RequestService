@@ -23,7 +23,7 @@ namespace Application.Queries.Requests.GetRequest
             var entity = await _context.Requests.Include(a => a.Answers)
                 .FirstOrDefaultAsync(r => r.Id == request.RequestId, cancellationToken);
 
-            if (entity == null) throw new NotFoundException($"{request.RequestId}", entity);
+            if (entity == null) throw new NotFoundException($"{request.RequestId}", request);
 
             return RequestMappings.ToRequestPreviewDTO(entity);
         }

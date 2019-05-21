@@ -25,6 +25,16 @@ namespace Application.Commands.Register
         {
             Guid.TryParse(request.Id, out var outputGuid);
 
+            await CheckIfGuidIsValid(request, cancellationToken, outputGuid);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
+        }
+
+        private async Task CheckIfGuidIsValid(RegisterCommand request, CancellationToken cancellationToken,
+            Guid outputGuid)
+        {
             if (outputGuid == Guid.Empty)
             {
                 var newGuid = new Guid();
@@ -37,10 +47,6 @@ namespace Application.Commands.Register
                 var user = await MakeUser(outputGuid, request.Username, request.Password);
                 await _context.Users.AddAsync(user, cancellationToken);
             }
-
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

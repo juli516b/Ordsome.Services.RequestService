@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Users;
 using MediatR;
@@ -24,11 +25,9 @@ namespace Application.Commands.AddNewLanguage
             var user = await _context.Users.Include(x => x.Languages)
                 .FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken);
 
-            if (user == null) return Unit.Value;
+            if (user == null) throw new NotFoundException(request.UserId.ToString(), request);
 
-            var listOfLanguages = new ListOfLanguages();
-
-            var language = ListOfLanguages.GetLanguageById(request.LanguageId);
+            var language = ListOfLanguages.GetLanguageByCode(request.LanguageCode);
 
             var languageToAdd = new Language
 

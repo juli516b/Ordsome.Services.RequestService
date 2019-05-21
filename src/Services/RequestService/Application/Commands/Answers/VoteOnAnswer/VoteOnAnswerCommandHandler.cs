@@ -42,11 +42,11 @@ namespace Application.Commands.Answers.VoteOnAnswer
 
         private static void CheckVoteOnAnswerCommandForNull(VoteOnAnswerCommand command, Request request)
         {
-            if (request == null) throw new NotFoundException($"{command.RequestId}", request);
+            if (request == null) throw new NotFoundException($"{command.RequestId}", command);
 
             var answer = request.Answers.FirstOrDefault(x => x.Id == command.AnswerId);
 
-            if (answer == null) throw new NotFoundException($"{command.AnswerId}", answer);
+            if (answer == null) throw new NotFoundException($"{command.AnswerId}", command);
 
             if (answer.UserId.Equals(command.UserId)) throw new ForbiddenException($"{command.UserId}", answer);
         }
