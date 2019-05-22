@@ -7,6 +7,7 @@ using Application.Commands.Requests.AnswerCreation;
 using Application.Commands.Requests.CloseRequest;
 using Application.Commands.Requests.RequestCreation;
 using Application.Models;
+using Application.Queries.Requests.CheckRequest;
 using Application.Queries.Requests.GetAnswersByRequestId;
 using Application.Queries.Requests.GetCountOfAnswersByRequestId;
 using Application.Queries.Requests.GetRequest;
@@ -89,6 +90,17 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
+        ///     Returns similar requests
+        /// </summary>
+        [HttpGet("check")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(CountOfAnswersDto), (int) HttpStatusCode.OK)]
+        public async Task<ActionResult> CheckRequest([FromQuery] CheckRequestQuery query)
+        {
+            return Ok(await Mediator.Send(query));
+        }
+
+        /// <summary>
         ///     Create a request.
         /// </summary>
         [HttpPost]
@@ -96,7 +108,7 @@ namespace WebApi.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Create([FromBody] CreateRequestCommand command)
         {
-            await Mediator.Send(command);
+            await Mediator.Publish(command);
 
             return NoContent();
         }
