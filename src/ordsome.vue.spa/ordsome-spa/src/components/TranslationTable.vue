@@ -166,7 +166,7 @@ import { setTimeout } from 'timers';
     }
   },
 
-  mounted() {
+  created() {
     axios.get('https://localhost:7000/api/requests')
       .then(response => {
           this.translationRequests = response.data
