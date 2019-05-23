@@ -7,6 +7,7 @@ using Application.Interfaces;
 using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Ordsome.Services.CrossCuttingConcerns.Exceptions;
 
 namespace Application.Commands.Register
 {
@@ -67,20 +68,18 @@ namespace Application.Commands.Register
         {
             username = username.ToLower();
 
-            if (await UserExists(username)) throw new Exception();
+            if (await UserExists(username)) throw new ForbiddenException(username, username);
 
 
             CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
 
-            var user = new User
+            return new User
             {
                 Id = id,
                 Username = username,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };
-
-            return user;
         }
     }
 }

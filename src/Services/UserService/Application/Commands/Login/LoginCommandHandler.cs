@@ -40,9 +40,7 @@ namespace Application.Commands.Login
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
                 throw new ForbiddenException($"{request.Username}", user);
 
-            var tokenToReturn = MakeTokenToReturn(user);
-
-            return tokenToReturn;
+            return MakeTokenToReturn(user);
         }
 
         private LoginToken MakeTokenToReturn(User user)
@@ -69,11 +67,10 @@ namespace Application.Commands.Login
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            var tokenToReturn = new LoginToken
+            return new LoginToken
             {
                 Token = "Bearer " + tokenHandler.WriteToken(token)
             };
-            return tokenToReturn;
         }
 
         private static bool VerifyPasswordHash(string password, IReadOnlyList<byte> passwordHash, byte[] passwordSalt)

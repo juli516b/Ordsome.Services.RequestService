@@ -58,7 +58,6 @@ export default {
             this.$nextTick(function() {
                 this.request = response.data
                 console.log(this.request)
-
             })
             console.log(this.request)
         })

@@ -10,12 +10,12 @@
 
 <script>
 import AppNavigation from '@/components/AppNavigation';
+import Axios from 'axios';
 export default {
     name: 'App',
     components: {
         AppNavigation
     }
-};
+}
 </script>
-
 <style></style>

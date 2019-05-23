@@ -117,7 +117,9 @@
 <script>
 import ordsomeApiGway from '@/repositories/ordsomeApiGway'
 import axios from 'axios'
-import { setTimeout } from 'timers';
+import { setTimeout } from 'timers'
+import { mapState} from 'vuex'
+
   export default {
     textToTranslate: "TranslationTable",
     data () {
@@ -130,7 +132,7 @@ import { setTimeout } from 'timers';
       languages: [],
       pagination: {},
       dialog: '',
-      translationRequests: [],
+      userId: '',
       editedIndex: -1,
       headers: [
         {
@@ -163,17 +165,16 @@ import { setTimeout } from 'timers';
   computed: {
     formTitle() {
         return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    }
+    },
   },
+  computed: mapState([
+      'translationRequests'
+    ]),
 
   created() {
-    axios.get('https://localhost:7000/api/requests')
-      .then(response => {
-          this.translationRequests = response.data
-          this.loading= false
-          })
-      .catch(e => {this.errors.push(e)})
-
+    this.loading = true;
+    this.$store.dispatch('getTranslationRequests');
+    this.loading = false;
     axios.get('https://localhost:7000/api/requests/languages')
       .then(response => {
           this.languages = response.data
@@ -203,7 +204,7 @@ import { setTimeout } from 'timers';
           languageOriginCode: this.editedItem.languageOrigin,
           languageTargetCode: this.editedItem.languageTarget,
           textToTranslate: this.editedItem.textToTranslate,
-          userId: "09f922ed-92b7-4488-b43a-d8b48d596e19"
+          userId: localStorage.getItem('userId')
       })
       .then(function (response) {      
         console.log(response);        
@@ -212,7 +213,7 @@ import { setTimeout } from 'timers';
         console.log(error);
       });
       this.dialog = false
-    }
+    },
   }
   }
 </script>
