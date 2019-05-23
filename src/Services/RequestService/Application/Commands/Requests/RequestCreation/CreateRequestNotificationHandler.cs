@@ -22,11 +22,11 @@ namespace Application.Commands.Requests.RequestCreation
 
         public async Task Handle(CreateRequestCommand request, CancellationToken cancellationToken)
         {
-            var languageOrigin = ListOfLanguages.GetLanguageById(request.LanguageOriginId);
+            var languageOrigin = ListOfLanguages.GetLanguageByCode(request.LanguageOriginCode);
 
-            var languageTarget = ListOfLanguages.GetLanguageById(request.LanguageTargetId);
+            var languageTarget = ListOfLanguages.GetLanguageByCode(request.LanguageOriginCode);
 
-            if (languageTarget == null) throw new NotFoundException($"{request.LanguageTargetId}", languageOrigin);
+            if (languageTarget == null) throw new NotFoundException($"{request.LanguageTargetCode}", languageOrigin);
 
             switch (languageOrigin)
             {

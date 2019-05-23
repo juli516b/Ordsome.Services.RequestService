@@ -39,6 +39,7 @@ namespace ApiGway
                         ValidateAudience = false
                     };
                 });
+            services.AddCors();
             services.AddSwaggerForOcelot(Configuration);
             services.AddOcelot(Configuration);
         }
@@ -47,6 +48,7 @@ namespace ApiGway
         {
             app.UseAuthentication();
             app.UseSwaggerForOcelotUI(Configuration, opt => { opt.EndPointBasePath = "/swagger/docs"; });
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             await app.UseOcelot();
         }
     }

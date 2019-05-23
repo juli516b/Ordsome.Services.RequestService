@@ -7,7 +7,7 @@ namespace Application.Commands.Requests.RequestCreation
     {
         public CreateRequestCommandValidator()
         {
-            RuleFor(x => x.LanguageTargetId).Must(LanguageValidationHelpers.BeALanguageById).WithMessage("Specified language must be a language");
+            RuleFor(x => x.LanguageTargetCode).Must(LanguageValidationHelpers.BeALanguageByCode).WithMessage("Specified language must be a language");
             RuleFor(x => x.TextToTranslate).NotEmpty().WithMessage("Provide a text to translate");
             RuleFor(x => x.UserId).NotEmpty().WithMessage("UserID is not valid");
         }

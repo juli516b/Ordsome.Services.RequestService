@@ -12,11 +12,12 @@
         hide-details
       ></v-text-field>
     </v-card-title>
-    <v-dialog v-model="dialog" max-width="500px">
+    <v-dialog v-model="dialog" max-width="600px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on" fab><v-icon>mdi-plus</v-icon></v-btn>
         </template>
         <v-card>
+          <v-form>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
           </v-card-title>
@@ -25,7 +26,7 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.name" label="Text to translate"></v-text-field>
+                  <v-textarea v-model="editedItem.textToTranslate" label="Text to translate"></v-textarea>
                 </v-flex>
                 <v-flex xs6>
                     <template>
@@ -33,7 +34,10 @@
                             <v-card-text>
                             <v-subheader class="pa-0">From language</v-subheader>
                             <v-autocomplete
-                                v-model="editedItem.fromLanguage"
+                                :items="languages"
+                                v-model="editedItem.languageOrigin"
+                                item-text="name"
+                                item-value="code"
                                 persistent-hint
                                 prepend-icon="mdi-translate"
                             >
@@ -54,7 +58,10 @@
                             <v-card-text>
                             <v-subheader class="pa-0">To language</v-subheader>
                             <v-autocomplete
-                                v-model="editedItem.toLanguage"
+                                :items="languages"
+                                v-model="editedItem.languageTarget"
+                                item-text="name"
+                                item-value="code"
                                 persistent-hint
                                 prepend-icon="mdi-translate"
                             >
@@ -67,7 +74,7 @@
                             </v-autocomplete>
                             </v-card-text>
                         </v-card>
-                        </template>
+                      </template>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -78,23 +85,29 @@
             <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
             <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
           </v-card-actions>
+          </v-form>
         </v-card>
       </v-dialog>
-    <v-data-table :headers="headers" :items="translationRequests" :search="search">
+    <v-data-table 
+    v-model="selected"
+    :headers="headers" 
+    :items="translationRequests" 
+    :search="search"
+    :loading="loading"
+    :rows-per-page-items="[25,50,100]">
       <template v-slot:items="props">
+        <tr @click="showAlert(props.item)">
         <td>{{ props.item.textToTranslate }}</td>
-        <td class="text-xs-center">{{ props.item.fromLanguage }}</td>
-        <td class="text-xs-center">{{ props.item.toLanguage }}</td>
+        <td class="text-xs-center">{{ props.item.languageOrigin }}</td>
+        <td class="text-xs-center">{{ props.item.languageTarget }}</td>
+        </tr>
       </template>
       <template v-slot:no-results>
         <v-alert
           :value="true"
           color="error"
-          icon="warning"
+          icon="mdi-warning"
         >Your search for "{{ search }}" found no results.</v-alert>
-      </template>
-            <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
     </v-data-table>
   </v-card>
@@ -102,131 +115,104 @@
 </template>
 
 <script>
+import ordsomeApiGway from '@/repositories/ordsomeApiGway'
+import axios from 'axios'
+import { setTimeout } from 'timers';
   export default {
-      name: "TranslationTable",
-    data: () => ({
+    textToTranslate: "TranslationTable",
+    data () {
+      return {
+      selected: [],
+      totalRequests: 0,
+      formTitle: 'Create new translation',
+      loading: true,
       search: '',
+      languages: [],
+      pagination: {},
       dialog: '',
-        headers: [
-          {
-            text: 'Text to translate',
-            align: 'left',
-            sortable: false,
-            value: 'textToTranslate'
-          },
-          { text: 'From language', value: 'fromLanguage' },
-          { text: 'To language', value: 'toLanguage' },
-      ],
-        translationRequests: [],
-        editedIndex: -1,
-        editedItem: {
-            name: '',
-            fromLanguage: '',
-            toLanguage: ''
+      translationRequests: [],
+      editedIndex: -1,
+      headers: [
+        {
+          text: 'Text to translate',
+          align: 'left',
+          sortable: false,
+          value: 'textToTranslate'
         },
-        defaultItem: {
-            name: '',
-            fromLanguage: '',
-            toLanguage: ''
-        }
-    }),
-
-    computed: {
-        formTitle () {
-            return this.editedIndex === -1 ? 'New translation' : 'Edit translation'
-        }
-    },
-
-    watch: {
-        dialog (val) {
-            val || this.close()
-        }
-    },
-
-    methods: {
-        initialize () {
-            this.translationRequests = [
-          {
-            textToTranslate: 'Hvad kalder man en ko?',
-            fromLanguage: 'EN',
-        toLanguage: 'DK',
-          },
-          {
-            textToTranslate: 'Hvad kalder man en ko?',
-            fromLanguage: 'EN',
-        toLanguage: 'DK',
-          },
-          {
-            textToTranslate: 'Hvad kalder man en ko?',
-            fromLanguage: 'EN',
-        toLanguage: 'DK',
-          },
-          {
-            textToTranslate: 'Hvad kalder man en ko?',
-            fromLanguage: 'EN',
-        toLanguage: 'DK',
-          },
-          {
-            textToTranslate: 'Hvad kalder man en ko?',
-            fromLanguage: 'EN',
-        toLanguage: 'DK',
-          },
-          {
-            textToTranslate: 'Hvad kalder man en ko?',
-            fromLanguage: 'EN',
-        toLanguage: 'DK',
-          },
-          {
-            textToTranslate: 'Hvad kalder man en ko?',
-            fromLanguage: 'EN',
-        toLanguage: 'DK',
-          },
-          {
-            textToTranslate: 'Hvad kalder man en ko?',
-            fromLanguage: 'EN',
-        toLanguage: 'DK',
-          },
-          {
-            textToTranslate: 'Hvad kalder man en ko?',
-            fromLanguage: 'EN',
-        toLanguage: 'DK',
-          },
-          {
-            textToTranslate: 'Hvad kalder man en ko?',
-            fromLanguage: 'EN',
-        toLanguage: 'DK',
-          }
-        ]
-        
-    },
-
-    editItem (item) {
-        this.editedIndex = this.translationRequests.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
+        { text: 'From language', value: 'languageOriginCode' },
+        { text: 'To language', value: 'languageTargetCode' },
+      ],
+      editedItem: {
+          textToTranslate: '',
+          languageOrigin: '',
+          languageTarget: ''
       },
-
-      deleteItem (item) {
-        const index = this.translationRequests.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.translationRequests.splice(index, 1)
-      },
-
-      close () {
-        this.dialog = false
-        setTimeout(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        }, 300)
-      },
-
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.translationRequests[this.editedIndex], this.editedItem)
-        } else {
-          this.translationRequests.push(this.editedItem)
-        }
-        this.close()
+      defaultItem: {
+          textToTranslate: '',
+          languageOrigin: '',
+          languageTarget: ''
       }
+    }
+  },
+  watch: {
+      dialog (val) {
+          val || this.close()
+      }
+  },
+
+  computed: {
+    formTitle() {
+        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+    }
+  },
+
+  mounted() {
+    axios.get('https://localhost:7000/api/requests')
+      .then(response => {
+          this.translationRequests = response.data
+          this.loading= false
+          })
+      .catch(e => {this.errors.push(e)})
+
+    axios.get('https://localhost:7000/api/requests/languages')
+      .then(response => {
+          this.languages = response.data
+          })
+      .catch(e => {this.errors.push(e)}) 
+     },
+
+  methods: {
+    showAlert(a) {
+      this.$router.push({ name: 'translationrequest', params: {id: a.requestId}})
+    },
+    close () {
+      this.dialog = false
+      setTimeout(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      }, 300)
+    },
+    save () {
+      console.log(this.editedItem)
+      if (this.editedIndex > -1) {
+        Object.assign(this.translationRequests[this.editedIndex], this.editedItem)
+      } else {
+        this.translationRequests.push(this.editedItem)
+      }  
+      axios.post('https://localhost:7000/api/requests', {
+          languageOriginCode: this.editedItem.languageOrigin,
+          languageTargetCode: this.editedItem.languageTarget,
+          textToTranslate: this.editedItem.textToTranslate,
+          userId: "09f922ed-92b7-4488-b43a-d8b48d596e19"
+      })
+      .then(function (response) {      
+        console.log(response);        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      this.dialog = false
+    }
   }
-}
+  }
 </script>
