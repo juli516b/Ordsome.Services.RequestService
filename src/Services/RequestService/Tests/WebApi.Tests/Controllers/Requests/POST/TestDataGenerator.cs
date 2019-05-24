@@ -46,36 +46,36 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
             {
                 new CreateRequestCommand
                 {
-                    LanguageOriginId = 0,
-                    LanguageTargetId = 0,
+                    LanguageOriginCode = "",
+                    LanguageTargetCode = "",
                     UserId = TryParseGuidFromString("dafuqqqasd"),
                     TextToTranslate = string.Empty
                 },
                 new CreateRequestCommand
                 {
-                    LanguageOriginId = 1,
-                    LanguageTargetId = 0,
+                    LanguageOriginCode = "dk",
+                    LanguageTargetCode = "",
                     UserId = TryParseGuidFromString("dgfsdcasdcsdfeaw"),
                     TextToTranslate = "Meget spændende"
                 },
                 new CreateRequestCommand
                 {
-                    LanguageOriginId = int.MaxValue,
-                    LanguageTargetId = int.MaxValue,
+                    LanguageOriginCode = "asdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                    LanguageTargetCode = "asdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
                     UserId = Guid.Parse("cb23e0db-208f-421d-9210-4b976576056f"),
                     TextToTranslate = string.Empty
                 },
                 new CreateRequestCommand
                 {
-                    LanguageOriginId = int.MinValue,
-                    LanguageTargetId = int.MinValue,
+                    LanguageOriginCode = "-----dasd2111´´",
+                    LanguageTargetCode = "ddawdawsdasdd",
                     UserId = Guid.Parse("cb23e0db-208f-421d-9210-4b976576056f"),
                     TextToTranslate = string.Empty
                 },
                 new CreateRequestCommand
                 {
-                LanguageOriginId = int.MinValue,
-                LanguageTargetId = int.MinValue,
+                LanguageOriginCode = "-----dasd2111´´",
+                LanguageTargetCode = "ddawdawsdasdd",
                 UserId = TryParseGuidFromString("c"),
                 TextToTranslate = "DDDDDDDD                                 DDDDDDDD                 DDDDDD"
                 },

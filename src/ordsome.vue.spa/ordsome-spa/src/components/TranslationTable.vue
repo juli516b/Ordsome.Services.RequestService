@@ -118,7 +118,7 @@
 import ordsomeApiGway from '@/repositories/ordsomeApiGway'
 import axios from 'axios'
 import { setTimeout } from 'timers'
-import { mapState} from 'vuex'
+import { mapState, mapActions} from 'vuex'
 
   export default {
     textToTranslate: "TranslationTable",
@@ -146,13 +146,13 @@ import { mapState} from 'vuex'
       ],
       editedItem: {
           textToTranslate: '',
-          languageOrigin: '',
-          languageTarget: ''
+          languageOriginCode: '',
+          languageTargetCode: ''
       },
       defaultItem: {
           textToTranslate: '',
-          languageOrigin: '',
-          languageTarget: ''
+          languageOriginCode: '',
+          languageTargetCode: ''
       }
     }
   },
@@ -163,13 +163,13 @@ import { mapState} from 'vuex'
   },
 
   computed: {
+    ...mapState({
+      translationRequests: state => state.translationRequests
+    }),
     formTitle() {
         return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
-  computed: mapState([
-      'translationRequests'
-    ]),
 
   created() {
     this.loading = true;

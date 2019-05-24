@@ -10,7 +10,6 @@ namespace Domain.Requests
         {
             Answers = new HashSet<Answer>();
         }
-
         public Guid UserId { get; set; }
         public string LanguageOrigin { get; set; }
         public string LanguageTarget { get; set; }

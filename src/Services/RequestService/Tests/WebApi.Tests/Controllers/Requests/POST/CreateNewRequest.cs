@@ -22,8 +22,8 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
         {
             var command = new CreateRequestCommand
             {
-                LanguageOriginId = 40,
-                LanguageTargetId = 20,
+                LanguageOriginCode = "en",
+                LanguageTargetCode = "dk",
                 TextToTranslate = "Do you want some apples?",
                 UserId = Guid.NewGuid()
             };
@@ -40,7 +40,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
         {
             var command = new CreateRequestCommand
             {
-                LanguageTargetId = 20,
+                LanguageTargetCode = "dk",
                 TextToTranslate = "Bobby har svært ved dansk",
                 UserId = Guid.NewGuid()
             };
