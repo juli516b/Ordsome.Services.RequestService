@@ -2,7 +2,7 @@
     <v-container>
         <v-layout align-space-around justify-center column fill-height>
             <v-flex>
-                <h1 v-show="listOfAnswers.length >= 0" class="text-md-center"> Be the first to answer! </h1>
+                <h1 v-show="listOfAnswers.length <= 0" class="text-md-center"> Be the first to answer! </h1>
                 <v-card>
                     <v-list v-show="listOfAnswers.length > 0">
                         <template v-for="(item, index) in listOfAnswers">

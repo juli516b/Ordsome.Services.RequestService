@@ -137,46 +137,40 @@ export default {
             UserId: ''
         };
     },
+    computed: {
+        isLoggedIn : function(){ return this.$store.getters.isLoggedIn}
+    },
     created () {
         axios.get('https://localhost:7000/api/users/new')
         .then(response => {
         console.log(response.data.newGuid)
-        if (localStorage.userId == '') {
+        if (localStorage.getItem('userId') == '') {
             localStorage.setItem('userId', response.data.newGuid)
         }
     })
       .catch(e => {this.errors.push(e)})
         },
-    methods: {
+    methods: {        
         registerUser () {
-            axios.post('https://localhost:7000/api/users/register', {
+            let data = {
                 username: this.User.username,
-                password: this.User.password,
-                userId: localStorage.getItem('userId')
-            })
-            .then(function (response) {   
-                this.joinDialog = false;           
-                console.log(response)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
+                password: this.User.password
+            }
+            this.$store.dispatch('register', data)
+            .then(() => joinDialog = false)
+            .catch(err => console.log(err))
+            },
         loginUser () {
-            this.signInDialog = false;        
-            axios.post('https://localhost:7000/api/users/login', {
+            let data = {
                 username: this.User.username,
-                password: this.User.password,
-            })
-            .then(function (response) {  
-                console.log(response);
-                localStorage.setItem('token', response.data.token)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+                password: this.User.password
+            }   
+            this.signInDialog = false;     
+            this.$store.dispatch('userLogin', data)
+            .then(() => signInDialog = false)
+            .catch(err => console.log(err))
         }
-    },
+    }
 }
 </script>
 

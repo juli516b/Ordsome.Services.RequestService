@@ -200,12 +200,7 @@ import { mapState} from 'vuex'
       } else {
         this.translationRequests.push(this.editedItem)
       }  
-      axios.post('https://localhost:7000/api/requests', {
-          languageOriginCode: this.editedItem.languageOrigin,
-          languageTargetCode: this.editedItem.languageTarget,
-          textToTranslate: this.editedItem.textToTranslate,
-          userId: localStorage.getItem('userId')
-      })
+      this.$store.dispatch('addTranslationRequest', this.editedItem)
       .then(function (response) {      
         console.log(response);        
       })
