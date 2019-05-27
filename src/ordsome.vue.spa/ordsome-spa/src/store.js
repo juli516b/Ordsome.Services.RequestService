@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import router from '@/router';
 
 Vue.use(Vuex);
 
@@ -37,6 +36,10 @@ export default new Vuex.Store({
           logout(state){
             state.status = ''
             state.token = ''
+            state.userRequests = []
+        },
+        get_user_translationrequests(state, payload) {
+          state.userRequests = payload
         }
     },
     actions: {
@@ -46,6 +49,9 @@ export default new Vuex.Store({
                     .then(r => r.data)
                     .then(translationRequests => {
                         commit('setTranslationRequests', translationRequests)
+                    })
+                    .catch(err => {
+                      reject(err)
                     })
             },
             addTranslationRequest({ commit, state }, request) {
@@ -104,10 +110,24 @@ export default new Vuex.Store({
                   delete axios.defaults.headers.common['Authorization']
                   resolve()
                 })
-              }
+              },
+              getUserTranslations({commit, state}) {
+                axios
+                .get(`${state.apiGwayUsersUrl}/${this.getters.jwtNameid}/requests`)
+                .then(r => r.data)
+                .then(translationRequests => {
+                    commit('get_user_translationrequests', translationRequests)
+                })
+                  .catch(err => {
+                      reject(err)
+                })
         },
+    },
         getters : {
             isLoggedIn: state => !!state.token,
             authStatus: state => state.status,
-          }
+            jwt: state => state.token,
+            jwtData: (state, getters) => state.token ? JSON.parse(atob(getters.jwt.split('.')[1])) : null,
+            jwtNameid: (state, getters) => getters.jwtData ? getters.jwtData.nameid : null
+        }
     })

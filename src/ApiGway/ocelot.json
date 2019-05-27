@@ -10,7 +10,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/languages/",
-      "UpstreamMethod": ["Get"],
+      "UpstreamMethod": [ "Get" ],
       "SwaggerKey": "requestapi"
     },
     {
@@ -23,7 +23,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/answers/",
-      "UpstreamMethod": ["Post"],
+      "UpstreamMethod": [ "Post" ],
       "SwaggerKey": "requestapi"
     },
     {
@@ -36,7 +36,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/answers/isPreferred/",
-      "UpstreamMethod": ["Patch"],
+      "UpstreamMethod": [ "Patch" ],
       "SwaggerKey": "requestapi"
 
     },
@@ -50,7 +50,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/",
-      "UpstreamMethod": ["Get"],
+      "UpstreamMethod": [ "Get" ],
       "SwaggerKey": "requestapi"
     },
     {
@@ -63,7 +63,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/{id}",
-      "UpstreamMethod": ["Get"],
+      "UpstreamMethod": [ "Get" ],
       "SwaggerKey": "requestapi"
     },
     {
@@ -76,7 +76,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/{id}/answers/",
-      "UpstreamMethod": ["Get, Post"],
+      "UpstreamMethod": [ "Get, Post" ],
       "SwaggerKey": "requestapi"
     },
     {
@@ -89,7 +89,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/{id}/answers/count/",
-      "UpstreamMethod": ["Get"],
+      "UpstreamMethod": [ "Get" ],
       "SwaggerKey": "requestapi"
     },
     {
@@ -102,7 +102,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/isClosed/",
-      "UpstreamMethod": ["Patch"],
+      "UpstreamMethod": [ "Patch" ],
       "SwaggerKey": "requestapi"
     },
     {
@@ -115,7 +115,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/requests/{id}/answers/{answerId}/vote",
-      "UpstreamMethod": ["Post"],
+      "UpstreamMethod": [ "Post" ],
       "SwaggerKey": "requestapi"
     },
     {
@@ -128,7 +128,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/users/new/",
-      "UpstreamMethod": ["Get"],
+      "UpstreamMethod": [ "Get" ],
       "SwaggerKey": "userapi"
     },
     {
@@ -141,7 +141,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/users/register/",
-      "UpstreamMethod": ["Post"],
+      "UpstreamMethod": [ "Post" ],
       "SwaggerKey": "userapi"
     },
     {
@@ -154,7 +154,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/users/login/",
-      "UpstreamMethod": ["Post"],
+      "UpstreamMethod": [ "Post" ],
       "SwaggerKey": "userapi"
     },
     {
@@ -167,7 +167,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/users/newLanguage/",
-      "UpstreamMethod": ["Patch"],
+      "UpstreamMethod": [ "Patch" ],
       "SwaggerKey": "userapi"
     },
     {
@@ -180,9 +180,36 @@
         }
       ],
       "UpstreamPathTemplate": "/api/users/{id}",
-      "UpstreamMethod": ["Get"],
+      "UpstreamMethod": [ "Get" ],
+      "SwaggerKey": "userapi"
+    },
+    {
+      "DownstreamPathTemplate": "/api/users/{id}/requests",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/{id}/requests",
+      "UpstreamMethod": [ "Get" ],
+      "SwaggerKey": "userapi"
+    },
+    {
+      "DownstreamPathTemplate": "/api/users/{id}/answers",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/{id}/answers",
+      "UpstreamMethod": [ "Get" ],
       "SwaggerKey": "userapi"
     }
+
   ],
   "SwaggerEndPoints": [
      {

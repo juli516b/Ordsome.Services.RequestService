@@ -27,7 +27,7 @@ namespace WebApi.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        [HttpGet("/u/{userId}")]
+        [HttpGet("u/{userId}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<AnswerDto>), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> GetAllAnswersByUserId(Guid userId)
