@@ -1,53 +1,44 @@
 <template>
-  <v-tabs
-    centered
-    color="cyan"
-    dark
-    icons-and-text
-  >
-    <v-tabs-slider color="yellow"></v-tabs-slider>
+    <v-tabs centered color="cyan" dark icons-and-text>
+        <v-tabs-slider color="yellow"></v-tabs-slider>
 
-    <v-tab href="#tab-1">
-      requests
-      <v-icon>mdi-translate</v-icon>
-    </v-tab>
+        <v-tab href="#tab-1">
+            requests
+            <v-icon>mdi-translate</v-icon>
+        </v-tab>
 
-    <v-tab href="#tab-2">
-      answers
-      <v-icon>mdi-forum</v-icon>
-    </v-tab>
-    <v-tab-item
-      v-for="i in 2"
-      :key="i"
-      :value="'tab-' + i"
-    >
-    <v-card v-show="i === 1">
-         <UserRequestsComponent/>
-      </v-card>
-    <v-card v-show="i === 2">
-        <UserAnswersComponent/>
-    </v-card>
-    </v-tab-item>
-  </v-tabs>
+        <v-tab href="#tab-2">
+            answers
+            <v-icon>mdi-forum</v-icon>
+        </v-tab>
+        <v-tab-item v-for="i in 2" :key="i" :value="'tab-' + i">
+            <v-card v-show="i === 1">
+                <UserRequestsComponent />
+            </v-card>
+            <v-card v-show="i === 2">
+                <UserAnswersComponent />
+            </v-card>
+        </v-tab-item>
+    </v-tabs>
 </template>
 
 <script>
-import UserRequestsComponent from '@/components/UserRequestsComponent'
-import UserAnswersComponent from '@/components/UserAnswersComponent'
+import UserRequestsComponent from '@/components/UserRequestsComponent';
+import UserAnswersComponent from '@/components/UserAnswersComponent';
 import { mapGetters, mapActions, mapState } from 'vuex';
 export default {
     components: {
         UserRequestsComponent,
         UserAnswersComponent
     },
-    data () {
+    data() {
         return {
-            UserData: [],
-        }
+            UserData: []
+        };
     },
     mounted() {
         this.$store.dispatch('getUserTranslations');
-        this.UserData = this.jwtData
+        this.UserData = this.jwtData;
     }
-}
+};
 </script>

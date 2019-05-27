@@ -17,7 +17,7 @@ const router = new Router({
         {
             path: '/about',
             name: 'about',
-            component: () => import('./views/About.vue'),
+            component: () => import('./views/About.vue')
         },
         {
             path: '/menu',
@@ -46,15 +46,15 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    if(to.matched.some(record => record.meta.requiresAuth)) {
-      if (store.getters.isLoggedIn) {
-        next()
-        return
-      }
-      next('/') 
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (store.getters.isLoggedIn) {
+            next();
+            return;
+        }
+        next('/');
     } else {
-      next() 
+        next();
     }
-  })
+});
 
 export default router;
