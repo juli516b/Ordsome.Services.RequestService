@@ -39,7 +39,9 @@ namespace Application.Queries.GetAnswersBasedOnUserId
 
             foreach (var item in resultToReturn)
                 if (item.TextTranslated == null)
+                {
                     throw new NotFoundException(item.TextTranslated, item);
+                }
 
             return resultToReturn;
         }

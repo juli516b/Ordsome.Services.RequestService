@@ -6,5 +6,6 @@ namespace Application.Queries.GetAnswersBasedOnUserId
         public int RequestId { get; set; }
         public int AnswerId { get; set; }
         public bool IsPreferred { get; set; }
+        public string TextToTranslate { get; set; }
     }
 }

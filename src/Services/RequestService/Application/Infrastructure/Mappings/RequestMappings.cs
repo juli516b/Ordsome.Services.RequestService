@@ -17,7 +17,7 @@ namespace Application.Infrastructure.Mappings
             };
         }
 
-        public static AnswerDto ToAnswerDTO(Answer answer)
+        public static AnswerDto ToAnswerDTO(Answer answer, string textToTranslate)
         {
             return new AnswerDto
             {
@@ -25,7 +25,7 @@ namespace Application.Infrastructure.Mappings
                 TextTranslated = answer.TextTranslated,
                 IsPreferred = answer.IsPreferred,
                 RequestId = answer.RequestId,
-                TextToTranslate = answer.Request.TextToTranslate
+                TextToTranslate = textToTranslate
             };
         }
     }
