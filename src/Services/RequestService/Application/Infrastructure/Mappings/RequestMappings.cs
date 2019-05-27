@@ -10,8 +10,8 @@ namespace Application.Infrastructure.Mappings
             return new RequestPreviewDto
             {
                 RequestId = request.Id,
-                LanguageOrigin = request.LanguageOrigin,
-                LanguageTarget = request.LanguageTarget,
+                LanguageOriginCode = request.LanguageOrigin,
+                LanguageTargetCode = request.LanguageTarget,
                 NoOfAnswers = request.Answers.Count,
                 TextToTranslate = request.TextToTranslate
             };

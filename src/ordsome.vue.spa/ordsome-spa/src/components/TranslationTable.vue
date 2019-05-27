@@ -35,7 +35,7 @@
                             <v-subheader class="pa-0">From language</v-subheader>
                             <v-autocomplete
                                 :items="languages"
-                                v-model="editedItem.languageOrigin"
+                                v-model="editedItem.languageOriginCode"
                                 item-text="name"
                                 item-value="code"
                                 persistent-hint
@@ -59,7 +59,7 @@
                             <v-subheader class="pa-0">To language</v-subheader>
                             <v-autocomplete
                                 :items="languages"
-                                v-model="editedItem.languageTarget"
+                                v-model="editedItem.languageTargetCode"
                                 item-text="name"
                                 item-value="code"
                                 persistent-hint
@@ -82,8 +82,8 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
+            <v-btn color="blue darken-1" flat @click="close()">Cancel</v-btn>
+            <v-btn color="blue darken-1" flat @click="save()">Save</v-btn>
           </v-card-actions>
           </v-form>
         </v-card>
@@ -98,8 +98,8 @@
       <template v-slot:items="props">
         <tr @click="showAlert(props.item)">
         <td>{{ props.item.textToTranslate }}</td>
-        <td class="text-xs-center">{{ props.item.languageOrigin }}</td>
-        <td class="text-xs-center">{{ props.item.languageTarget }}</td>
+        <td class="text-xs-center">{{ props.item.languageOriginCode }}</td>
+        <td class="text-xs-center">{{ props.item.languageTargetCode }}</td>
         </tr>
       </template>
       <template v-slot:no-results>
@@ -198,17 +198,23 @@ import { mapState, mapActions} from 'vuex'
       if (this.editedIndex > -1) {
         Object.assign(this.translationRequests[this.editedIndex], this.editedItem)
       } else {
-        this.translationRequests.push(this.editedItem)
-      }  
-      this.$store.dispatch('addTranslationRequest', this.editedItem)
+        this.$store.dispatch('addTranslationRequest', 
+        {
+          "languageOriginCode": this.editedItem.languageOriginCode,
+          "languageTargetCode": this.editedItem.languageTargetCode,
+          "textToTranslate": this.editedItem.textToTranslate,
+          "userId": this.$store.getters.jwtNameid
+        })
       .then(function (response) {      
         console.log(response);        
       })
       .catch(function (error) {
         console.log(error);
       });
-      this.dialog = false
-    },
+        this.translationRequests.push(this.editedItem)
+        this.dialog = false
+      }  
+    }
   }
   }
 </script>

@@ -45,11 +45,6 @@ export default {
             UserData: [],
         }
     },
-    computed: {
-    ...mapState({
-        userRequests: state => state.userRequests
-    })
-    },
     mounted() {
         this.$store.dispatch('getUserTranslations');
         this.UserData = this.jwtData
