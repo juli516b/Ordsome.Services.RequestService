@@ -24,7 +24,8 @@ namespace Application.Infrastructure.Mappings
                 AnswerId = answer.Id,
                 TextTranslated = answer.TextTranslated,
                 IsPreferred = answer.IsPreferred,
-                RequestId = answer.RequestId
+                RequestId = answer.RequestId,
+                TextToTranslate = answer.Request.TextToTranslate
             };
         }
     }
