@@ -14,7 +14,7 @@
             </v-card-title>
             <v-dialog v-model="dialog" max-width="600px">
                 <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark class="mb-2" v-on="on" fab
+                    <v-btn color="brown lighten-2" dark class="mb-2" v-on="on" fab
                         ><v-icon>mdi-plus</v-icon></v-btn
                     >
                 </template>
@@ -142,10 +142,9 @@
 </template>
 
 <script>
-import ordsomeApiGway from '@/repositories/ordsomeApiGway';
 import axios from 'axios';
 import { setTimeout } from 'timers';
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
     textToTranslate: 'TranslationTable',
@@ -153,7 +152,6 @@ export default {
         return {
             selected: [],
             totalRequests: 0,
-            formTitle: 'Create new translation',
             loading: true,
             search: '',
             languages: [],
@@ -202,7 +200,7 @@ export default {
             translationRequests: state => state.translationRequests
         }),
         formTitle() {
-            return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
+            return this.editedIndex === -1 ? 'New translation' : 'Edit Item';
         }
     },
 
@@ -235,7 +233,6 @@ export default {
             }, 300);
         },
         save() {
-            console.log(this.editedItem);
             if (this.editedIndex > -1) {
                 Object.assign(
                     this.translationRequests[this.editedIndex],
@@ -255,6 +252,13 @@ export default {
                     .catch(function(error) {
                         console.log(error);
                     });
+                if (this.editedItem.languageOriginCode === '') {
+                    this.translationRequests.push({
+                        languageOriginCode: 'Not set',
+                        languageTargetCode: this.editedItem.languageTargetCode,
+                        textToTranslate: this.editedItem.textToTranslate
+                    })
+                } else
                 this.translationRequests.push(this.editedItem);
                 this.dialog = false;
             }

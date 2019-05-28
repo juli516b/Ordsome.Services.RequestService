@@ -59,20 +59,16 @@ export default {
             .then(response => {
                 this.$nextTick(function() {
                     this.request = response.data;
-                    console.log(this.request);
                 });
-                console.log(this.request);
             })
             .catch(e => {
                 this.errors.push(e);
             });
-
-        console.log(request);
     },
     computed: {
         isLoggedIn: function() {
             return this.$store.getters.isLoggedIn;
-        },
+        }
     },
     methods: {}
 };

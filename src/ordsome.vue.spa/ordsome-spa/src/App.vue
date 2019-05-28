@@ -23,7 +23,7 @@ export default {
                     err.config &&
                     !err.config.__isRetryRequest
                 ) {
-                    this.$store.dispatch(logout);
+                    this.$store.dispatch('logout');
                 }
                 throw err;
             });

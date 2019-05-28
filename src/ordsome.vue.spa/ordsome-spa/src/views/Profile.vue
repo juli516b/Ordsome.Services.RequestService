@@ -1,5 +1,5 @@
 <template>
-    <v-tabs centered color="cyan" dark icons-and-text>
+    <v-tabs centered color="brown lighten-2" dark icons-and-text>
         <v-tabs-slider color="yellow"></v-tabs-slider>
 
         <v-tab href="#tab-1">
@@ -25,7 +25,7 @@
 <script>
 import UserRequestsComponent from '@/components/UserRequestsComponent';
 import UserAnswersComponent from '@/components/UserAnswersComponent';
-import { mapGetters, mapActions, mapState } from 'vuex';
+
 export default {
     components: {
         UserRequestsComponent,

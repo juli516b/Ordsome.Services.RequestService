@@ -6,7 +6,7 @@
             :rows-per-page-items="[25, 50, 100]"
         >
             <template v-slot:items="props">
-                <tr @click="showAlert(props.item)">
+                <tr @click="goToRequest(props.item)">
                     <td>{{ props.item.textToTranslate }}</td>
                     <td class="text-xs-center">
                         {{ props.item.languageOriginCode }}
@@ -63,7 +63,7 @@ export default {
         this.UserData = this.jwtData;
     },
     methods: {
-        showAlert(a) {
+        goToRequest(a) {
             this.$router.push({
                 name: 'translationrequest',
                 params: { id: a.requestID }

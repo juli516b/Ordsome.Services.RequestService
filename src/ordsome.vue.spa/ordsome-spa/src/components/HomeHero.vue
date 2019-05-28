@@ -12,7 +12,11 @@
             <div class="display-1 font-weight-bold white--text text-xs-center">
                 Get help or help others with translations!
             </div>
-            <v-btn fab class="mt-5 brown darken-4">
+            <v-btn
+                fab
+                class="mt-5 brown darken-4"
+                @click="$vuetify.goTo(target, options)"
+            >
                 <v-icon large color="white">mdi-chevron-down</v-icon>
             </v-btn>
         </v-layout>
@@ -20,8 +24,40 @@
 </template>
 
 <script>
+import * as easings from 'vuetify/es5/util/easing-patterns';
 export default {
-    name: 'HomeHero'
+    name: 'HomeHero',
+    data() {
+        return {
+            type: 'number',
+            number: 9999,
+            selector: '#first',
+            selected: 'Button',
+            elements: ['Button', 'Radio group'],
+            duration: 999,
+            offset: 0,
+            easing: 'easeInOutCubic',
+            easings: Object.keys(easings)
+        };
+    },
+    computed: {
+        target() {
+            const value = this[this.type];
+            if (!isNaN(value)) return Number(value);
+            else return value;
+        },
+        options() {
+            return {
+                duration: this.duration,
+                offset: this.offset,
+                easing: this.easing
+            };
+        },
+        element() {
+            if (this.selected === 'Button') return this.$refs.button;
+            else if (this.selected === 'Radio group') return this.$refs.radio;
+        }
+    }
 };
 </script>
 

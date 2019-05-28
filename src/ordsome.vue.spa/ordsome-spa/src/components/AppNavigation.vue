@@ -204,7 +204,7 @@ export default {
             this.joinDialog = false;
             this.$store
                 .dispatch('register', data)
-                .then(() => (joinDialog = false))
+                .then(() => (this.joinDialog = false))
                 .catch(err => console.log(err));
         },
         loginUser() {

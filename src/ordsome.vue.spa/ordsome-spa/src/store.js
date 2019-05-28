@@ -47,10 +47,10 @@ export default new Vuex.Store({
             state.usersAnswers = payload;
         },
         get_answers(state, payload) {
-          state.answers = payload
+            state.answers = payload;
         },
         add_answer(state, payload) {
-          state.answers[payload.id].push(payload)
+            state.answers[payload.id].push(payload);
         }
     },
     actions: {
@@ -62,20 +62,20 @@ export default new Vuex.Store({
                     commit('setTranslationRequests', translationRequests);
                 })
                 .catch(err => {
-                    reject(err);
+                    console.log(err);
                 });
         },
         getAnswers({ commit, state }, request) {
-          axios
-              .get(`${state.apiGwayRequestsUrl}/${request.id}/answers`)
-              .then(r => r.data)
-              .then(answers => {
-                  commit('get_answers', answers);
-              })
-              .catch(err => {
-                  reject(err);
-              });
-      },
+            axios
+                .get(`${state.apiGwayRequestsUrl}/${request.id}/answers`)
+                .then(r => r.data)
+                .then(answers => {
+                    commit('get_answers', answers);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        },
         addTranslationRequest({ commit, state }, request) {
             axios
                 .post(`${state.apiGwayRequestsUrl}`, request)
@@ -84,7 +84,7 @@ export default new Vuex.Store({
                     commit('add_translationrequest', request);
                 })
                 .catch(err => {
-                    reject(err);
+                    console.log(err);
                 });
         },
         userLogin({ commit, state }, user) {
@@ -134,7 +134,7 @@ export default new Vuex.Store({
             });
         },
         logout({ commit }) {
-            return new Promise((resolve, reject) => {
+            return new Promise(resolve => {
                 commit('logout');
                 localStorage.removeItem('token');
                 delete axios.defaults.headers.common['Authorization'];
@@ -153,7 +153,7 @@ export default new Vuex.Store({
                     commit('get_user_translationrequests', translationRequests);
                 })
                 .catch(err => {
-                    reject(err);
+                    console.log(err);
                 });
         },
         getUserAnswers({ commit, state }) {
@@ -166,20 +166,23 @@ export default new Vuex.Store({
                     commit('get_user_answers', answers);
                 })
                 .catch(err => {
-                    reject(err);
+                    console.log(err);
                 });
         },
         addTranslationAnswer({ commit, state }, answer) {
-          axios
-              .post(`${state.apiGwayRequestsUrl}/${answer.requestId}/answers`, answer)
-              .then(r => r.data)
-              .then(answer => {
-                  commit('add_answer', answer);
-              })
-              .catch(err => {
-                  reject(err);
-              });
-      }
+            axios
+                .post(
+                    `${state.apiGwayRequestsUrl}/${answer.requestId}/answers`,
+                    answer
+                )
+                .then(r => r.data)
+                .then(answer => {
+                    commit('add_answer', answer);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     },
     getters: {
         isLoggedIn: state => !!state.token,

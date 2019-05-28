@@ -24,7 +24,7 @@ namespace Application.Commands.Requests.RequestCreation
         {
             var languageOrigin = ListOfLanguages.GetLanguageByCode(request.LanguageOriginCode);
 
-            var languageTarget = ListOfLanguages.GetLanguageByCode(request.LanguageOriginCode);
+            var languageTarget = ListOfLanguages.GetLanguageByCode(request.LanguageTargetCode);
 
             if (languageTarget == null) throw new NotFoundException($"{request.LanguageTargetCode}", languageOrigin);
 

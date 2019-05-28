@@ -45,24 +45,30 @@
                 </v-card>
             </v-flex>
             <v-flex pt-5>
-            <v-form @submit.prevent="isLoggedIn" id="submit-answer-form">
-                <v-textarea
-                    auto-grow
-                    outline
-                    :disabled="!isLoggedIn"
-                    label="Answer this translation"
-                    v-model="editedItem.textTranslated"
-                 >
-                </v-textarea>
-                <v-btn type="submit" :disabled="!isLoggedIn" color="success" form="submit-answer-form" @click="addAnswer()">Submit</v-btn>
-            </v-form>
+                <v-form @submit.prevent="isLoggedIn" id="submit-answer-form">
+                    <v-textarea
+                        auto-grow
+                        outline
+                        :disabled="!isLoggedIn"
+                        label="Answer this translation"
+                        v-model="editedItem.textTranslated"
+                    >
+                    </v-textarea>
+                    <v-btn
+                        type="submit"
+                        :disabled="!isLoggedIn"
+                        color="success"
+                        form="submit-answer-form"
+                        @click="addAnswer()"
+                        >Submit</v-btn
+                    >
+                </v-form>
             </v-flex>
         </v-layout>
     </v-container>
 </template>
 
 <script>
-import Axios from 'axios';
 import { mapGetters, mapActions, mapState } from 'vuex';
 
 export default {
@@ -84,23 +90,21 @@ export default {
         };
     },
 
-    created() {
-    },
+    created() {},
     computed: {
         ...mapGetters(['jwtData']),
         ...mapState({
             listOfAnswers: state => state.answers
         }),
-    isLoggedIn: function() {
+        isLoggedIn: function() {
             return this.$store.getters.isLoggedIn;
-        },
+        }
     },
     mounted() {
         let request = {
-            'id': this.$route.params.id,
-
-        }
-        this.getAnswers(request)
+            id: this.$route.params.id
+        };
+        this.getAnswers(request);
     },
     methods: {
         ...mapActions(['getAnswers', 'addTranslationAnswer']),
@@ -116,12 +120,11 @@ export default {
         },
         addAnswer() {
             let data = {
-                "textTranslated": this.editedItem.textTranslated,
-                "requestId": this.editedItem.requestId,
-                "userId": this.jwtData.nameid
-            }
-            console.log(data)
-            this.addTranslationAnswer(data)
+                textTranslated: this.editedItem.textTranslated,
+                requestId: this.editedItem.requestId,
+                userId: this.jwtData.nameid
+            };
+            this.addTranslationAnswer(data);
         }
     }
 };
