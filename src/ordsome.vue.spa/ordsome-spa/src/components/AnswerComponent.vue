@@ -2,11 +2,8 @@
     <v-container>
         <v-layout align-space-around justify-center column fill-height>
             <v-flex>
-                <h1 v-show="listOfAnswers.length <= 0" class="text-md-center">
-                    Be the first to answer!
-                </h1>
-                <v-card>
-                    <v-list v-show="listOfAnswers.length > 0">
+                <v-card v-if="listOfAnswers.length > 0">
+                    <v-list>
                         <template v-for="(item, index) in listOfAnswers">
                             <v-list-tile
                                 :key="item.id"
@@ -43,6 +40,9 @@
                         </template>
                     </v-list>
                 </v-card>
+                <h1 v-else class="text-md-center">
+                    Be the first to answer!
+                </h1>
             </v-flex>
             <v-flex pt-5>
                 <v-form @submit.prevent="isLoggedIn" id="submit-answer-form">
@@ -125,6 +125,7 @@ export default {
                 userId: this.jwtData.nameid
             };
             this.addTranslationAnswer(data);
+            this.listOfAnswers.push(data)
         }
     }
 };

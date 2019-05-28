@@ -19,7 +19,7 @@
                     >
                 </template>
                 <v-card>
-                    <v-form>
+                    <v-form @submit.prevent="submit" lazy-validation>
                         <v-card-title>
                             <span class="headline">{{ formTitle }}</span>
                         </v-card-title>
@@ -81,6 +81,7 @@
                                                         item-value="code"
                                                         persistent-hint
                                                         prepend-icon="mdi-translate"
+                                                        required
                                                     >
                                                         <template
                                                             v-slot:append-outer
@@ -104,7 +105,7 @@
                             <v-btn color="blue darken-1" flat @click="close()"
                                 >Cancel</v-btn
                             >
-                            <v-btn color="blue darken-1" flat @click="save()"
+                            <v-btn type="submit" color="blue darken-1" flat @click="save()"
                                 >Save</v-btn
                             >
                         </v-card-actions>
@@ -142,6 +143,7 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
 import axios from 'axios';
 import { setTimeout } from 'timers';
 import { mapState } from 'vuex';
