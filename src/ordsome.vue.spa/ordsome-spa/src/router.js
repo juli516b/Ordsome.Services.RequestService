@@ -15,11 +15,6 @@ const router = new Router({
             component: Home
         },
         {
-            path: '/about',
-            name: 'about',
-            component: () => import('./views/About.vue'),
-        },
-        {
             path: '/menu',
             name: 'menu',
             component: () => import('./views/Menu.vue')
@@ -41,15 +36,15 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    if(to.matched.some(record => record.meta.requiresAuth)) {
-      if (store.getters.isLoggedIn) {
-        next()
-        return
-      }
-      next('/') 
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (store.getters.isLoggedIn) {
+            next();
+            return;
+        }
+        next('/');
     } else {
-      next() 
+        next();
     }
-  })
+});
 
 export default router;

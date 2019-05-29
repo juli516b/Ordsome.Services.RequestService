@@ -30,7 +30,12 @@ namespace Application.Queries.Requests.GetAnswersByRequestId
             if (entity == null)
                 throw new NotFoundException($"{request.RequestId}", request);
 
-            return entity.Answers.Select(RequestMappings.ToAnswerDTO).ToList();
+            List < AnswerDto > answerDtosToReturn = new List<AnswerDto>();
+            foreach (var item in entity.Answers)
+            {
+                answerDtosToReturn.Add(RequestMappings.ToAnswerDTO(item, entity.TextToTranslate));
+            }
+            return answerDtosToReturn;
         }
     }
 }

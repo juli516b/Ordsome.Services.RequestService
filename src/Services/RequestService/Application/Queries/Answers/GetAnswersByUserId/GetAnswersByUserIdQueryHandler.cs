@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Infrastructure.Mappings;
 using Application.Interfaces;
 using Application.Models;
+using Domain.Requests;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Ordsome.Services.CrossCuttingConcerns.Exceptions;
@@ -29,7 +30,15 @@ namespace Application.Queries.Answers.GetAnswersByUserId
 
             if (answers == null) throw new NotFoundException($"{request.UserId}", request);
 
-            return answers.Select(RequestMappings.ToAnswerDTO).ToList();
+            List<AnswerDto> answersToReturn = new List<AnswerDto>();
+
+            foreach (Answer item in answers)
+            {
+                var requestToCheck = await _context.Requests.FirstOrDefaultAsync(x => x.Id == item.RequestId);
+                answersToReturn.Add(RequestMappings.ToAnswerDTO(item, requestToCheck.TextToTranslate));
+            }
+
+            return answersToReturn; 
         }
     }
 }

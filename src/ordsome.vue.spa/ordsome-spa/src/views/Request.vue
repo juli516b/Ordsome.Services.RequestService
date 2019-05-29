@@ -3,71 +3,73 @@
         <v-layout align-center justify-center>
             <v-flex xs6>
                 <v-text-field
-                disabled
-                :label = request.textToTranslate
-                prepend-icon="mdi-translate"
-                >
-                </v-text-field>
-            </v-flex>
-
-            <v-flex xs2 px-2 order-lg2>
-                <v-text-field v-show="request.languageOrigin != 'Not set'"
-                disabled
-                label = 'from'
-                :prefix = request.languageOrigin
+                    disabled
+                    :label="request.textToTranslate"
+                    prepend-icon="mdi-translate"
                 >
                 </v-text-field>
             </v-flex>
 
             <v-flex xs2 px-2 order-lg2>
                 <v-text-field
-                disabled
-                label = 'to'
-                :prefix = request.languageTarget
+                    v-show="request.languageOriginCode != 'Not set'"
+                    disabled
+                    label="from"
+                    :prefix="request.languageOriginCode"
+                >
+                </v-text-field>
+            </v-flex>
+
+            <v-flex xs2 px-2 order-lg2>
+                <v-text-field
+                    disabled
+                    label="to"
+                    :prefix="request.languageTargetCode"
                 >
                 </v-text-field>
             </v-flex>
             <v-divider></v-divider>
-            <v-flex xs12>
-            </v-flex>
+            <v-flex xs12> </v-flex>
         </v-layout>
-        <AnswerComponent/>
+        <AnswerComponent />
     </v-container>
 </template>
 
 <script>
 import Axios from 'axios';
-import AnswerComponent from '@/components/AnswerComponent'
+import AnswerComponent from '@/components/AnswerComponent';
 export default {
     components: {
         AnswerComponent
     },
-    data () {
+    data() {
         return {
-        request: {
-            textToTranslate: '',
-            languageOrigin: '',
-            languageTarget: ''
+            request: {
+                textToTranslate: '',
+                languageOriginCode: '',
+                languageTargetCode: ''
             }
-        }
+        };
     },
 
     created() {
-        Axios.get('https://localhost:7000/api/requests/' + this.$route.params.id)
-        .then(response => {
-            this.$nextTick(function() {
-                this.request = response.data
-                console.log(this.request)
+        Axios.get(
+            'https://localhost:7000/api/requests/' + this.$route.params.id
+        )
+            .then(response => {
+                this.$nextTick(function() {
+                    this.request = response.data;
+                });
             })
-            console.log(this.request)
-        })
-        .catch(e => {this.errors.push(e)})
-
-        console.log(request)
+            .catch(e => {
+                this.errors.push(e);
+            });
     },
-
-    methods: {
-
-    }
-}
+    computed: {
+        isLoggedIn: function() {
+            return this.$store.getters.isLoggedIn;
+        }
+    },
+    methods: {}
+};
 </script>

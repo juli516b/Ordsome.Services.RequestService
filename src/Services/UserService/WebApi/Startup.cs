@@ -49,7 +49,7 @@ namespace WebApi
             }
 
             app.UseStaticFiles();
-            app.UseSwagger(c => { c.RouteTemplate = "userapi/docs/{documentName}/swagger.json"; });
+            app.UseSwagger(c => c.RouteTemplate = "userapi/docs/{documentName}/swagger.json");
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/userapi/docs/v1/swagger.json", "UserAPI");

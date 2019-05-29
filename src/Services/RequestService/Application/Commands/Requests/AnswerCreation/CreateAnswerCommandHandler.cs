@@ -32,7 +32,9 @@ namespace Application.Commands.Requests.AnswerCreation
             var entity = new Answer
             {
                 RequestId = request.RequestId,
-                TextTranslated = Regex.Replace(request.TextTranslated, @"\s+", " ").Trim()
+                TextTranslated = Regex.Replace(request.TextTranslated, @"\s+", " ").Trim(),
+                UserId = request.UserId
+                
             };
 
             _context.Answers.Add(entity);

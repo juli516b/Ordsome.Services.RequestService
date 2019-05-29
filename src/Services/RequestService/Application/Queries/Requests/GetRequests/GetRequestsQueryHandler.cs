@@ -34,7 +34,9 @@ namespace Application.Queries.Requests.GetRequests
             IQueryable<Request> entities = null;
 
             if (string.IsNullOrWhiteSpace(request.FromLanguage) && string.IsNullOrWhiteSpace(request.ToLanguage))
+            {
                 entities = _context.Requests.Include(x => x.Answers);
+            }
             else if (!string.IsNullOrWhiteSpace(request.FromLanguage) && string.IsNullOrWhiteSpace(request.ToLanguage))
                 entities = _context.Requests.Include(x => x.Answers)
                     .Where(x => x.LanguageOrigin == request.FromLanguage);

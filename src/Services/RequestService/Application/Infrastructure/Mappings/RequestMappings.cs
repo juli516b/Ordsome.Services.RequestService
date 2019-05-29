@@ -10,14 +10,14 @@ namespace Application.Infrastructure.Mappings
             return new RequestPreviewDto
             {
                 RequestId = request.Id,
-                LanguageOrigin = request.LanguageOrigin,
-                LanguageTarget = request.LanguageTarget,
+                LanguageOriginCode = request.LanguageOrigin,
+                LanguageTargetCode = request.LanguageTarget,
                 NoOfAnswers = request.Answers.Count,
                 TextToTranslate = request.TextToTranslate
             };
         }
 
-        public static AnswerDto ToAnswerDTO(Answer answer)
+        public static AnswerDto ToAnswerDTO(Answer answer, string textToTranslate)
         {
             return new AnswerDto
             {
@@ -25,7 +25,7 @@ namespace Application.Infrastructure.Mappings
                 TextTranslated = answer.TextTranslated,
                 IsPreferred = answer.IsPreferred,
                 RequestId = answer.RequestId,
-                TextToTranslate = answer.Request.TextToTranslate
+                TextToTranslate = textToTranslate
             };
         }
     }
