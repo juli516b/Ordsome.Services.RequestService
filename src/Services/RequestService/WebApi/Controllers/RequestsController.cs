@@ -50,7 +50,7 @@ namespace WebApi.Controllers
         /// </summary>
         [HttpGet("languages")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IList<LanguageDto>), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<LanguageDto>), (int) HttpStatusCode.OK)]
         public IActionResult GetAllLanguages()
         {
             return Ok(ListOfLanguages.GetList());
@@ -94,7 +94,7 @@ namespace WebApi.Controllers
         /// </summary>
         [HttpGet("check")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(CountOfAnswersDto), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<AnswerDto>), (int) HttpStatusCode.OK)]
         public async Task<ActionResult> CheckRequest([FromQuery] CheckRequestQuery query)
         {
             return Ok(await Mediator.Send(query));

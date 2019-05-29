@@ -115,10 +115,13 @@
             <v-data-table
                 v-model="selected"
                 :headers="headers"
+                disable-initial-sort
+                :pagination.sync="pagination"
                 :items="translationRequests"
                 :search="search"
                 :loading="loading"
                 :rows-per-page-items="[25, 50, 100]"
+                class="elevation-1"
             >
                 <template v-slot:items="props">
                     <tr @click="showAlert(props.item)">
@@ -128,6 +131,9 @@
                         </td>
                         <td class="text-xs-center">
                             {{ props.item.languageTargetCode }}
+                        </td>
+                        <td class="text-xs-center">
+                            {{ props.item.noOfAnswers }}
                         </td>
                     </tr>
                 </template>
@@ -152,6 +158,10 @@ export default {
     textToTranslate: 'TranslationTable',
     data() {
         return {
+          pagination: {
+              sortBy: 'noOfAnswers',
+              descending: true
+          },
             selected: [],
             totalRequests: 0,
             loading: true,
@@ -177,6 +187,11 @@ export default {
                     text: 'To language',
                     value: 'languageTargetCode',
                     align: 'center'
+                },
+                {
+                  text: 'Number of answers',
+                  value: 'noOfAnswers',
+                  align: 'center'
                 }
             ],
             editedItem: {

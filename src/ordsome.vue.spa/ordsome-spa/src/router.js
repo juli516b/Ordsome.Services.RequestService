@@ -36,15 +36,15 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (store.getters.isLoggedIn) {
+        if (to.matched.some(record => record.meta.requiresAuth)) {
+            if (store.getters.isLoggedIn) {
+                next();
+                return;
+            }
+            next('/');
+        } else {
             next();
-            return;
         }
-        next('/');
-    } else {
-        next();
     }
-});
-
+)
 export default router;

@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Application.Infrastructure.Mappings;
 using Application.Interfaces;
 using Application.Models;
+using Domain.Requests;
 using F23.StringSimilarity;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.Requests.CheckRequest
 {
-    public class CheckRequestQueryHandler : IRequestHandler<CheckRequestQuery, IEnumerable<RequestPreviewDto>>
+    public class CheckRequestQueryHandler : IRequestHandler<CheckRequestQuery, IEnumerable<AnswerDto>>
     {
         private readonly IRequestServiceDbContext _context;
         private readonly IMediator _mediator;
@@ -22,18 +23,27 @@ namespace Application.Queries.Requests.CheckRequest
             _mediator = mediator;
         }
 
-        public async Task<IEnumerable<RequestPreviewDto>> Handle(CheckRequestQuery request,
+        public async Task<IEnumerable<AnswerDto>> Handle(CheckRequestQuery request,
             CancellationToken cancellationToken)
         {
-            var allTextToTranslate = await _context.Requests.ToListAsync(cancellationToken);
-            var requestToReturn = new List<RequestPreviewDto>();
+            var allTextToTranslate = await _context.Requests.Include(a => a.Answers).ToListAsync(cancellationToken);
+            var requestsChecked = new List<Request>();
             foreach (var item in allTextToTranslate)
             {
                 var similarity = CalculateSimilarity(item.TextToTranslate, request.TextToTranslate);
-                if (similarity > 0.30) requestToReturn.Add(RequestMappings.ToRequestPreviewDTO(item));
+                if (similarity > 0.30) requestsChecked.Add(item);
             }
 
-            return requestToReturn;
+            var answersToReturn = new List<AnswerDto>();
+            foreach (var requestToCheck in requestsChecked)
+            {
+                foreach (var answer in requestToCheck.Answers)
+                {
+                    var requestToGetTextToTranslate = await _context.Requests.FirstOrDefaultAsync(x => x.Id == answer.RequestId);
+                    answersToReturn.Add(RequestMappings.ToAnswerDTO(answer, requestToGetTextToTranslate.TextToTranslate));
+                }
+            }
+            return answersToReturn;
         }
 
         //TODO - look at this and how it returns similar request
