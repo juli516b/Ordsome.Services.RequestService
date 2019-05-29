@@ -45,7 +45,7 @@ export default {
     data () {
         return {
         request: {
-            textToTranslate: 'asdasdasd',
+            textToTranslate: '',
             languageOrigin: '',
             languageTarget: ''
             }

@@ -33,11 +33,6 @@ const router = new Router({
             }
         },
         {
-            path: '/join',
-            name: 'join',
-            component: () => import('./views/Join.vue')
-        },
-        {
             path: '/translationrequest/:id',
             name: 'translationrequest',
             component: () => import('./views/Request.vue')
