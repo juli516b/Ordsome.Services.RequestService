@@ -40,7 +40,8 @@ import Axios from 'axios';
 import AnswerComponent from '@/components/AnswerComponent';
 export default {
     components: {
-        AnswerComponent
+        AnswerComponentD
+        
     },
     data() {
         return {
