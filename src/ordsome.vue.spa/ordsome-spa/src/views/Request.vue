@@ -41,7 +41,6 @@ import AnswerComponent from '@/components/AnswerComponent';
 export default {
     components: {
         AnswerComponent
-
     },
     data() {
         return {

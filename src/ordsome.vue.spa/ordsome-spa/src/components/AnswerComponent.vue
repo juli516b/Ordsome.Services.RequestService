@@ -125,7 +125,7 @@ export default {
                 userId: this.jwtData.nameid
             };
             this.addTranslationAnswer(data);
-            this.listOfAnswers.push(data)
+            this.listOfAnswers.push(data);
         }
     }
 };

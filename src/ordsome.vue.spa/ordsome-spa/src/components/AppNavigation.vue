@@ -25,9 +25,7 @@
             ></v-toolbar-side-icon>
             <v-spacer class="hidden-md-and-up"></v-spacer>
             <router-link to="/">
-                <v-toolbar-title data-cy="titleBtn">
-                    {{ appTitle }}
-                </v-toolbar-title>
+                <img class="logo" src="../assets/logo.png" />
             </router-link>
             <v-btn
                 flat
@@ -91,7 +89,7 @@
                                 color="blue darken-1"
                                 flat
                                 @click="joinDialog = false"
-                                >Close</v-btn
+                                >Cancel</v-btn
                             >
                             <v-btn
                                 color="blue darken-1"
@@ -137,14 +135,14 @@
                             <v-btn
                                 color="blue darken-1"
                                 flat
-                                @click="loginUser()"
-                                >Login</v-btn
+                                @click="signInDialog = false"
+                                >Cancel</v-btn
                             >
                             <v-btn
                                 color="blue darken-1"
                                 flat
-                                @click="signInDialog = false"
-                                >Close</v-btn
+                                @click="loginUser()"
+                                >Sign in</v-btn
                             >
                         </v-card-actions>
                     </v-card>
@@ -231,5 +229,11 @@ export default {
 a {
     color: white;
     text-decoration: none;
+}
+
+.logo {
+    width: 133.633px;
+    height: 36px;
+    position: relative;
 }
 </style>
