@@ -14,11 +14,15 @@ export default new Vuex.Store({
         apiGwayUsersUrl: 'https://localhost:7000/api/users',
         user: {},
         userRequests: [],
-        usersAnswers: []
+        usersAnswers: [],
+        languages: []
     },
     mutations: {
         setTranslationRequests(state, payload) {
             state.translationRequests = payload;
+        },
+        get_languages(state, payload) {
+            state.languages = payload;
         },
         add_translationrequest(state, payload) {
             state.translationRequests[payload.id].push(payload);
@@ -71,6 +75,17 @@ export default new Vuex.Store({
                 .then(r => r.data)
                 .then(answers => {
                     commit('get_answers', answers);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        },
+        getLanguages({ commit, state }) {
+            axios
+                .get(`${state.apiGwayRequestsUrl}/languages`)
+                .then(r => r.data)
+                .then(languages => {
+                    commit('get_languages', languages);
                 })
                 .catch(err => {
                     console.log(err);

@@ -44,34 +44,52 @@
                     Be the first to answer!
                 </h1>
             </v-flex>
-            <v-flex pt-5>
-                <v-form @submit.prevent="isLoggedIn" id="submit-answer-form">
-                    <v-textarea
-                        auto-grow
-                        outline
-                        :disabled="!isLoggedIn"
-                        label="Answer this translation"
-                        v-model="editedItem.textTranslated"
+            <ValidationObserver ref="obs">
+                <v-flex pt-5 slot-scope="{ invalid, validated }">
+                    <v-form
+                        @submit.prevent="isLoggedIn"
+                        id="submit-answer-form"
                     >
-                    </v-textarea>
-                    <v-btn
-                        type="submit"
-                        :disabled="!isLoggedIn"
-                        color="success"
-                        form="submit-answer-form"
-                        @click="addAnswer()"
-                        >Submit</v-btn
-                    >
-                </v-form>
-            </v-flex>
+                        <ValidationProvider
+                            name="Text translated"
+                            rules="required"
+                        >
+                            <v-textarea
+                                slot-scope="{ errors, valid }"
+                                :success="valid"
+                                :error-messages="errors"
+                                auto-grow
+                                outline
+                                :disabled="!isLoggedIn"
+                                label="Answer this translation"
+                                v-model="editedItem.textTranslated"
+                            >
+                            </v-textarea>
+                        </ValidationProvider>
+                        <v-btn
+                            type="submit"
+                            @click="addAnswer()"
+                            :disabled="invalid || !validated"
+                            color="success"
+                            form="submit-answer-form"
+                            >Submit</v-btn
+                        >
+                    </v-form>
+                </v-flex>
+            </ValidationObserver>
         </v-layout>
     </v-container>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
+import { ValidationObserver, ValidationProvider } from 'vee-validate';
 
 export default {
+    components: {
+        ValidationObserver,
+        ValidationProvider
+    },
     name: 'AnswerComponent',
     data() {
         return {
@@ -95,10 +113,7 @@ export default {
         ...mapGetters(['jwtData']),
         ...mapState({
             listOfAnswers: state => state.answers
-        }),
-        isLoggedIn: function() {
-            return this.$store.getters.isLoggedIn;
-        }
+        })
     },
     mounted() {
         let request = {
@@ -108,7 +123,9 @@ export default {
     },
     methods: {
         ...mapActions(['getAnswers', 'addTranslationAnswer']),
-
+        isLoggedIn: function() {
+            return this.$store.getters.isLoggedIn;
+        },
         isPreffered(index) {
             const i = this.selected.indexOf(index);
 
@@ -118,13 +135,15 @@ export default {
                 this.selected.push(index);
             }
         },
-        addAnswer() {
+        async addAnswer() {
+            await this.$refs.obs.validate();
             let data = {
                 textTranslated: this.editedItem.textTranslated,
                 requestId: this.editedItem.requestId,
                 userId: this.jwtData.nameid
             };
-            this.addTranslationAnswer(data);
+            (this.editedItem.textTranslated = ''),
+                this.addTranslationAnswer(data);
             this.listOfAnswers.push(data);
         }
     }
