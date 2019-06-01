@@ -2,8 +2,18 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import vuetifyToast from 'vuetify-toast';
+import VuexPersist from 'vuex-persist';
 
 Vue.use(Vuex);
+
+const vuexLocalStorage = new VuexPersist({
+    key: 'vuex', // The key to store the state on in the storage provider.
+    storage: window.localStorage, // or window.sessionStorage or localForage
+    // Function that passes the state and returns the state with only the objects you want to store.
+    // reducer: state => state,
+    // Function that passes a mutation and lets you decide if it should update the state in localStorage.
+    // filter: mutation => (true)
+  })
 
 export default new Vuex.Store({
     state: {
@@ -13,11 +23,15 @@ export default new Vuex.Store({
         answers: [],
         apiGwayRequestsUrl: 'https://localhost:7000/api/requests',
         apiGwayUsersUrl: 'https://localhost:7000/api/users',
-        user: {},
+        user: {
+            userId: '',
+            userName: ''
+        },
         userRequests: [],
         usersAnswers: [],
         languages: []
     },
+    plugins: [vuexLocalStorage.plugin],
     mutations: {
         setTranslationRequests(state, payload) {
             state.translationRequests = payload;
@@ -31,10 +45,15 @@ export default new Vuex.Store({
         auth_request(state) {
             state.status = 'loading';
         },
-        auth_success(state, token, user) {
+        auth_success(state, token) {
+            const tokenSplitted = JSON.parse(atob(token.split('.')[1]));
+            let data = {
+                userId: tokenSplitted.nameid,
+                userName: tokenSplitted.unique_name
+            };
             state.status = 'success';
             state.token = token;
-            state.user = user;
+            state.user = data;
         },
         auth_error(state) {
             state.status = 'error';
@@ -44,6 +63,7 @@ export default new Vuex.Store({
             state.token = '';
             state.userRequests = [];
             state.usersAnswers = [];
+            state.user = {}
         },
         get_user_translationrequests(state, payload) {
             state.userRequests = payload;
@@ -97,11 +117,10 @@ export default new Vuex.Store({
                 .post(`${state.apiGwayRequestsUrl}`, request)
                 .then(r => r.data)
                 .then(request => {
-                    vuetifyToast.success('You added an request!')
+                    vuetifyToast.success('You added an request!');
                     commit('add_translationrequest', request);
                 })
                 .catch(err => {
-                    console.log(err)
                     vuetifyToast.error(`${err.message} has occurred!`);
                 });
         },
@@ -115,11 +134,10 @@ export default new Vuex.Store({
                 })
                     .then(response => {
                         const token = response.data.token;
-                        const user = response.data.user;
                         localStorage.setItem('token', token);
                         axios.defaults.headers.common['Authorization'] = token;
-                        commit('auth_success', token, user);
-                        vuetifyToast.success('You succesfully logged in!')
+                        commit('auth_success', token);
+                        vuetifyToast.success('You succesfully logged in!');
                         resolve(response);
                     })
                     .catch(err => {
@@ -130,7 +148,7 @@ export default new Vuex.Store({
             });
         },
         register({ commit }, user) {
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 commit('auth_request');
                 axios({
                     url: this.state.apiGwayUsersUrl + '/register',
@@ -143,6 +161,9 @@ export default new Vuex.Store({
                         localStorage.setItem('token', token);
                         axios.defaults.headers.common['Authorization'] = token;
                         commit('auth_success', token, user);
+                        vuetifyToast.success(
+                            'You have been succesfully registered'
+                        );
                         resolve(resp);
                     })
                     .catch(err => {
@@ -156,6 +177,7 @@ export default new Vuex.Store({
             return new Promise(resolve => {
                 commit('logout');
                 localStorage.removeItem('token');
+                localStorage.removeItem('userId');
                 delete axios.defaults.headers.common['Authorization'];
                 resolve();
             });
@@ -196,7 +218,7 @@ export default new Vuex.Store({
                 )
                 .then(r => r.data)
                 .then(answer => {
-                    vuetifyToast.success('Your answer has been added')
+                    vuetifyToast.success('Your answer has been added');
                     commit('add_answer', answer);
                 })
                 .catch(err => {
@@ -208,9 +230,6 @@ export default new Vuex.Store({
         isLoggedIn: state => !!state.token,
         authStatus: state => state.status,
         jwt: state => state.token,
-        jwtData: (state, getters) =>
-            state.token ? JSON.parse(atob(getters.jwt.split('.')[1])) : null,
-        jwtNameid: (state, getters) =>
-            getters.jwtData ? getters.jwtData.nameid : null
+        jwtNameid: state => state.user.userId
     }
 });

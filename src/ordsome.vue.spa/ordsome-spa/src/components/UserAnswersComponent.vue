@@ -23,11 +23,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 export default {
     data() {
         return {
-            UserData: [],
             headers: [
                 {
                     text: 'Text to translate',
@@ -45,7 +44,6 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(['jwtData']),
         ...mapState({
             userAnswers: state => state.usersAnswers
         })
@@ -53,7 +51,6 @@ export default {
 
     mounted() {
         this.getUserAnswers();
-        this.UserData = this.jwtData;
     },
     methods: {
         goToRequest(a) {

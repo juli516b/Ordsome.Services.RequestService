@@ -52,10 +52,6 @@ export default {
                 offset: this.offset,
                 easing: this.easing
             };
-        },
-        element() {
-            if (this.selected === 'Button') return this.$refs.button;
-            else if (this.selected === 'Radio group') return this.$refs.radio;
         }
     }
 };

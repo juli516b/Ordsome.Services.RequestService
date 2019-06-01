@@ -26,7 +26,7 @@ export default {
                 ) {
                     this.$store.dispatch('logout');
                 }
-                vuetifyToast.error('Please provide correct credentials')
+                vuetifyToast.error('Something went wrong');
             });
         });
     }

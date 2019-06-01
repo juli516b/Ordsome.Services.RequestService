@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,12 +30,15 @@ namespace Application.Commands.Requests.AnswerCreation
                 await _context.Requests.FirstOrDefaultAsync(x => x.Id == request.RequestId, cancellationToken);
             if (requestToCheck == null) throw new NotFoundException($"{request.RequestId}", request);
 
+            if (requestToCheck.UserId == request.UserId)
+            {
+                throw new ForbiddenException(request.UserId.ToString(), request);
+            }
             var entity = new Answer
             {
                 RequestId = request.RequestId,
                 TextTranslated = Regex.Replace(request.TextTranslated, @"\s+", " ").Trim(),
                 UserId = request.UserId
-                
             };
 
             _context.Answers.Add(entity);

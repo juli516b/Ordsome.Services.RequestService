@@ -123,7 +123,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
     components: {
@@ -144,10 +144,14 @@ export default {
         };
     },
     computed: {
+        ...mapGetters(['jwtNameid']),
         ...mapState({
             languages: state => state.languages,
             translationRequests: state => state.translationRequests
-        })
+        }),
+        isLoggedIn: function() {
+            return this.$store.getters.isLoggedIn;
+        }
     },
     methods: {
         close() {
@@ -169,7 +173,7 @@ export default {
                     languageOriginCode: this.editedItem.languageOriginCode,
                     languageTargetCode: this.editedItem.languageTargetCode,
                     textToTranslate: this.editedItem.textToTranslate,
-                    userId: this.$store.getters.jwtNameid
+                    userId: this.jwtNameid
                 });
                 var requestIdToGoTo =
                     this.translationRequests[

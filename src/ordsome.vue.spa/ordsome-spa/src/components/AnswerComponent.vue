@@ -84,7 +84,6 @@
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
-import { request } from 'http';
 
 export default {
     components: {
@@ -98,8 +97,7 @@ export default {
             request: null,
             editedItem: {
                 textTranslated: '',
-                requestId: this.$route.params.id,
-                userId: this.jwtData
+                requestId: this.$route.params.id
             },
             defaultItem: {
                 textToTranslate: '',
@@ -111,7 +109,7 @@ export default {
 
     created() {},
     computed: {
-        ...mapGetters(['jwtData']),
+        ...mapGetters(['jwtNameid']),
         ...mapState({
             listOfAnswers: state => state.answers
         })
@@ -139,10 +137,15 @@ export default {
         async addAnswer() {
             await this.$refs.obs.validate();
             let request = {
-            id: this.$route.params.id
+                id: this.$route.params.id
             };
-            this.addTranslationAnswer(this.editedItem);
-            this.getAnswers(request)
+            let data = {
+                textTranslated: this.editedItem.textTranslated,
+                requestId: this.editedItem.requestId,
+                userId: this.jwtNameid
+            };
+            this.addTranslationAnswer(data);
+            this.listOfAnswers = this.getAnswers(request);
         }
     }
 };

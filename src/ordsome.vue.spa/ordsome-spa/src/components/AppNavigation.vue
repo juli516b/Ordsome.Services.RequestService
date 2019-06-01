@@ -10,9 +10,9 @@
             <v-list>
                 <template v-for="(item, index) in items">
                     <v-list-tile :key="index">
-                        <v-list-tile-content>
-                            {{ item.title }}
-                        </v-list-tile-content>
+                        <v-list-tile-content>{{
+                            item.title
+                        }}</v-list-tile-content>
                     </v-list-tile>
                     <v-divider :key="`divider-${index}`"></v-divider>
                 </template>
@@ -58,9 +58,10 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Join from './dialogs/Join';
 import Login from './dialogs/Login';
+import axios from 'axios';
+import { mapGetters } from 'vuex';
 export default {
     components: {
         Join,
@@ -85,16 +86,19 @@ export default {
         };
     },
     computed: {
-        isLoggedIn: function() {
-            return this.$store.getters.isLoggedIn;
-        }
+        ...mapGetters(['jwtNameid', 'isLoggedIn'])
     },
-    created() {
-        axios.get('https://localhost:7000/api/users/new').then(response => {
-            if (localStorage.getItem('userId') === '') {
-                localStorage.setItem('userId', response.data.newGuid);
+    mounted() {
+        if (localStorage.getItem('userId') === '') {
+            if (!this.isLoggedIn) {
+                axios
+                    .get('https://localhost:7000/api/users/new')
+                    .then(response => {
+                        localStorage.setItem('userId', response.data.newGuid);
+                    });
             }
-        });
+            localStorage.setItem('userId', this.jwtNameid);
+        }
     },
     methods: {
         logout() {
