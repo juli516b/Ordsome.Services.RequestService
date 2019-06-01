@@ -44,16 +44,11 @@ namespace Ordsome.Services.CrossCuttingConcerns.Extensions
             });
         }
 
-        public static void AddCustomMvc(this IServiceCollection services)
+        public static IMvcBuilder AddCustomMvc(this IServiceCollection services)
         {
-            services
+            return services
                 .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddFluentValidation(fv =>
-                {
-                    fv.RegisterValidatorsFromAssemblyContaining<IValidator>();
-                    fv.LocalizationEnabled = false;
-                });
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
         }

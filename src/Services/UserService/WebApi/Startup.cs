@@ -1,7 +1,9 @@
 using System.Reflection;
+using Application.Commands.AddNewLanguage;
 using Application.Interfaces;
 using Application.Queries.GetRequestsBasedOnUserId;
 using Application.RestClients;
+using FluentValidation.AspNetCore;
 using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -30,7 +32,11 @@ namespace WebApi
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddDbContext<IUserServiceDbContext, UserServiceDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UserServiceDb")));
-            services.AddCustomMvc();
+            services.AddCustomMvc().AddFluentValidation(fv =>
+            {
+                fv.RegisterValidatorsFromAssemblyContaining<AddNewLanguageCommandValidator>();
+                fv.LocalizationEnabled = false;
+            });
             services.AddSwaggerSettings(Configuration);
             services.AddCors();
             services.AddAuthenticationSettings(Configuration);

@@ -16,11 +16,13 @@ namespace Application.Queries.Requests.GetRequestsByUserId
     {
         private readonly IRequestServiceDbContext _context;
         private IMediator _mediator;
+        private readonly IRequestMappings _mapper;
 
-        public GetRequestsByUserIdQueryHandler(IRequestServiceDbContext context, IMediator mediator)
+        public GetRequestsByUserIdQueryHandler(IRequestServiceDbContext context, IMediator mediator, IRequestMappings mapper)
         {
             _context = context;
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<RequestPreviewDto>> Handle(GetRequestsByUserIdQuery request,
@@ -30,7 +32,7 @@ namespace Application.Queries.Requests.GetRequestsByUserId
                 .ToListAsync(cancellationToken);
             return requests.Count == 0
                 ? throw new NotFoundException($"{request.UserId}", request)
-                : requests.Select(RequestMappings.ToRequestPreviewDTO).ToList();
+                : requests.Select(_mapper.ToRequestPreviewDTO).ToList();
         }
     }
 }

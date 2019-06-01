@@ -1,7 +1,10 @@
 using System.Reflection;
+using Application.Commands.Answers.VoteOnAnswer;
+using Application.Infrastructure.Mappings;
 using Application.Interfaces;
 using Application.Queries.Requests.GetAnswersByRequestId;
 using Application.RestClients;
+using FluentValidation.AspNetCore;
 using Infrastructure;
 using Infrastructure.Persistence;
 using MediatR;
@@ -30,9 +33,14 @@ namespace WebApi
             services.AddTransient<INotificationService, NotificationService>();
             services.AddMediatR(typeof(GetAnswersByRequestIdQueryHandler).GetTypeInfo().Assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+            services.AddTransient<IRequestMappings, RequestMappings>();
             services.AddDbContext<IRequestServiceDbContext, RequestServiceDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("RequestDbService")));
-            services.AddCustomMvc();
+            services.AddCustomMvc().AddFluentValidation(fv =>
+            {
+                fv.RegisterValidatorsFromAssemblyContaining<VoteOnAnswerCommandValidator>();
+                fv.LocalizationEnabled = false;
+            });
             services.AddSwaggerSettings(Configuration);
             services.AddCors();
             services.AddAuthenticationSettings(Configuration);

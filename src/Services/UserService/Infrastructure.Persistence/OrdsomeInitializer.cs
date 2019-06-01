@@ -25,14 +25,14 @@ namespace Infrastructure.Persistence
         private void SeedUsers(UserServiceDbContext context)
         {
             var user1guid = Guid.Parse("8e3f52d0-ee7e-4353-8941-ab1b75bbdf76");
-            var user1name = "bob";
-            var user1password = "123123123";
+            var user1name = "user1";
+            var user1password = "123";
             var user2guid = Guid.Parse("50c41b86-1620-4912-9b5d-561b34dc27f7");
-            var user2name = "bobbob";
-            var user2password = "123123123";
+            var user2name = "user2";
+            var user2password = "123";
             var user3guid = Guid.Parse("0e8e8abd-0f47-4164-9a1d-55ed125db66b");
-            var user3name = "bobbobbob";
-            var user3password = "123123123";
+            var user3name = "user3";
+            var user3password = "123";
             context.Users.Add(MakeUser(user1guid, user1name, user1password));
             context.Users.Add(MakeUser(user2guid, user2name, user2password));
             context.Users.Add(MakeUser(user3guid, user3name, user3password));

@@ -14,10 +14,12 @@ namespace Application.Queries.Requests.GetAnswersByRequestId
     public class GetAnswersByRequestIdQueryHandler : IRequestHandler<GetAnswersByRequestIdQuery, IEnumerable<AnswerDto>>
     {
         private readonly IRequestServiceDbContext _context;
+        private readonly IRequestMappings _mapper;
 
-        public GetAnswersByRequestIdQueryHandler(IRequestServiceDbContext context)
+        public GetAnswersByRequestIdQueryHandler(IRequestServiceDbContext context, IRequestMappings mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<AnswerDto>> Handle(GetAnswersByRequestIdQuery request,
@@ -33,7 +35,7 @@ namespace Application.Queries.Requests.GetAnswersByRequestId
             List < AnswerDto > answerDtosToReturn = new List<AnswerDto>();
             foreach (var item in entity.Answers)
             {
-                answerDtosToReturn.Add(RequestMappings.ToAnswerDTO(item, entity.TextToTranslate));
+                answerDtosToReturn.Add(await _mapper.ToAnswerDTOAsync(item));
             }
             return answerDtosToReturn;
         }

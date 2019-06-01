@@ -146,6 +146,7 @@ export default {
             };
             this.addTranslationAnswer(data);
             this.listOfAnswers = this.getAnswers(request);
+            this.listOfAnswers.push(data);
         }
     }
 };

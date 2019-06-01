@@ -7,5 +7,6 @@ namespace Application.Models
         public string TextTranslated { get; set; }
         public string TextToTranslate { get; set; }
         public bool IsPreferred { get; set; }
+        public int AmountOfLikes { get; set; }
     }
 }

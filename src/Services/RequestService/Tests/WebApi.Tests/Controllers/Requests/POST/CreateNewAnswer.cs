@@ -64,8 +64,8 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
             {
                 TextTranslated = "Den er nu fikset",
                 RequestId = 1,
-                UserId = Guid.Parse("8e3f52d0-ee7e-4353-8941-ab1b75bbdf76")
-            };
+                UserId = Guid.Parse("50c41b86-1620-4912-9b5d-561b34dc27f7")
+            }; 
 
             Assert.True(await IsSuccessStatusCode(command));
         }

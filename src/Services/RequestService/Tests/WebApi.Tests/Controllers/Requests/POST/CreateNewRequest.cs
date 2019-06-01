@@ -55,24 +55,37 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
         [Theory]
         [MemberData(nameof(TestDataGenerator.GetCreateNewRequestCommandsFromDataGenerator), MemberType =
             typeof(TestDataGenerator))]
-        public async Task CreateNewRequest_ReturnsBadRequest(CreateRequestCommand a, CreateRequestCommand b,
-            CreateRequestCommand c, CreateRequestCommand d, CreateRequestCommand e)
+        public async Task CreateNewRequest_ReturnsBadRequest(
+            CreateRequestCommand a, CreateRequestCommand b, CreateRequestCommand c)
         {
-            Assert.True(await IsBadRequest(a));
-            Assert.True(await IsBadRequest(b));
-            Assert.True(await IsBadRequest(c));
-            Assert.True(await IsBadRequest(d));
-            Assert.True(await IsBadRequest(e));
+            Assert.True(await CheckStatusCode(a, "BadRequest"));
+            Assert.True(await CheckStatusCode(b, "BadRequest"));
+            Assert.True(await CheckStatusCode(c, "BadRequest"));
         }
-        
-        private async Task<bool> IsBadRequest(CreateRequestCommand command)
+
+        [Theory]
+        [MemberData(nameof(TestDataGenerator.GetCreateNewRequestCommandsToNotFoundTestFromDataGenerator), MemberType =
+            typeof(TestDataGenerator))]
+        public async Task CreateNewRequest_ReturnsNotFoundBecauseNoLanguageTarget(CreateRequestCommand a, CreateRequestCommand b)
+        {
+            Assert.True(await CheckStatusCode(a, "NotFound"));
+            Assert.True(await CheckStatusCode(b, "NotFound"));
+        }
+
+        private async Task<bool> CheckStatusCode(CreateRequestCommand command, string statusCode)
         {
             var content = Utilities.GetRequestContent(command);
 
             var response = await _client.PostAsync($"/api/requests/",
                 content);
 
-            return response.StatusCode.ToString() == "BadRequest";
+            return response.StatusCode.ToString() == statusCode;
+        }
+        private static Guid TryParseGuidFromString(string str)
+        {
+            Guid.TryParse(str, out var result);
+            Guid.Parse(result.ToString());
+            return result;
         }
     }
 }

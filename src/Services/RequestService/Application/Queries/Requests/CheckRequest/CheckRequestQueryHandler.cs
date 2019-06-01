@@ -16,11 +16,13 @@ namespace Application.Queries.Requests.CheckRequest
     {
         private readonly IRequestServiceDbContext _context;
         private readonly IMediator _mediator;
+        private readonly IRequestMappings _mapper;
 
-        public CheckRequestQueryHandler(IRequestServiceDbContext context, IMediator mediator)
+        public CheckRequestQueryHandler(IRequestServiceDbContext context, IMediator mediator, IRequestMappings mapper)
         {
             _context = context;
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<AnswerDto>> Handle(CheckRequestQuery request,
@@ -40,7 +42,7 @@ namespace Application.Queries.Requests.CheckRequest
                 foreach (var answer in requestToCheck.Answers)
                 {
                     var requestToGetTextToTranslate = await _context.Requests.FirstOrDefaultAsync(x => x.Id == answer.RequestId);
-                    answersToReturn.Add(RequestMappings.ToAnswerDTO(answer, requestToGetTextToTranslate.TextToTranslate));
+                    answersToReturn.Add(await _mapper.ToAnswerDTOAsync(answer));
                 }
             }
             return answersToReturn;

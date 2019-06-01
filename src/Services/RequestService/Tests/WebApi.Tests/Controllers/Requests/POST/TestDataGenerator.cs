@@ -39,18 +39,10 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
             Guid.Parse(result.ToString());
             return result;
         }
-        
-        public static IEnumerable<object[]> GetCreateNewRequestCommandsFromDataGenerator()
+        public static IEnumerable<object[]> GetCreateNewRequestCommandsToNotFoundTestFromDataGenerator()
         {
             yield return new object[]
             {
-                new CreateRequestCommand
-                {
-                    LanguageOriginCode = "",
-                    LanguageTargetCode = "",
-                    UserId = TryParseGuidFromString("dafuqqqasd"),
-                    TextToTranslate = string.Empty
-                },
                 new CreateRequestCommand
                 {
                     LanguageOriginCode = "dk",
@@ -60,22 +52,38 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
                 },
                 new CreateRequestCommand
                 {
-                    LanguageOriginCode = "asdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-                    LanguageTargetCode = "asdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                LanguageOriginCode = "",
+                LanguageTargetCode = "",
+                UserId = TryParseGuidFromString("dafuqqqasd"),
+                TextToTranslate = string.Empty
+                }
+            };
+        }
+
+
+
+        public static IEnumerable<object[]> GetCreateNewRequestCommandsFromDataGenerator()
+        {
+            yield return new object[]
+            {
+                new CreateRequestCommand
+                {
+                    LanguageOriginCode = "",
+                    LanguageTargetCode = "en",
                     UserId = Guid.Parse("cb23e0db-208f-421d-9210-4b976576056f"),
                     TextToTranslate = string.Empty
                 },
                 new CreateRequestCommand
                 {
                     LanguageOriginCode = "-----dasd2111´´",
-                    LanguageTargetCode = "ddawdawsdasdd",
+                    LanguageTargetCode = "dk",
                     UserId = Guid.Parse("cb23e0db-208f-421d-9210-4b976576056f"),
                     TextToTranslate = string.Empty
                 },
                 new CreateRequestCommand
                 {
-                LanguageOriginCode = "-----dasd2111´´",
-                LanguageTargetCode = "ddawdawsdasdd",
+                LanguageOriginCode = "",
+                LanguageTargetCode = "dk",
                 UserId = TryParseGuidFromString("c"),
                 TextToTranslate = "DDDDDDDD                                 DDDDDDDD                 DDDDDD"
                 },

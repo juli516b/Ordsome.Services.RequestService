@@ -12,10 +12,12 @@ namespace Application.Queries.Requests.GetRequest
     public class GetAnswersByRequestIdQueryHandler : IRequestHandler<GetRequestQuery, RequestPreviewDto>
     {
         private readonly IRequestServiceDbContext _context;
+        private readonly IRequestMappings _mapper;
 
-        public GetAnswersByRequestIdQueryHandler(IRequestServiceDbContext context)
+        public GetAnswersByRequestIdQueryHandler(IRequestServiceDbContext context, IRequestMappings mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<RequestPreviewDto> Handle(GetRequestQuery request, CancellationToken cancellationToken)
@@ -25,7 +27,7 @@ namespace Application.Queries.Requests.GetRequest
 
             if (entity == null) throw new NotFoundException($"{request.RequestId}", request);
 
-            return RequestMappings.ToRequestPreviewDTO(entity);
+            return _mapper.ToRequestPreviewDTO(entity);
         }
     }
 }

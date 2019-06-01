@@ -16,11 +16,13 @@ namespace Application.Queries.Answers.GetAnswersByUserId
     {
         private readonly IRequestServiceDbContext _context;
         private readonly IMediator _mediator;
+        private readonly IRequestMappings _mapper;
 
-        public GetAnswersByUserIdQueryHandler(IRequestServiceDbContext context, IMediator mediator)
+        public GetAnswersByUserIdQueryHandler(IRequestServiceDbContext context, IMediator mediator, IRequestMappings mapper)
         {
             _context = context;
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         public async Task<ICollection<AnswerDto>> Handle(GetAnswersByUserIdQuery request,
@@ -32,12 +34,10 @@ namespace Application.Queries.Answers.GetAnswersByUserId
 
             List<AnswerDto> answersToReturn = new List<AnswerDto>();
 
-            foreach (Answer item in answers)
+            foreach (var item in answers)
             {
-                var requestToCheck = await _context.Requests.FirstOrDefaultAsync(x => x.Id == item.RequestId);
-                answersToReturn.Add(RequestMappings.ToAnswerDTO(item, requestToCheck.TextToTranslate));
+                answersToReturn.Add(await _mapper.ToAnswerDTOAsync(item));
             }
-
             return answersToReturn; 
         }
     }
