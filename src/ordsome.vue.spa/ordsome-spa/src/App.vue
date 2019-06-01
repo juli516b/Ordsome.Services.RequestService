@@ -10,6 +10,7 @@
 <script>
 import AppNavigation from '@/components/AppNavigation';
 import Axios from 'axios';
+import vuetifyToast from 'vuetify-toast';
 export default {
     name: 'App',
     components: {
@@ -25,7 +26,7 @@ export default {
                 ) {
                     this.$store.dispatch('logout');
                 }
-                throw err;
+                vuetifyToast.error('Please provide correct credentials')
             });
         });
     }

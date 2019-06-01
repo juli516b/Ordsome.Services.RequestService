@@ -84,6 +84,7 @@
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
+import { request } from 'http';
 
 export default {
     components: {
@@ -137,14 +138,11 @@ export default {
         },
         async addAnswer() {
             await this.$refs.obs.validate();
-            let data = {
-                textTranslated: this.editedItem.textTranslated,
-                requestId: this.editedItem.requestId,
-                userId: this.jwtData.nameid
+            let request = {
+            id: this.$route.params.id
             };
-            (this.editedItem.textTranslated = ''),
-                this.addTranslationAnswer(data);
-            this.listOfAnswers.push(data);
+            this.addTranslationAnswer(this.editedItem);
+            this.getAnswers(request)
         }
     }
 };

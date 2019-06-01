@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import vuetifyToast from 'vuetify-toast';
 
 Vue.use(Vuex);
 
@@ -25,7 +26,7 @@ export default new Vuex.Store({
             state.languages = payload;
         },
         add_translationrequest(state, payload) {
-            state.translationRequests[payload.id].push(payload);
+            state.translationRequests.push(payload);
         },
         auth_request(state) {
             state.status = 'loading';
@@ -54,7 +55,7 @@ export default new Vuex.Store({
             state.answers = payload;
         },
         add_answer(state, payload) {
-            state.answers[payload.id].push(payload);
+            state.answers.push(payload);
         }
     },
     actions: {
@@ -66,7 +67,7 @@ export default new Vuex.Store({
                     commit('setTranslationRequests', translationRequests);
                 })
                 .catch(err => {
-                    console.log(err);
+                    vuetifyToast.error(`${err.message} has occurred!`);
                 });
         },
         getAnswers({ commit, state }, request) {
@@ -77,7 +78,7 @@ export default new Vuex.Store({
                     commit('get_answers', answers);
                 })
                 .catch(err => {
-                    console.log(err);
+                    vuetifyToast.error(`${err.message} has occurred!`);
                 });
         },
         getLanguages({ commit, state }) {
@@ -88,7 +89,7 @@ export default new Vuex.Store({
                     commit('get_languages', languages);
                 })
                 .catch(err => {
-                    console.log(err);
+                    vuetifyToast.error(`${err.message} has occurred!`);
                 });
         },
         addTranslationRequest({ commit, state }, request) {
@@ -96,14 +97,16 @@ export default new Vuex.Store({
                 .post(`${state.apiGwayRequestsUrl}`, request)
                 .then(r => r.data)
                 .then(request => {
+                    vuetifyToast.success('You added an request!')
                     commit('add_translationrequest', request);
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.log(err)
+                    vuetifyToast.error(`${err.message} has occurred!`);
                 });
         },
         userLogin({ commit, state }, user) {
-            return new Promise((resolve, reject) => {
+            return new Promise(resolve => {
                 commit('auth_request');
                 axios({
                     url: `${state.apiGwayUsersUrl}` + '/login',
@@ -116,17 +119,18 @@ export default new Vuex.Store({
                         localStorage.setItem('token', token);
                         axios.defaults.headers.common['Authorization'] = token;
                         commit('auth_success', token, user);
+                        vuetifyToast.success('You succesfully logged in!')
                         resolve(response);
                     })
                     .catch(err => {
                         commit('auth_error');
                         localStorage.removeItem('token');
-                        reject(err);
+                        vuetifyToast.error(`${err.message} has occurred!`);
                     });
             });
         },
         register({ commit }, user) {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 commit('auth_request');
                 axios({
                     url: this.state.apiGwayUsersUrl + '/register',
@@ -144,7 +148,7 @@ export default new Vuex.Store({
                     .catch(err => {
                         commit('auth_error', err);
                         localStorage.removeItem('token');
-                        reject(err);
+                        vuetifyToast.error(`${err.message} has occurred!`);
                     });
             });
         },
@@ -168,7 +172,7 @@ export default new Vuex.Store({
                     commit('get_user_translationrequests', translationRequests);
                 })
                 .catch(err => {
-                    console.log(err);
+                    vuetifyToast.error(`${err.message} has occurred!`);
                 });
         },
         getUserAnswers({ commit, state }) {
@@ -181,7 +185,7 @@ export default new Vuex.Store({
                     commit('get_user_answers', answers);
                 })
                 .catch(err => {
-                    console.log(err);
+                    vuetifyToast.error(`${err.message} has occurred!`);
                 });
         },
         addTranslationAnswer({ commit, state }, answer) {
@@ -192,10 +196,11 @@ export default new Vuex.Store({
                 )
                 .then(r => r.data)
                 .then(answer => {
+                    vuetifyToast.success('Your answer has been added')
                     commit('add_answer', answer);
                 })
                 .catch(err => {
-                    console.log(err);
+                    vuetifyToast.error(`${err.message} has occurred!`);
                 });
         }
     },
