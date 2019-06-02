@@ -2,12 +2,15 @@
     <v-container>
         <v-layout align-center justify-center>
             <v-flex xs6>
-                <v-text-field
+                <v-textarea
+                    auto-grow
+                    box
                     disabled
-                    :label="request.textToTranslate"
+                    label= "Text to translate"
+                    :value="request.textToTranslate"
                     prepend-icon="mdi-translate"
                 >
-                </v-text-field>
+                </v-textarea>
             </v-flex>
 
             <v-flex xs2 px-2 order-lg2>

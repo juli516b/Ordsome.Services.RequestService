@@ -28,9 +28,7 @@ namespace Application.Queries.Requests.GetRequestsByUserId
         {
             var requests = await _context.Requests.Where(x => x.UserId == request.UserId).Include(x => x.Answers)
                 .ToListAsync(cancellationToken);
-            return requests.Count == 0
-                ? throw new NotFoundException($"{request.UserId}", request)
-                : requests.Select(_mapper.ToRequestPreviewDTO).ToList();
+            return requests.Select(_mapper.ToRequestPreviewDTO).ToList();
         }
     }
 }
