@@ -25,7 +25,8 @@ namespace Application.Infrastructure.Mappings
                 LanguageOriginCode = request.LanguageOrigin,
                 LanguageTargetCode = request.LanguageTarget,
                 NoOfAnswers = request.Answers.Count,
-                TextToTranslate = request.TextToTranslate
+                TextToTranslate = request.TextToTranslate,
+                UserId = request.UserId
             };
         }
 

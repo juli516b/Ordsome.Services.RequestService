@@ -62,7 +62,7 @@ export default {
                 name: 'translationrequest',
                 params: { id: a.requestID }
             });
-        },
+        }
     }
 };
 </script>

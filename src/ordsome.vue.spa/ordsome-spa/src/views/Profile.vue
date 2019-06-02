@@ -38,7 +38,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch('getUserTranslations');
-        this.$store.dispatch('getUserAnswers')
+        this.$store.dispatch('getUserAnswers');
         this.UserData = this.jwtData;
     }
 };

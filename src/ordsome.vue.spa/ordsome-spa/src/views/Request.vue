@@ -6,7 +6,7 @@
                     auto-grow
                     box
                     disabled
-                    label= "Text to translate"
+                    label="Text to translate"
                     :value="request.textToTranslate"
                     prepend-icon="mdi-translate"
                 >
@@ -41,6 +41,7 @@
 <script>
 import Axios from 'axios';
 import AnswerComponent from '@/components/AnswerComponent';
+import { mapGetters } from 'vuex';
 export default {
     components: {
         AnswerComponent
@@ -50,7 +51,8 @@ export default {
             request: {
                 textToTranslate: '',
                 languageOriginCode: '',
-                languageTargetCode: ''
+                languageTargetCode: '',
+                userId: ''
             }
         };
     },
@@ -71,7 +73,8 @@ export default {
     computed: {
         isLoggedIn: function() {
             return this.$store.getters.isLoggedIn;
-        }
+        },
+        ...mapGetters(['jwtNameid'])
     },
     methods: {}
 };

@@ -136,8 +136,8 @@ export default new Vuex.Store({
                         localStorage.setItem('token', token);
                         axios.defaults.headers.common['Authorization'] = token;
                         commit('auth_success', token);
-                        dispatch('getUserTranslations')
-                        dispatch('getUserAnswers')
+                        dispatch('getUserTranslations');
+                        dispatch('getUserAnswers');
                         vuetifyToast.success('You succesfully logged in!');
                         resolve(response);
                     })
@@ -156,7 +156,7 @@ export default new Vuex.Store({
                     method: 'POST'
                 })
                     .then(resp => {
-                        dispatch('userLogin', user)
+                        dispatch('userLogin', user);
                         vuetifyToast.success(
                             'You have been succesfully registered'
                         );

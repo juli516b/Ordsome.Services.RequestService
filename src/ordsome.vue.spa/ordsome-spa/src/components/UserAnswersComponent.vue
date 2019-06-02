@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 export default {
     data() {
         return {
@@ -45,19 +45,17 @@ export default {
     },
     computed: {
         ...mapState({
-            userAnswers: state => state.usersAnswers,
+            userAnswers: state => state.usersAnswers
         })
     },
-    created: {
-
-    },
+    created: {},
     methods: {
         goToRequest(a) {
             this.$router.push({
                 name: 'translationrequest',
                 params: { id: a.requestId }
             });
-        },
+        }
     }
 };
 </script>

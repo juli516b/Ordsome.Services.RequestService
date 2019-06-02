@@ -12,25 +12,24 @@
                                 @click="isPreffered(index)"
                             >
                                 <v-list-tile-content>
-                                    <v-list-tile-title>{{
-                                        item.textTranslated
-                                    }}</v-list-tile-title>
+                                    <v-list-tile-title>
+                                        {{ item.textTranslated }}
+                                    </v-list-tile-title>
                                 </v-list-tile-content>
 
                                 <v-list-tile-action>
-                                    <v-list-tile-action-text>{{
-                                        item.action
-                                    }}</v-list-tile-action-text>
+                                    <v-list-tile-action-text>
+                                        {{ item.action }}
+                                    </v-list-tile-action-text>
                                     <v-icon
                                         v-if="selected.indexOf(index) < 0"
                                         color="grey lighten-1"
+                                        >mdi-thumb-up</v-icon
                                     >
-                                        mdi-thumb-up
-                                    </v-icon>
 
-                                    <v-icon v-else color="primary">
-                                        mdi-thumb-up
-                                    </v-icon>
+                                    <v-icon v-else color="primary"
+                                        >mdi-thumb-up</v-icon
+                                    >
                                 </v-list-tile-action>
                             </v-list-tile>
                             <v-divider
@@ -40,43 +39,42 @@
                         </template>
                     </v-list>
                 </v-card>
-                <h1 v-else class="text-md-center">
-                    Be the first to answer!
-                </h1>
+                <h1 v-else class="text-md-center">Be the first to answer!</h1>
             </v-flex>
-            <ValidationObserver ref="obs">
-                <v-flex pt-5 slot-scope="{ invalid, validated }">
-                    <v-form
-                        @submit.prevent="isLoggedIn"
-                        id="submit-answer-form"
-                    >
-                        <ValidationProvider
-                            name="Text translated"
-                            rules="required"
+            <div v-show="this.jwtNameid != this.currentRequest.userId">
+                <ValidationObserver ref="obs">
+                    <v-flex pt-5 slot-scope="{ invalid, validated }">
+                        <v-form
+                            @submit.prevent="isLoggedIn"
+                            id="submit-answer-form"
                         >
-                            <v-textarea
-                                slot-scope="{ errors, valid }"
-                                :success="valid"
-                                :error-messages="errors"
-                                auto-grow
-                                outline
-                                :disabled="!isLoggedIn"
-                                label="Answer this translation"
-                                v-model="editedItem.textTranslated"
+                            <ValidationProvider
+                                name="Text translated"
+                                rules="required"
                             >
-                            </v-textarea>
-                        </ValidationProvider>
-                        <v-btn
-                            type="submit"
-                            @click="addAnswer()"
-                            :disabled="invalid || !validated"
-                            color="success"
-                            form="submit-answer-form"
-                            >Submit</v-btn
-                        >
-                    </v-form>
-                </v-flex>
-            </ValidationObserver>
+                                <v-textarea
+                                    slot-scope="{ errors, valid }"
+                                    :success="valid"
+                                    :error-messages="errors"
+                                    auto-grow
+                                    outline
+                                    :disabled="!isLoggedIn"
+                                    label="Answer this translation"
+                                    v-model="editedItem.textTranslated"
+                                ></v-textarea>
+                            </ValidationProvider>
+                            <v-btn
+                                type="submit"
+                                @click="addAnswer()"
+                                :disabled="invalid || !validated"
+                                color="success"
+                                form="submit-answer-form"
+                                >Submit</v-btn
+                            >
+                        </v-form>
+                    </v-flex>
+                </ValidationObserver>
+            </div>
         </v-layout>
     </v-container>
 </template>
@@ -84,6 +82,7 @@
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
+import Axios from 'axios';
 
 export default {
     components: {
@@ -94,6 +93,7 @@ export default {
     data() {
         return {
             selected: [],
+            currentRequest: null,
             request: null,
             editedItem: {
                 textTranslated: '',
@@ -106,19 +106,28 @@ export default {
             }
         };
     },
-
-    created() {},
     computed: {
         ...mapGetters(['jwtNameid']),
         ...mapState({
             listOfAnswers: state => state.answers
         })
     },
-    mounted() {
+    created() {
+        Axios.get(
+            'https://localhost:7000/api/requests/' + this.$route.params.id
+        )
+            .then(response => {
+                this.$nextTick(function() {
+                    this.currentRequest = response.data;
+                });
+            })
+            .catch(e => {
+                this.errors.push(e);
+            });
+        this.getAnswers(request);
         let request = {
             id: this.$route.params.id
         };
-        this.getAnswers(request);
     },
     methods: {
         ...mapActions(['getAnswers', 'addTranslationAnswer']),

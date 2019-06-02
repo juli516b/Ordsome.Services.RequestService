@@ -1,3 +1,5 @@
+using System;
+
 namespace Application.Models
 {
     public class RequestPreviewDto
@@ -8,5 +10,6 @@ namespace Application.Models
         public string TextToTranslate { get; set; }
         public int NoOfAnswers { get; set; }
         public bool IsClosed { get; set; }
+        public Guid UserId { get; set; }
     }
 }
