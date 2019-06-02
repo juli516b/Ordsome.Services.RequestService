@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Infrastructure.Mappings;
@@ -32,11 +31,8 @@ namespace Application.Queries.Requests.GetAnswersByRequestId
             if (entity == null)
                 throw new NotFoundException($"{request.RequestId}", request);
 
-            List < AnswerDto > answerDtosToReturn = new List<AnswerDto>();
-            foreach (var item in entity.Answers)
-            {
-                answerDtosToReturn.Add(await _mapper.ToAnswerDTOAsync(item));
-            }
+            var answerDtosToReturn = new List<AnswerDto>();
+            foreach (var item in entity.Answers) answerDtosToReturn.Add(await _mapper.ToAnswerDTOAsync(item));
             return answerDtosToReturn;
         }
     }

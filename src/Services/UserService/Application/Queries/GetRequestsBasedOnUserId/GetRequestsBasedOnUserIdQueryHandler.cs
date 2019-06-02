@@ -16,13 +16,11 @@ namespace Application.Queries.GetRequestsBasedOnUserId
     {
         private readonly IRequestServiceClient _client;
         private readonly IUserServiceDbContext _context;
-        private readonly IMediator _mediator;
 
-        public GetRequestsBasedOnUserIdQueryHandler(IMediator mediator, IUserServiceDbContext context,
+        public GetRequestsBasedOnUserIdQueryHandler(IUserServiceDbContext context,
             IRequestServiceClient client)
         {
             _context = context;
-            _mediator = mediator;
             _client = client;
         }
 

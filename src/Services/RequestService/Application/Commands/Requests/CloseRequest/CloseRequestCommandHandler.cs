@@ -11,15 +11,12 @@ namespace Application.Commands.Requests.CloseRequest
         public class Handler : IRequestHandler<CloseRequestCommand, Unit>
         {
             private readonly IRequestServiceDbContext _context;
-            private readonly IMediator _mediator;
             private readonly INotificationService _notificationService;
 
-            public Handler(IRequestServiceDbContext context, INotificationService notificationService,
-                IMediator mediator)
+            public Handler(IRequestServiceDbContext context, INotificationService notificationService)
             {
                 _context = context;
                 _notificationService = notificationService;
-                _mediator = mediator;
             }
 
             public async Task<Unit> Handle(CloseRequestCommand request, CancellationToken cancellationToken)

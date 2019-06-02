@@ -20,13 +20,13 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
         [Fact]
         public async Task GetsTheCountOfAnswersByRequestId()
         {
-            var id = 1;
+            const int id = 1;
 
             var response = await _client.GetAsync($"/api/requests/{id}/answers/count");
 
             response.EnsureSuccessStatusCode();
 
-            var request = await Utilities.GetResponseContent<CountOfAnswersDto>(response);
+            await Utilities.GetResponseContent<CountOfAnswersDto>(response);
         }
 
         [Fact]

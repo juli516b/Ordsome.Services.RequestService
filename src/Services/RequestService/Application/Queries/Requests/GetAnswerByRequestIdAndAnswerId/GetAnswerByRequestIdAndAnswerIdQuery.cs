@@ -1,16 +1,5 @@
-﻿using Application.Infrastructure.Mappings;
-using Application.Interfaces;
-using Application.Models;
-using Domain.Requests;
+﻿using Application.Models;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Ordsome.Services.CrossCuttingConcerns.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.Queries.Requests.GetAnswerByRequestIdAndAnswerId
 {

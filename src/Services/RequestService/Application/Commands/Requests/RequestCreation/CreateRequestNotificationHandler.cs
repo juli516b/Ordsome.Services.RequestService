@@ -12,12 +12,10 @@ namespace Application.Commands.Requests.RequestCreation
     public class CreateRequestNotificationHandler : INotificationHandler<CreateRequestCommand>
     {
         private readonly IRequestServiceDbContext _context;
-        private readonly IMediator _mediator;
 
-        public CreateRequestNotificationHandler(IRequestServiceDbContext context, IMediator mediator)
+        public CreateRequestNotificationHandler(IRequestServiceDbContext context)
         {
             _context = context;
-            _mediator = mediator;
         }
 
         public async Task Handle(CreateRequestCommand request, CancellationToken cancellationToken)

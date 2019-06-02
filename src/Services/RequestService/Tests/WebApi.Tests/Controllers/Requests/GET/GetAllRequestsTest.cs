@@ -32,8 +32,8 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
         [Fact]
         public async Task ReturnsIEnumerableRequestPreviewDto_WithFromAndToLanguage()
         {
-            var fromLanguage = "en";
-            var toLanguage = "dk";
+            const string fromLanguage = "en";
+            const string toLanguage = "dk";
             var response = await _client.GetAsync($"/api/requests?FromLanguage={fromLanguage}&ToLanguage={toLanguage}");
 
             response.EnsureSuccessStatusCode();

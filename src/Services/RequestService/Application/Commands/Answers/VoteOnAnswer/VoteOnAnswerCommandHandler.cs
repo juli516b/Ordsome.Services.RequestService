@@ -12,11 +12,9 @@ namespace Application.Commands.Answers.VoteOnAnswer
     public class VoteOnAnswerCommandHandler : IRequestHandler<VoteOnAnswerCommand, Unit>
     {
         private readonly IRequestServiceDbContext _context;
-        private readonly IMediator _mediator;
 
-        public VoteOnAnswerCommandHandler(IRequestServiceDbContext context, IMediator mediator)
+        public VoteOnAnswerCommandHandler(IRequestServiceDbContext context)
         {
-            _mediator = mediator;
             _context = context;
         }
 

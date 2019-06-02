@@ -21,7 +21,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.GET
         [Fact]
         public async Task GetAllAnswersByRequestId()
         {
-            var id = 1;
+            const int id = 1;
             var response = await _client.GetAsync($"/api/requests/{id}/answers");
 
             response.EnsureSuccessStatusCode();

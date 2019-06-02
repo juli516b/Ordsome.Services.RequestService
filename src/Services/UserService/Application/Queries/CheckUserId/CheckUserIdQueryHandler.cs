@@ -9,12 +9,10 @@ namespace Application.Queries.CheckUserId
     public class CheckUserIdQueryHandler : IRequestHandler<CheckUserIdQuery, bool>
     {
         private readonly IUserServiceDbContext _context;
-        private readonly IMediator _mediator;
 
-        public CheckUserIdQueryHandler(IUserServiceDbContext context, IMediator mediator)
+        public CheckUserIdQueryHandler(IUserServiceDbContext context)
         {
             _context = context;
-            _mediator = mediator;
         }
 
         public async Task<bool> Handle(CheckUserIdQuery request, CancellationToken cancellationToken)

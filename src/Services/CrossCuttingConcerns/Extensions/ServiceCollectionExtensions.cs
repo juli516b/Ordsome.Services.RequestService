@@ -42,6 +42,8 @@ namespace Ordsome.Services.CrossCuttingConcerns.Extensions
                     });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
+
+            services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
         }
 
         public static IMvcBuilder AddCustomMvc(this IServiceCollection services)
@@ -49,8 +51,6 @@ namespace Ordsome.Services.CrossCuttingConcerns.Extensions
             return services
                 .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
         }
 
         public static void AddDbContext(this IServiceCollection services)

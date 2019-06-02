@@ -15,13 +15,11 @@ namespace Application.Queries.GetAnswersBasedOnUserId
     {
         private readonly IRequestServiceClient _client;
         private readonly IUserServiceDbContext _context;
-        private readonly IMediator _mediator;
 
-        public GetAnswersBasedOnUserIdQueryHandler(IMediator mediator, IUserServiceDbContext context,
+        public GetAnswersBasedOnUserIdQueryHandler(IUserServiceDbContext context,
             IRequestServiceClient client)
         {
             _context = context;
-            _mediator = mediator;
             _client = client;
         }
 
@@ -39,9 +37,7 @@ namespace Application.Queries.GetAnswersBasedOnUserId
 
             foreach (var item in resultToReturn)
                 if (item.TextTranslated == null)
-                {
                     throw new NotFoundException(item.TextTranslated, item);
-                }
 
             return resultToReturn;
         }

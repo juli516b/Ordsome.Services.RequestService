@@ -8,11 +8,10 @@ namespace Infrastructure.Persistence
     {
         public static void Initialize(RequestServiceDbContext context)
         {
-            var initializer = new OrdsomeInitializer();
-            initializer.SeedEverything(context);
+            SeedEverything(context);
         }
 
-        private void SeedEverything(RequestServiceDbContext context)
+        private static void SeedEverything(RequestServiceDbContext context)
         {
             context.Database.EnsureCreated();
 

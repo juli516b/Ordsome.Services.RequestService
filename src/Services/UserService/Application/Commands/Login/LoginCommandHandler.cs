@@ -21,12 +21,10 @@ namespace Application.Commands.Login
     {
         private readonly IConfiguration _config;
         private readonly IUserServiceDbContext _context;
-        private readonly IMediator _mediator;
 
-        public LoginCommandHandler(IUserServiceDbContext context, IMediator mediator, IConfiguration config)
+        public LoginCommandHandler(IUserServiceDbContext context, IConfiguration config)
         {
             _context = context;
-            _mediator = mediator;
             _config = config;
         }
 

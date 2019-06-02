@@ -12,15 +12,13 @@ namespace Application.Commands.Answers.SetAnswerAsCorrectAnswer
     public class SetAnswerAsCorrectAnswerCommandHandler : INotificationHandler<SetAnswerAsCorrectAnswerCommand>
     {
         private readonly IRequestServiceDbContext _context;
-        private readonly IMediator _mediator;
         private readonly INotificationService _notificationService;
 
         public SetAnswerAsCorrectAnswerCommandHandler(IRequestServiceDbContext context,
-            INotificationService notificationService, IMediator mediator)
+            INotificationService notificationService)
         {
             _context = context;
             _notificationService = notificationService;
-            _mediator = mediator;
         }
 
         public async Task Handle(SetAnswerAsCorrectAnswerCommand notification, CancellationToken cancellationToken)

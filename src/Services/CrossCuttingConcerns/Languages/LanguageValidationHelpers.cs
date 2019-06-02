@@ -10,10 +10,10 @@
         }
 
         public static bool BeALanguageById(int id)
-        { 
+        {
             var language = ListOfLanguages.GetLanguageById(id);
 
             return language != null;
-        }    
+        }
     }
 }

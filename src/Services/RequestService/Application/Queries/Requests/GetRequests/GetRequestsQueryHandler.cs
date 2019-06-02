@@ -36,24 +36,16 @@ namespace Application.Queries.Requests.GetRequests
             IQueryable<Request> entities = null;
 
             if (string.IsNullOrWhiteSpace(request.FromLanguage) && string.IsNullOrWhiteSpace(request.ToLanguage))
-            {
                 entities = _context.Requests.Include(x => x.Answers);
-            }
             else if (!string.IsNullOrWhiteSpace(request.FromLanguage) && string.IsNullOrWhiteSpace(request.ToLanguage))
-            {
                 entities = _context.Requests.Include(x => x.Answers)
-                   .Where(x => x.LanguageOrigin == request.FromLanguage);
-            }
+                    .Where(x => x.LanguageOrigin == request.FromLanguage);
             else if (string.IsNullOrWhiteSpace(request.FromLanguage) && !string.IsNullOrWhiteSpace(request.ToLanguage))
-            {
                 entities = _context.Requests.Include(x => x.Answers)
-                   .Where(x => x.LanguageTarget == request.ToLanguage);
-            }
+                    .Where(x => x.LanguageTarget == request.ToLanguage);
             else if (!string.IsNullOrWhiteSpace(request.FromLanguage) && !string.IsNullOrWhiteSpace(request.ToLanguage))
-            {
                 entities = _context.Requests.Include(x => x.Answers).Where(x =>
-                   x.LanguageOrigin == request.FromLanguage && x.LanguageTarget == request.ToLanguage);
-            }
+                    x.LanguageOrigin == request.FromLanguage && x.LanguageTarget == request.ToLanguage);
 
             return await entities.ToListAsync(cancellationToken);
         }

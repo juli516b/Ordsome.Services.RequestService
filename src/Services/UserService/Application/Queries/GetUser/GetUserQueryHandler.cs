@@ -10,12 +10,10 @@ namespace Application.Queries.GetUser
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserDto>
     {
         private readonly IUserServiceDbContext _context;
-        private readonly IMediator _mediator;
 
-        public GetUserQueryHandler(IUserServiceDbContext context, IMediator mediator)
+        public GetUserQueryHandler(IUserServiceDbContext context)
         {
             _context = context;
-            _mediator = mediator;
         }
 
         public async Task<UserDto> Handle(GetUserQuery request, CancellationToken cancellationToken)

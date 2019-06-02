@@ -15,13 +15,11 @@ namespace Application.Queries.Requests.GetRequestsByUserId
         GetRequestsByUserIdQueryHandler : IRequestHandler<GetRequestsByUserIdQuery, IEnumerable<RequestPreviewDto>>
     {
         private readonly IRequestServiceDbContext _context;
-        private IMediator _mediator;
         private readonly IRequestMappings _mapper;
 
-        public GetRequestsByUserIdQueryHandler(IRequestServiceDbContext context, IMediator mediator, IRequestMappings mapper)
+        public GetRequestsByUserIdQueryHandler(IRequestServiceDbContext context, IRequestMappings mapper)
         {
             _context = context;
-            _mediator = mediator;
             _mapper = mapper;
         }
 

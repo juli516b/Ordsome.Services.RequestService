@@ -7,13 +7,6 @@ namespace Application.Queries.GetGuid
 {
     public class GetGuidQueryHandler : IRequestHandler<GetGuidQuery, GetGuidDto>
     {
-        private readonly IMediator _mediator;
-
-        public GetGuidQueryHandler(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
         public async Task<GetGuidDto> Handle(GetGuidQuery request, CancellationToken cancellationToken)
         {
             return new GetGuidDto

@@ -39,6 +39,7 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
             Guid.Parse(result.ToString());
             return result;
         }
+
         public static IEnumerable<object[]> GetCreateNewRequestCommandsToNotFoundTestFromDataGenerator()
         {
             yield return new object[]
@@ -52,14 +53,13 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
                 },
                 new CreateRequestCommand
                 {
-                LanguageOriginCode = "",
-                LanguageTargetCode = "",
-                UserId = TryParseGuidFromString("dafuqqqasd"),
-                TextToTranslate = string.Empty
+                    LanguageOriginCode = "",
+                    LanguageTargetCode = "",
+                    UserId = TryParseGuidFromString("dafuqqqasd"),
+                    TextToTranslate = string.Empty
                 }
             };
         }
-
 
 
         public static IEnumerable<object[]> GetCreateNewRequestCommandsFromDataGenerator()
@@ -82,11 +82,11 @@ namespace RequestService.WebApi.Tests.Controllers.Requests.POST
                 },
                 new CreateRequestCommand
                 {
-                LanguageOriginCode = "",
-                LanguageTargetCode = "dk",
-                UserId = TryParseGuidFromString("c"),
-                TextToTranslate = "DDDDDDDD                                 DDDDDDDD                 DDDDDD"
-                },
+                    LanguageOriginCode = "",
+                    LanguageTargetCode = "dk",
+                    UserId = TryParseGuidFromString("c"),
+                    TextToTranslate = "DDDDDDDD                                 DDDDDDDD                 DDDDDD"
+                }
             };
         }
 

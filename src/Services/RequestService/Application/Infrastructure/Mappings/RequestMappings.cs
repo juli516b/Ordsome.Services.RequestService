@@ -1,10 +1,9 @@
+using System.Threading.Tasks;
 using Application.Interfaces;
 using Application.Models;
 using Domain.Requests;
 using Microsoft.EntityFrameworkCore;
 using Ordsome.Services.CrossCuttingConcerns.Exceptions;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Application.Infrastructure.Mappings
 {
@@ -16,6 +15,7 @@ namespace Application.Infrastructure.Mappings
         {
             _context = context;
         }
+
         public RequestPreviewDto ToRequestPreviewDTO(Request request)
         {
             return new RequestPreviewDto
@@ -32,19 +32,12 @@ namespace Application.Infrastructure.Mappings
         public async Task<AnswerDto> ToAnswerDTOAsync(Answer answer)
         {
             var request = await _context.Requests.FirstOrDefaultAsync(x => x.Id == answer.RequestId);
-            if (request == null)
-            {
-                throw new NotFoundException(answer.RequestId.ToString(), answer);
-            }
+            if (request == null) throw new NotFoundException(answer.RequestId.ToString(), answer);
             var likes = await _context.AnswerVotes.ToListAsync();
             var amountOfLikes = 0;
             foreach (var like in likes)
-            {
                 if (like.Like)
-                {
                     amountOfLikes++;
-                }
-            }
             return new AnswerDto
             {
                 AnswerId = answer.Id,

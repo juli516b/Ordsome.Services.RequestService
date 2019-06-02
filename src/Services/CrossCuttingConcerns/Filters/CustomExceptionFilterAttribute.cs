@@ -3,7 +3,6 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Ordsome.Services.CrossCuttingConcerns.Exceptions;
-using ValidationException = Ordsome.Services.CrossCuttingConcerns.Exceptions.ValidationException;
 
 namespace Ordsome.Services.CrossCuttingConcerns.Filters
 {
@@ -23,8 +22,9 @@ namespace Ordsome.Services.CrossCuttingConcerns.Filters
                     return;
                 case ArgumentNullException _:
                     context.HttpContext.Response.ContentType = "application/json";
-                    context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    context.Result = new JsonResult($"A command cant be null. Please provide the properties for this command");
+                    context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    context.Result =
+                        new JsonResult("A command cant be null. Please provide the properties for this command");
 
                     return;
             }

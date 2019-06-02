@@ -121,7 +121,7 @@ namespace WebApi.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> CreateAnswer([FromBody] CreateAnswerCommand command)
         {
-            var id = await Mediator.Send(command);
+            await Mediator.Send(command);
 
             return NoContent();
         }

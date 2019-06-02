@@ -14,12 +14,10 @@ namespace Application.Commands.Register
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Unit>
     {
         private readonly IUserServiceDbContext _context;
-        private readonly IMediator _mediator;
 
-        public RegisterCommandHandler(IUserServiceDbContext context, IMediator mediator)
+        public RegisterCommandHandler(IUserServiceDbContext context)
         {
             _context = context;
-            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -50,7 +48,7 @@ namespace Application.Commands.Register
             }
         }
 
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
             {

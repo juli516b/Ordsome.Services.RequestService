@@ -12,12 +12,10 @@ namespace Application.Commands.AddNewLanguage
     public class AddNewLanguageCommandHandler : IRequestHandler<AddNewLanguageCommand, Unit>
     {
         private readonly IUserServiceDbContext _context;
-        private readonly IMediator _mediator;
 
-        public AddNewLanguageCommandHandler(IUserServiceDbContext context, IMediator mediator)
+        public AddNewLanguageCommandHandler(IUserServiceDbContext context)
         {
             _context = context;
-            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(AddNewLanguageCommand request, CancellationToken cancellationToken)

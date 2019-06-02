@@ -1,4 +1,3 @@
-using System;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,9 +30,7 @@ namespace Application.Commands.Requests.AnswerCreation
             if (requestToCheck == null) throw new NotFoundException($"{request.RequestId}", request);
 
             if (requestToCheck.UserId == request.UserId)
-            {
                 throw new ForbiddenException(request.UserId.ToString(), request);
-            }
             var entity = new Answer
             {
                 RequestId = request.RequestId,
@@ -45,7 +42,7 @@ namespace Application.Commands.Requests.AnswerCreation
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            await _mediator.Publish(new AnswerCreated {AnswerId = entity.Id});
+            await _mediator.Publish(new AnswerCreated {AnswerId = entity.Id}, cancellationToken);
 
             return new AnswerIdDto
             {

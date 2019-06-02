@@ -15,13 +15,11 @@ namespace Application.Queries.Requests.CheckRequest
     public class CheckRequestQueryHandler : IRequestHandler<CheckRequestQuery, IEnumerable<AnswerDto>>
     {
         private readonly IRequestServiceDbContext _context;
-        private readonly IMediator _mediator;
         private readonly IRequestMappings _mapper;
 
-        public CheckRequestQueryHandler(IRequestServiceDbContext context, IMediator mediator, IRequestMappings mapper)
+        public CheckRequestQueryHandler(IRequestServiceDbContext context, IRequestMappings mapper)
         {
             _context = context;
-            _mediator = mediator;
             _mapper = mapper;
         }
 
@@ -38,18 +36,17 @@ namespace Application.Queries.Requests.CheckRequest
 
             var answersToReturn = new List<AnswerDto>();
             foreach (var requestToCheck in requestsChecked)
+            foreach (var answer in requestToCheck.Answers)
             {
-                foreach (var answer in requestToCheck.Answers)
-                {
-                    var requestToGetTextToTranslate = await _context.Requests.FirstOrDefaultAsync(x => x.Id == answer.RequestId);
-                    answersToReturn.Add(await _mapper.ToAnswerDTOAsync(answer));
-                }
+                await _context.Requests.FirstOrDefaultAsync(x => x.Id == answer.RequestId, cancellationToken);
+                answersToReturn.Add(await _mapper.ToAnswerDTOAsync(answer));
             }
+
             return answersToReturn;
         }
 
         //TODO - look at this and how it returns similar request
-        private double CalculateSimilarity(string source, string target)
+        private static double CalculateSimilarity(string source, string target)
         {
             var d = new Damerau();
             if (source == null || target == null) return 0.0;
