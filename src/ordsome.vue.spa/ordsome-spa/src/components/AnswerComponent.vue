@@ -25,11 +25,11 @@
                                         v-if="selected.indexOf(index) < 0"
                                         color="grey lighten-1"
                                     >
-                                        mdi-star-outline
+                                        mdi-thumb-up
                                     </v-icon>
 
-                                    <v-icon v-else color="yellow darken-2">
-                                        mdi-star
+                                    <v-icon v-else color="primary">
+                                        mdi-thumb-up
                                     </v-icon>
                                 </v-list-tile-action>
                             </v-list-tile>

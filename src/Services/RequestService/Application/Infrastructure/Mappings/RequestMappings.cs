@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Application.Models;
@@ -33,7 +34,7 @@ namespace Application.Infrastructure.Mappings
         {
             var request = await _context.Requests.FirstOrDefaultAsync(x => x.Id == answer.RequestId);
             if (request == null) throw new NotFoundException(answer.RequestId.ToString(), answer);
-            var likes = await _context.AnswerVotes.ToListAsync();
+            var likes = await _context.AnswerVotes.Where(x => x.AnswerId == answer.Id).ToListAsync();
             var amountOfLikes = 0;
             foreach (var like in likes)
                 if (like.Like)
