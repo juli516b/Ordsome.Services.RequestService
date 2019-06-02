@@ -11,6 +11,10 @@ export default {
     name: 'home',
     components: {
         TranslationTable
+    },
+    mounted() {
+        this.$store.dispatch('getTranslationRequests');
+        this.$store.dispatch('getLanguages');
     }
 };
 </script>

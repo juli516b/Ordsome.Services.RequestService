@@ -124,9 +124,8 @@ export default new Vuex.Store({
                     vuetifyToast.error(`${err.message} has occurred!`);
                 });
         },
-        userLogin({ commit, state }, user) {
+        userLogin({ commit, state, dispatch }, user) {
             return new Promise(resolve => {
-                commit('auth_request');
                 axios({
                     url: `${state.apiGwayUsersUrl}` + '/login',
                     data: user,
@@ -137,6 +136,8 @@ export default new Vuex.Store({
                         localStorage.setItem('token', token);
                         axios.defaults.headers.common['Authorization'] = token;
                         commit('auth_success', token);
+                        dispatch('getUserTranslations')
+                        dispatch('getUserAnswers')
                         vuetifyToast.success('You succesfully logged in!');
                         resolve(response);
                     })
@@ -147,20 +148,15 @@ export default new Vuex.Store({
                     });
             });
         },
-        register({ commit }, user) {
+        register({ commit, dispatch }, user) {
             return new Promise(resolve => {
-                commit('auth_request');
                 axios({
                     url: this.state.apiGwayUsersUrl + '/register',
                     data: user,
                     method: 'POST'
                 })
                     .then(resp => {
-                        const token = resp.data.token;
-                        const user = resp.data.user;
-                        localStorage.setItem('token', token);
-                        axios.defaults.headers.common['Authorization'] = token;
-                        commit('auth_success', token, user);
+                        dispatch('userLogin', user)
                         vuetifyToast.success(
                             'You have been succesfully registered'
                         );

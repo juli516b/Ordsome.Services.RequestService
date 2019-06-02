@@ -125,8 +125,6 @@ export default {
 
     created() {
         this.loading = true;
-        this.$store.dispatch('getTranslationRequests');
-        this.$store.dispatch('getLanguages');
         this.loading = false;
     },
 

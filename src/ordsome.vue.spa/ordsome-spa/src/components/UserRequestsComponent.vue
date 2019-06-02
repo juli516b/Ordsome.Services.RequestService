@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 export default {
     data() {
         return {
@@ -56,9 +56,6 @@ export default {
         })
     },
 
-    created() {
-        this.$store.dispatch('getUserTranslations');
-    },
     methods: {
         goToRequest(a) {
             this.$router.push({
@@ -66,7 +63,6 @@ export default {
                 params: { id: a.requestID }
             });
         },
-        ...mapActions(['getUserTranslations'])
     }
 };
 </script>

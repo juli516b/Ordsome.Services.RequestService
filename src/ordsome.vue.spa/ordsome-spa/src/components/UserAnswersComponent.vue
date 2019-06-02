@@ -45,12 +45,11 @@ export default {
     },
     computed: {
         ...mapState({
-            userAnswers: state => state.usersAnswers
+            userAnswers: state => state.usersAnswers,
         })
     },
+    created: {
 
-    mounted() {
-        this.getUserAnswers();
     },
     methods: {
         goToRequest(a) {
@@ -59,7 +58,6 @@ export default {
                 params: { id: a.requestId }
             });
         },
-        ...mapActions(['getUserAnswers'])
     }
 };
 </script>
