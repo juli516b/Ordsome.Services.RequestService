@@ -60,7 +60,6 @@
 <script>
 import Join from './dialogs/Join';
 import Login from './dialogs/Login';
-import axios from 'axios';
 import { mapGetters } from 'vuex';
 export default {
     components: {
@@ -82,23 +81,11 @@ export default {
                 username: '',
                 password: ''
             },
-            UserId: ''
+            userId: ''
         };
     },
     computed: {
         ...mapGetters(['jwtNameid', 'isLoggedIn'])
-    },
-    mounted() {
-        if (localStorage.getItem('userId') === '') {
-            if (!this.isLoggedIn) {
-                axios
-                    .get('https://localhost:7000/api/users/new')
-                    .then(response => {
-                        localStorage.setItem('userId', response.data.newGuid);
-                    });
-            }
-            localStorage.setItem('userId', this.jwtNameid);
-        }
     },
     methods: {
         logout() {

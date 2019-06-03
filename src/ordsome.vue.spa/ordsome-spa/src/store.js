@@ -29,7 +29,8 @@ export default new Vuex.Store({
         },
         userRequests: [],
         usersAnswers: [],
-        languages: []
+        languages: [],
+        currentRequest: null
     },
     plugins: [vuexLocalStorage.plugin],
     mutations: {
@@ -76,6 +77,9 @@ export default new Vuex.Store({
         },
         add_answer(state, payload) {
             state.answers.push(payload);
+        },
+        set_current_request(state, payload) {
+            state.currentRequest = payload;
         }
     },
     actions: {
@@ -90,9 +94,9 @@ export default new Vuex.Store({
                     vuetifyToast.error(`${err.message} has occurred!`);
                 });
         },
-        getAnswers({ commit, state }, request) {
+        getAnswers({ commit, state }, id) {
             axios
-                .get(`${state.apiGwayRequestsUrl}/${request.id}/answers`)
+                .get(`${state.apiGwayRequestsUrl}/${id}/answers`)
                 .then(r => r.data)
                 .then(answers => {
                     commit('get_answers', answers);
@@ -119,6 +123,17 @@ export default new Vuex.Store({
                 .then(request => {
                     vuetifyToast.success('You added an request!');
                     commit('add_translationrequest', request);
+                })
+                .catch(err => {
+                    vuetifyToast.error(`${err.message} has occurred!`);
+                });
+        },
+        setRequest({ commit, state }, id) {
+            axios
+                .get(`${state.apiGwayRequestsUrl}/` + id)
+                .then(r => r.data)
+                .then(response => {
+                    commit('set_current_request', response);
                 })
                 .catch(err => {
                     vuetifyToast.error(`${err.message} has occurred!`);

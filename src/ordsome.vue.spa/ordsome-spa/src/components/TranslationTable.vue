@@ -39,10 +39,9 @@
                     </tr>
                 </template>
                 <template v-slot:no-results>
-                    <v-alert :value="true" color="error" icon="mdi-warning"
-                        >Your search for "{{ search }}" found no
-                        results.</v-alert
-                    >
+                    <v-alert :value="true" color="error" icon="mdi-warning">
+                        Your search for "{{ search }}" found no results.
+                    </v-alert>
                 </template>
             </v-data-table>
         </v-card>
@@ -122,7 +121,6 @@ export default {
             return this.editedIndex === -1 ? 'New translation' : 'Edit Item';
         }
     },
-
     created() {
         this.loading = true;
         this.loading = false;

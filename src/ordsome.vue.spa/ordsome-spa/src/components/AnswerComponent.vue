@@ -80,9 +80,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
-import Axios from 'axios';
 
 export default {
     components: {
@@ -93,7 +92,6 @@ export default {
     data() {
         return {
             selected: [],
-            currentRequest: null,
             request: null,
             editedItem: {
                 textTranslated: '',
@@ -107,27 +105,11 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(['jwtNameid']),
         ...mapState({
-            listOfAnswers: state => state.answers
-        })
-    },
-    created() {
-        Axios.get(
-            'https://localhost:7000/api/requests/' + this.$route.params.id
-        )
-            .then(response => {
-                this.$nextTick(function() {
-                    this.currentRequest = response.data;
-                });
-            })
-            .catch(e => {
-                this.errors.push(e);
-            });
-        this.getAnswers(request);
-        let request = {
-            id: this.$route.params.id
-        };
+            listOfAnswers: state => state.answers,
+            currentRequest: state => state.currentRequest
+        }),
+        ...mapGetters(['jwtNameid'])
     },
     methods: {
         ...mapActions(['getAnswers', 'addTranslationAnswer']),

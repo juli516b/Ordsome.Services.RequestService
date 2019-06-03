@@ -39,43 +39,27 @@
 </template>
 
 <script>
-import Axios from 'axios';
 import AnswerComponent from '@/components/AnswerComponent';
-import { mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 export default {
     components: {
         AnswerComponent
     },
-    data() {
-        return {
-            request: {
-                textToTranslate: '',
-                languageOriginCode: '',
-                languageTargetCode: '',
-                userId: ''
-            }
-        };
-    },
 
     created() {
-        Axios.get(
-            'https://localhost:7000/api/requests/' + this.$route.params.id
-        )
-            .then(response => {
-                this.$nextTick(function() {
-                    this.request = response.data;
-                });
-            })
-            .catch(e => {
-                this.errors.push(e);
-            });
+        this.setRequest(this.$route.params.id);
+        this.getAnswers(this.$route.params.id);
     },
     computed: {
         isLoggedIn: function() {
             return this.$store.getters.isLoggedIn;
         },
-        ...mapGetters(['jwtNameid'])
+        ...mapState({
+            request: state => state.currentRequest
+        })
     },
-    methods: {}
+    methods: {
+        ...mapActions(['setRequest', 'getAnswers'])
+    }
 };
 </script>
