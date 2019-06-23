@@ -39,7 +39,7 @@
                         </template>
                     </v-list>
                 </v-card>
-                <h1 v-else class="text-md-center">Be the first to answer!</h1>
+                <h1 v-else v-show="this.jwtNameid != this.currentRequest.userId" class="text-md-center">Be the first to answer!</h1>
             </v-flex>
             <div v-show="this.jwtNameid != this.currentRequest.userId">
                 <ValidationObserver ref="obs">
